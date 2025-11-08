@@ -45,6 +45,7 @@
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/NuGet.Frameworks.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/nunit.framework.dll
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Scalar.AspNetCore.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Serilog.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Serilog.AspNetCore.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Serilog.Extensions.Hosting.dll
@@ -54,9 +55,6 @@
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Serilog.Sinks.Console.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Serilog.Sinks.Debug.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Serilog.Sinks.File.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/cs/Microsoft.TestPlatform.CoreUtilities.resources.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/cs/Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/bin/Debug/net8.0/de/Microsoft.TestPlatform.CoreUtilities.resources.dll
