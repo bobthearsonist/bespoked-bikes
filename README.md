@@ -22,6 +22,14 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/) f
 - [ ] setup ci/cd pipeline
 - [ ] start development
 
+## AI tooling
+
+I will be using AI tooling as an accelerator tool. for planning i wil use it to generate the actual diagram files form my sketches and then use it to iterate on those until they are the way I want them. during development I will use it to help me with boilerplate code generation and to help me think through problems or issues I encounter. i _will not_ use it to generate large chunks of code or features without my direct involvement. iw ill do my best to identify areas that not my own if there are any and indicate which decisions were made with AI assistance.
+
+## commit history
+
+i will use the commit history to "tell a story" more than anything since this is an interview exercise.
+
 ## decisions
 
 - nswag to go from openapi spec to controllers quickly. make sure to generate dto types even thoguht hey may "not be needed" yet becasue its annoying to configure it without them
@@ -39,6 +47,13 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/) f
 - automapper for mapping between entities and dtos
 - jest for unit tests on frontend
 - "happy path" system tests with playwright if we have time
+- exception middleware for error handling
+- repository pattern for data access abstraction
+- dependency injection for service management
+- logging with microsoft.extensions.logging, json file logging provider
+- instrumentation with opentelemetry, console exporter for now
+- authorization that utilizes employee role for access
+- identityserver for auth if we have time
 
 ## design docs
 
