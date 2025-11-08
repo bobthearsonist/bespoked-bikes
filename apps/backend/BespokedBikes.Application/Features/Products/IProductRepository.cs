@@ -1,6 +1,4 @@
-using BespokedBikes.Domain.Entities;
-
-namespace BespokedBikes.Infrastructure.Features.Products;
+namespace BespokedBikes.Application.Features.Products;
 
 public interface IProductRepository
 {

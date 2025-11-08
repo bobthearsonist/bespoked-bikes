@@ -1,6 +1,7 @@
+using BespokedBikes.Application.Generated;
+
 namespace BespokedBikes.Application.Features.Employees;
 
-public class EmployeeDto
+public partial class EmployeeDto
 {
-    // DTO properties to be implemented
 }

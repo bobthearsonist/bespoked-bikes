@@ -1,6 +1,4 @@
-using BespokedBikes.Domain.Entities;
-
-namespace BespokedBikes.Infrastructure.Features.Sales;
+namespace BespokedBikes.Application.Features.Sales;
 
 public interface ISaleRepository
 {

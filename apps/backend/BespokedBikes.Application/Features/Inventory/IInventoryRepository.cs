@@ -1,4 +1,4 @@
-namespace BespokedBikes.Infrastructure.Features.Inventory;
+namespace BespokedBikes.Application.Features.Inventory;
 
 public interface IInventoryRepository
 {

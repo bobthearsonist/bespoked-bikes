@@ -17,4 +17,10 @@
     <ProjectReference Include="..\BespokedBikes.Infrastructure\BespokedBikes.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\..\openapi.yaml">
+      <Link>openapi.yaml</Link>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-namespace BespokedBikes.Infrastructure.Features.Employees;
+namespace BespokedBikes.Application.Features.Employees;
 
 public interface IEmployeeRepository
 {
