@@ -1,0 +1,860 @@
+# BeSpoked Bikes API OpenAPI Specification
+# This file is the single source of truth for the API contract.
+# NSwag generates controllers and DTOs from this specification.
+
+openapi: 3.0.3
+info:
+  title: BeSpoked Bikes API
+  description: API for BeSpoked Bikes sales tracking system
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+    description: Development server
+
+paths:
+  /api/customers:
+    post:
+      summary: Create a new customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDto'
+      responses:
+        '201':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Search customers
+      operationId: searchCustomers
+      parameters:
+        - name: searchTerm
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerDto'
+
+  /api/customers/{id}:
+    get:
+      summary: Get customer by ID
+      operationId: getCustomerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Customer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update customer
+      operationId: updateCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDto'
+      responses:
+        '200':
+          description: Customer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/employees:
+    post:
+      summary: Create a new employee
+      operationId: createEmployee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeDto'
+      responses:
+        '201':
+          description: Employee created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: List employees
+      operationId: listEmployees
+      parameters:
+        - name: location
+          in: query
+          schema:
+            $ref: '#/components/schemas/Location'
+        - name: role
+          in: query
+          schema:
+            $ref: '#/components/schemas/EmployeeRole'
+      responses:
+        '200':
+          description: List of employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeDto'
+
+  /api/employees/{id}:
+    get:
+      summary: Get employee by ID
+      operationId: getEmployeeById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Employee details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDto'
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update employee
+      operationId: updateEmployee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeDto'
+      responses:
+        '200':
+          description: Employee updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/products:
+    post:
+      summary: Create a new product
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDto'
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: List products
+      operationId: listProducts
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductDto'
+
+  /api/products/{id}:
+    get:
+      summary: Get product by ID
+      operationId: getProductById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update product
+      operationId: updateProduct
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDto'
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/products/{id}/inventory:
+    put:
+      summary: Update product inventory
+      operationId: updateProductInventory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryUpdateDto'
+      responses:
+        '200':
+          description: Inventory updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/sales:
+    post:
+      summary: Create a new sale
+      operationId: createSale
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSaleDto'
+      responses:
+        '201':
+          description: Sale created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaleDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Get sales by date range
+      operationId: getSalesByDateRange
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: status
+          in: query
+          schema:
+            $ref: '#/components/schemas/SaleStatus'
+      responses:
+        '200':
+          description: List of sales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SaleDto'
+
+  /api/sales/{id}:
+    get:
+      summary: Get sale by ID
+      operationId: getSaleById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Sale details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaleDto'
+        '404':
+          description: Sale not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/reports/commissions/quarterly:
+    get:
+      summary: Get quarterly commission report
+      operationId: getQuarterlyCommissions
+      parameters:
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: quarter
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 4
+      responses:
+        '200':
+          description: Quarterly commission report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuarterlyCommissionReportDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/reports/commissions/employee/{id}/quarterly:
+    get:
+      summary: Get employee quarterly commission report
+      operationId: getEmployeeQuarterlyCommissions
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: year
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: quarter
+          in: query
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 4
+      responses:
+        '200':
+          description: Employee quarterly commission report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeCommissionDto'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    # Enumerations
+    Location:
+      type: string
+      enum:
+        - STORE
+      description: Store location (expandable to multiple locations in future)
+
+    SaleStatus:
+      type: string
+      enum:
+        - PENDING
+        - FULFILLED
+      description: Sale status - PENDING (awaiting fulfillment) or FULFILLED (completed)
+
+    EmployeeRole:
+      type: string
+      enum:
+        - SALESPERSON
+        - FULFILLMENT
+        - ADMIN
+      description: Employee roles - employees can have multiple roles
+
+    # DTOs
+    CustomerDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        email:
+          type: string
+          format: email
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        address:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        postalCode:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - name
+
+    EmployeeDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        location:
+          $ref: '#/components/schemas/Location'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeRole'
+          minItems: 1
+        hireDate:
+          type: string
+          format: date-time
+        terminationDate:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - name
+        - location
+        - roles
+        - hireDate
+
+    ProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        productType:
+          type: string
+          minLength: 1
+          maxLength: 100
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        description:
+          type: string
+          nullable: true
+        supplier:
+          type: string
+          description: Supplier name (will become supplier_id FK in future)
+          nullable: true
+        costPrice:
+          type: number
+          format: double
+          minimum: 0
+        retailPrice:
+          type: number
+          format: double
+          minimum: 0
+        commissionPercentage:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 100
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - productType
+        - name
+        - costPrice
+        - retailPrice
+        - commissionPercentage
+
+    InventoryDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        productId:
+          type: string
+          format: uuid
+        location:
+          $ref: '#/components/schemas/Location'
+        quantity:
+          type: integer
+          minimum: 0
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - productId
+        - location
+        - quantity
+
+    InventoryUpdateDto:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        quantity:
+          type: integer
+          minimum: 0
+      required:
+        - location
+        - quantity
+
+    CreateSaleDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          format: uuid
+        soldByEmployeeId:
+          type: string
+          format: uuid
+        productId:
+          type: string
+          format: uuid
+        salePrice:
+          type: number
+          format: double
+          minimum: 0
+        saleChannel:
+          type: string
+          nullable: true
+        location:
+          $ref: '#/components/schemas/Location'
+        saleDate:
+          type: string
+          format: date-time
+      required:
+        - customerId
+        - soldByEmployeeId
+        - productId
+        - salePrice
+        - location
+        - saleDate
+
+    SaleDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        customerId:
+          type: string
+          format: uuid
+        soldByEmployeeId:
+          type: string
+          format: uuid
+        fulfilledByEmployeeId:
+          type: string
+          format: uuid
+          nullable: true
+        productId:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/SaleStatus'
+        salePrice:
+          type: number
+          format: double
+        commissionAmount:
+          type: number
+          format: double
+          readOnly: true
+        saleChannel:
+          type: string
+          nullable: true
+        location:
+          $ref: '#/components/schemas/Location'
+        saleDate:
+          type: string
+          format: date-time
+        fulfilledDate:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - customerId
+        - soldByEmployeeId
+        - productId
+        - status
+        - salePrice
+        - location
+        - saleDate
+
+    QuarterlyCommissionReportDto:
+      type: object
+      properties:
+        year:
+          type: integer
+        quarter:
+          type: integer
+          minimum: 1
+          maximum: 4
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeCommissionDto'
+        totalCommissions:
+          type: number
+          format: double
+        totalSales:
+          type: number
+          format: double
+        salesCount:
+          type: integer
+      required:
+        - year
+        - quarter
+        - employees
+        - totalCommissions
+        - totalSales
+        - salesCount
+
+    EmployeeCommissionDto:
+      type: object
+      properties:
+        employeeId:
+          type: string
+          format: uuid
+        employeeName:
+          type: string
+        totalCommission:
+          type: number
+          format: double
+        totalSales:
+          type: number
+          format: double
+        salesCount:
+          type: integer
+      required:
+        - employeeId
+        - employeeName
+        - totalCommission
+        - totalSales
+        - salesCount
+
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: string
+          format: date-time
+        path:
+          type: string
+      required:
+        - statusCode
+        - message
+        - timestamp
