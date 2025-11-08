@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "SX6p0kSdmec=",
+  "dgSpecHash": "IQnisbvnv5Q=",
   "success": true,
-  "projectFilePath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj",
+  "expectedPackageFiles": [
+    "/Users/dislexicmofo/.nuget/packages/microsoft.netcore.app.ref/8.0.21/microsoft.netcore.app.ref.8.0.21.nupkg.sha512",
+    "/Users/dislexicmofo/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.21/microsoft.aspnetcore.app.ref.8.0.21.nupkg.sha512"
+  ],
   "logs": []
 }

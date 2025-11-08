@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/BespokedBikes.Tests.Integration.csproj": {}
+    "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Tests.Integration/BespokedBikes.Tests.Integration.csproj": {}
   },
   "projects": {
-    "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj": {
+    "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj",
+        "projectUniqueName": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj",
         "projectName": "BespokedBikes.Api",
-        "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj",
-        "packagesPath": "/home/runner/.nuget/packages/",
-        "outputPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/obj/",
+        "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj",
+        "packagesPath": "/Users/dislexicmofo/.nuget/packages/",
+        "outputPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/runner/.nuget/NuGet/NuGet.Config"
+          "/Users/dislexicmofo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -26,11 +26,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj": {
-                "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj"
+              "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj": {
+                "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj"
               },
-              "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj": {
-                "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj"
+              "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj": {
+                "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj"
               }
             }
           }
@@ -83,6 +83,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[8.0.21, 8.0.21]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -91,21 +105,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj": {
+    "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj",
+        "projectUniqueName": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj",
         "projectName": "BespokedBikes.Application",
-        "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj",
-        "packagesPath": "/home/runner/.nuget/packages/",
-        "outputPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/obj/",
+        "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj",
+        "packagesPath": "/Users/dislexicmofo/.nuget/packages/",
+        "outputPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/runner/.nuget/NuGet/NuGet.Config"
+          "/Users/dislexicmofo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -117,8 +131,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj": {
-                "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj"
+              "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj": {
+                "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj"
               }
             }
           }
@@ -163,26 +177,36 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj": {
+    "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj",
+        "projectUniqueName": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj",
         "projectName": "BespokedBikes.Domain",
-        "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj",
-        "packagesPath": "/home/runner/.nuget/packages/",
-        "outputPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/",
+        "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj",
+        "packagesPath": "/Users/dislexicmofo/.nuget/packages/",
+        "outputPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/runner/.nuget/NuGet/NuGet.Config"
+          "/Users/dislexicmofo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -222,26 +246,36 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj": {
+    "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj",
+        "projectUniqueName": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj",
         "projectName": "BespokedBikes.Infrastructure",
-        "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj",
-        "packagesPath": "/home/runner/.nuget/packages/",
-        "outputPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Infrastructure/obj/",
+        "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Infrastructure/BespokedBikes.Infrastructure.csproj",
+        "packagesPath": "/Users/dislexicmofo/.nuget/packages/",
+        "outputPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/runner/.nuget/NuGet/NuGet.Config"
+          "/Users/dislexicmofo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -253,11 +287,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj": {
-                "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj"
+              "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj": {
+                "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj"
               },
-              "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj": {
-                "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj"
+              "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj": {
+                "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Domain/BespokedBikes.Domain.csproj"
               }
             }
           }
@@ -304,26 +338,36 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/BespokedBikes.Tests.Integration.csproj": {
+    "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Tests.Integration/BespokedBikes.Tests.Integration.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/BespokedBikes.Tests.Integration.csproj",
+        "projectUniqueName": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Tests.Integration/BespokedBikes.Tests.Integration.csproj",
         "projectName": "BespokedBikes.Tests.Integration",
-        "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/BespokedBikes.Tests.Integration.csproj",
-        "packagesPath": "/home/runner/.nuget/packages/",
-        "outputPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Tests.Integration/obj/",
+        "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Tests.Integration/BespokedBikes.Tests.Integration.csproj",
+        "packagesPath": "/Users/dislexicmofo/.nuget/packages/",
+        "outputPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Tests.Integration/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/runner/.nuget/NuGet/NuGet.Config"
+          "/Users/dislexicmofo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -335,8 +379,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj": {
-                "projectPath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj"
+              "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj": {
+                "projectPath": "/Users/dislexicmofo/Repositories/bespoked-bikes/BespokedBikes.Api/BespokedBikes.Api.csproj"
               }
             }
           }
@@ -389,12 +433,22 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.21, 8.0.21]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
