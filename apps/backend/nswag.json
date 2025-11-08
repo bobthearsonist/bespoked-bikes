@@ -1,0 +1,34 @@
+{
+  "runtime": "Net90",
+  "documentGenerator": {
+    "fromDocument": {
+      "url": "../../openapi.yaml"
+    }
+  },
+  "codeGenerators": {
+    "openApiToCSharpController": {
+      "className": "{controller}",
+      "operationGenerationMode": "SingleClientFromOperationId",
+      "namespace": "BespokedBikes.Api.Controllers",
+      "generateDtoTypes": false,
+      "generateNullableReferenceTypes": true,
+      "generateDataAnnotations": true,
+      "output": "BespokedBikes.Api/Controllers/GeneratedControllerBase.cs"
+    },
+    "openApiToCSharpClient": {
+      "generateClientClasses": false,
+      "generateClientInterfaces": false,
+      "generateDtoTypes": true,
+      "namespace": "BespokedBikes.Application.Generated",
+      "generateNullableReferenceTypes": true,
+      "generateDataAnnotations": true,
+      "dateType": "System.DateTimeOffset",
+      "dateTimeType": "System.DateTimeOffset",
+      "classStyle": "Poco",
+      "generateDefaultValues": true,
+      "inlineNamedDictionaries": false,
+      "inlineNamedArrays": false,
+      "output": "BespokedBikes.Application/Generated/Dtos.cs"
+    }
+  }
+}
