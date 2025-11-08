@@ -26,7 +26,6 @@
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Microsoft.Extensions.Caching.Memory.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Microsoft.Extensions.Logging.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
@@ -34,15 +33,6 @@
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Npgsql.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Scalar.AspNetCore.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.AspNetCore.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.Extensions.Hosting.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.Extensions.Logging.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.Formatting.Compact.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.Settings.Configuration.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.Sinks.Console.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.Sinks.Debug.dll
-/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/Serilog.Sinks.File.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/BespokedBikes.Application.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/BespokedBikes.Domain.dll
 /home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Api/bin/Debug/net8.0/BespokedBikes.Infrastructure.dll

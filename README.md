@@ -45,7 +45,7 @@ Features/
 - **PostgreSQL** - Database (via Npgsql.EntityFrameworkCore.PostgreSQL)
 - **AutoMapper 12.0.1** - Object-to-object mapping
 - **FluentValidation 11.10.0** - Request validation
-- **Serilog** - Structured logging
+- **Microsoft.Extensions.Logging** - Built-in logging with console output
 - **OpenAPI / Scalar** - API documentation (instead of Swagger)
 - **NUnit** - Testing framework
 
@@ -197,7 +197,7 @@ Update the PostgreSQL connection string in `appsettings.json`:
 
 ### Logging
 
-Serilog is configured for structured logging to the console.
+Microsoft.Extensions.Logging is configured with console and debug output providers for logging.
 
 ## Design Decisions
 

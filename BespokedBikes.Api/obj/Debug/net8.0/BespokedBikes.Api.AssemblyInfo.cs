@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BespokedBikes.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7393743626eaf3799f5fbf2d4c78133374f86afb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fe5a06aa22c725f6e0b91038094c3848e260170")]
 [assembly: System.Reflection.AssemblyProductAttribute("BespokedBikes.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BespokedBikes.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
