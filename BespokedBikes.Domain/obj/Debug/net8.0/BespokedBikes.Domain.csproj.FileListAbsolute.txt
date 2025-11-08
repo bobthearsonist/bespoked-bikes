@@ -1,0 +1,12 @@
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/bin/Debug/net8.0/BespokedBikes.Domain.deps.json
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/bin/Debug/net8.0/BespokedBikes.Domain.dll
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/bin/Debug/net8.0/BespokedBikes.Domain.pdb
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/BespokedBikes.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/BespokedBikes.Domain.AssemblyInfoInputs.cache
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/BespokedBikes.Domain.AssemblyInfo.cs
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/BespokedBikes.Domain.csproj.CoreCompileInputs.cache
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/BespokedBikes.Domain.sourcelink.json
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/BespokedBikes.Domain.dll
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/refint/BespokedBikes.Domain.dll
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/BespokedBikes.Domain.pdb
+/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Domain/obj/Debug/net8.0/ref/BespokedBikes.Domain.dll

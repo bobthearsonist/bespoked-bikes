@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "55Z+3DdA6+8=",
+  "success": true,
+  "projectFilePath": "/home/runner/work/bespoked-bikes/bespoked-bikes/BespokedBikes.Application/BespokedBikes.Application.csproj",
+  "expectedPackageFiles": [
+    "/home/runner/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/home/runner/.nuget/packages/fluentvalidation/11.10.0/fluentvalidation.11.10.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.10.0/fluentvalidation.dependencyinjectionextensions.11.10.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/2.1.0/microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
