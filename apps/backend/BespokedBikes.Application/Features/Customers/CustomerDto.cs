@@ -1,6 +1,7 @@
+using BespokedBikes.Application.Generated;
+
 namespace BespokedBikes.Application.Features.Customers;
 
-public class CustomerDto
+public partial class CustomerDto
 {
-    // Properties to be implemented
 }
