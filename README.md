@@ -1,42 +1,10 @@
-# BeSpoked Bikes - Sales Tracking API
+# bespoked-bikes
 
-A .NET 9 Web API for tracking bicycle sales, calculating commissions, and generating quarterly reports for BeSpoked Bikes.
+Demo project for bespoked-bikes.
 
-## Project Overview
+This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
 
-BeSpoked Bikes is a high-end bicycle shop that needs a backend system to track sales, manage inventory, and calculate salesperson commissions. This API provides the core functionality for managing customers, products, salespeople, and sales transactions.
-
-## Architecture
-
-This project follows **Clean Architecture** principles with a **feature-oriented folder structure**:
-
-### Layers
-
-- **BespokedBikes.Domain** - Domain entities and business logic
-- **BespokedBikes.Application** - Application services, DTOs, validators, and mapping profiles
-- **BespokedBikes.Infrastructure** - Data access, repositories, and EF Core DbContext
-- **BespokedBikes.Api** - API controllers, middleware, and configuration
-- **BespokedBikes.Tests.Unit** - Unit tests
-- **BespokedBikes.Tests.Integration** - Integration tests
-
-### Feature-Oriented Structure
-
-Each feature is organized in its own folder containing all related files:
-
-```
-Features/
-├── Customers/
-│   ├── CustomerDto.cs
-│   ├── CustomerService.cs
-│   ├── ICustomerService.cs
-│   ├── CustomerValidator.cs
-│   ├── CustomerMappingProfile.cs
-│   └── CustomerRepository.cs (in Infrastructure)
-├── Products/
-├── Salespeople/
-├── Sales/
-└── Reports/
-```
+This backend project follows a **Three Layer Architecture** with a **feature-oriented project structure**:
 
 ## Technology Stack
 
@@ -48,55 +16,13 @@ Features/
 - **Microsoft.Extensions.Logging** - Built-in logging with console output
 - **OpenAPI / Scalar** - API documentation (instead of Swagger)
 - **NUnit** - Testing framework
-
-## Project Structure
-
-```
-bespoked-bikes/
-├── BespokedBikes.Domain/
-│   └── Entities/
-│       ├── Customer.cs
-│       ├── Employee.cs
-│       ├── Salesperson.cs
-│       ├── Product.cs
-│       ├── Inventory.cs
-│       └── Sale.cs
-├── BespokedBikes.Application/
-│   └── Features/
-│       ├── Customers/
-│       ├── Products/
-│       ├── Salespeople/
-│       ├── Sales/
-│       └── Reports/
-├── BespokedBikes.Infrastructure/
-│   ├── Data/
-│   │   └── ApplicationDbContext.cs
-│   └── Features/
-│       ├── Customers/
-│       ├── Products/
-│       ├── Salespeople/
-│       └── Sales/
-├── BespokedBikes.Api/
-│   ├── Features/
-│   ├── Middleware/
-│   ├── Program.cs
-│   └── appsettings.json
-├── BespokedBikes.Tests.Unit/
-├── BespokedBikes.Tests.Integration/
-├── openapi.yaml
-└── BespokedBikes.sln
-```
+- **FluentAssertions** - Assertion library for tests
 
 ## Domain Model
 
 ### Entities
 
-- **Customer** - Customer information (name, email, contact details, address)
-- **Employee** - Base employee information
-- **Salesperson** - Sales staff (references Employee, tracks start/termination dates)
-- **Product** - Bicycle products (type, name, manufacturer, pricing, commission percentage)
-- **Inventory** - Product inventory tracking by location
-- **Sale** - Sales transactions (links customer, salesperson, product; tracks sale price and commission)
+- [ ] align this section with result of actual design
 
 ### Key Business Logic
 
@@ -105,50 +31,7 @@ bespoked-bikes/
 - SalePrice can differ from RetailPrice (discounts, negotiations)
 - Inventory is reduced when sales are created
 
-## API Endpoints
-
-The API is defined in `openapi.yaml` and includes:
-
-### Customers
-
-- `POST /api/customers` - Create customer
-- `GET /api/customers/{id}` - Get customer by ID
-- `PUT /api/customers/{id}` - Update customer
-- `GET /api/customers?searchTerm=...` - Search customers
-
-### Salespeople
-
-- `POST /api/salespeople` - Create salesperson
-- `GET /api/salespeople/{id}` - Get salesperson by ID
-- `PUT /api/salespeople/{id}` - Update salesperson
-- `GET /api/salespeople` - List salespeople
-
-### Products
-
-- `POST /api/products` - Create product
-- `GET /api/products/{id}` - Get product by ID
-- `PUT /api/products/{id}` - Update product
-- `GET /api/products` - List products
-- `PUT /api/products/{id}/inventory` - Update inventory
-
-### Sales
-
-- `POST /api/sales` - Create sale (calculates commission automatically)
-- `GET /api/sales/{id}` - Get sale by ID
-- `GET /api/sales?startDate=X&endDate=Y` - Filter sales by date range
-
-### Reports
-
-- `GET /api/reports/commissions/quarterly?year=2025&quarter=4` - Quarterly commission report
-- `GET /api/reports/commissions/salesperson/{id}/quarterly?year=2025&quarter=4` - Salesperson quarterly report
-
 ## Getting Started
-
-### Prerequisites
-
-- .NET 9 SDK
-- PostgreSQL 14+
-- IDE (Visual Studio, VS Code, or Rider)
 
 ### Build the Solution
 
@@ -159,12 +42,15 @@ dotnet build
 
 ### Run the API
 
+The API is defined in `openapi.yaml`.
+
 ```bash
 cd BespokedBikes.Api
 dotnet run
 ```
 
 The API will start on `https://localhost:5001` (or configured port).
+The API can be viewed at `https://localhost:5001/scalar` when running locally.
 
 ### Run Tests
 
@@ -172,32 +58,10 @@ The API will start on `https://localhost:5001` (or configured port).
 # Run all tests
 dotnet test
 
-# Run unit tests only
+# individual suites
 dotnet test BespokedBikes.Tests.Unit
-
-# Run integration tests only
 dotnet test BespokedBikes.Tests.Integration
 ```
-
-## Configuration
-
-Configuration is managed through `appsettings.json` and `appsettings.Development.json`.
-
-### Connection String
-
-Update the PostgreSQL connection string in `appsettings.json`:
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Database=bespoked_bikes;Username=postgres;Password=postgres"
-  }
-}
-```
-
-### Logging
-
-Microsoft.Extensions.Logging is configured with console and debug output providers for logging.
 
 ## Design Decisions
 
