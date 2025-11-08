@@ -8,14 +8,19 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/) f
 
 ## planning phase
 
-- [ ] scope of deliverables
-- [ ] tech stack decision
-- [ ] architecture design
-  - [ ] initial sketches
-  - [ ] data model
-  - [ ] user stories
-  - [ ] api design
-- [ ] project plan
+- [x] scope of deliverables
+- [x] tech stack decision
+- [x] architecture design
+  - [x] initial sketches
+  - [x] data model
+  - [x] user stories
+  - [x] api design
+- [x] project plan
+- [ ] setup project structure / monorepo
+  - [ ] initial test projects with single passing test for each
+- [ ] containerization with docker
+- [ ] setup ci/cd pipeline
+- [ ] start development
 
 ## decisions
 
@@ -32,3 +37,14 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/) f
 - github actions for ci/cd
 - scalar instead of swagger... its prettier
 - automapper for mapping between entities and dtos
+- jest for unit tests on frontend
+- "happy path" system tests with playwright if we have time
+
+## design docs
+
+initial entity/class diagrams, they may evolve as we go.
+[class-diagram.md](docs/1%20initial%20diagrams/class-diagram.md)
+[entity-relationship-diagram.md](docs/1%20initial%20diagrams/entity-relationship-diagram.md)
+
+the scenario doc/s were created to use as a starting point and an exercise to validate the initial entity/class designs. They may not reflect the final design decisions.
+[user-scenario-diagram.md](docs/1%20initial%20diagrams/user-scenario-diagram.md)
