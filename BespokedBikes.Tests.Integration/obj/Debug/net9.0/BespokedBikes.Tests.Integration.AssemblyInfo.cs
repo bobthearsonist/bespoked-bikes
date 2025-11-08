@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BespokedBikes.Tests.Integration")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5d60592541002472aabb578d12dad59f61d0229")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d881ad4818ae9c2bbbe052ad8a520e392d030770")]
 [assembly: System.Reflection.AssemblyProductAttribute("BespokedBikes.Tests.Integration")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BespokedBikes.Tests.Integration")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

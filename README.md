@@ -1,6 +1,6 @@
 # BeSpoked Bikes - Sales Tracking API
 
-A .NET 8 Web API for tracking bicycle sales, calculating commissions, and generating quarterly reports for BeSpoked Bikes.
+A .NET 9 Web API for tracking bicycle sales, calculating commissions, and generating quarterly reports for BeSpoked Bikes.
 
 ## Project Overview
 
@@ -40,9 +40,9 @@ Features/
 
 ## Technology Stack
 
-- **.NET 8** - Web API framework
-- **Entity Framework Core 8.x** - ORM for database access
-- **PostgreSQL** - Database (via Npgsql.EntityFrameworkCore.PostgreSQL)
+- **.NET 9** - Web API framework
+- **Entity Framework Core 9.0** - ORM for database access
+- **PostgreSQL** - Database (via Npgsql.EntityFrameworkCore.PostgreSQL 9.0.2)
 - **AutoMapper 12.0.1** - Object-to-object mapping
 - **FluentValidation 11.10.0** - Request validation
 - **Microsoft.Extensions.Logging** - Built-in logging with console output
@@ -146,7 +146,7 @@ The API is defined in `openapi.yaml` and includes:
 
 ### Prerequisites
 
-- .NET 8 SDK
+- .NET 9 SDK
 - PostgreSQL 14+
 - IDE (Visual Studio, VS Code, or Rider)
 
