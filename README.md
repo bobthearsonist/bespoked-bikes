@@ -2,7 +2,135 @@
 
 Demo project for bespoked-bikes.
 
-## Commit Message Convention
+This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
+
+
+## Architecture
+
+This backend project follows **Clean Architecture** with a feature-oriented organization. This is a quick jumble of words trying to describe *why* its this "complex". I'm usually bad about remembering these terms when discussing the *why* so now I cant forget.
+
+``` text
+Domain (entities, enums) → no dependencies
+   ↑
+Application (services, DTOs, interfaces) → depends on Domain
+   ↑
+Infrastructure (repositories, DbContext) → depends on Domain + Application
+   ↑
+Api (controllers, middleware) → depends on Application + Infrastructure
+```
+
+Achieves **SOLID** principles:
+
+| Principle                                          | Implementation                                                 |
+| -------------------------------------------------- | -------------------------------------------------------------- |
+| **S** - Single Responsibility                      | Each project/class has one job                                 |
+| **O** - Open for extension/Closed for Modification | Extend via interfaces/inheritance                              |
+| **L** - Liskov Substitution                        | IEmployeeRepository substitutable with any implementation      |
+| **I** - Interface Segregation                      | Small, focused interfaces (IEmployeeRepository, ISalesService) |
+| **D** - Dependency Inversion                       | Application defines interfaces, Infrastructure implements them |
+
+## Technology Stack
+
+- **.NET 9** - Web API framework
+- **Entity Framework Core 9.0** - ORM for database access
+- **PostgreSQL** - Database (via Npgsql.EntityFrameworkCore.PostgreSQL 9.0.2)
+- **AutoMapper 12.0.1** - Object-to-object mapping
+- **FluentValidation 11.10.0** - Request validation
+- **Microsoft.Extensions.Logging** - Built-in logging with console output
+- **OpenAPI / Scalar** - API documentation (instead of Swagger)
+- **NUnit** - Testing framework
+- **FluentAssertions** - Assertion library for tests
+
+## Domain Model
+
+### Entities
+
+- [ ] align this section with result of actual design
+
+### Key Business Logic
+
+- **Commission Calculation**: `CommissionAmount = (SalePrice - CostPrice) × CommissionPercentage`
+- Commission is stored on each Sale for historical accuracy
+- SalePrice can differ from RetailPrice (discounts, negotiations)
+- Inventory is reduced when sales are created
+
+## Getting Started
+
+### Build the Solution
+
+```bash
+dotnet restore
+dotnet build
+```
+
+### Run the API
+
+The API is defined in `openapi.yaml`.
+
+```bash
+cd BespokedBikes.Api
+dotnet run
+```
+
+The API will start on `https://localhost:5001` (or configured port).
+The API can be viewed at `https://localhost:5001/scalar` when running locally.
+
+### Run Tests
+
+```bash
+# Run all tests
+dotnet test
+
+# individual suites
+dotnet test BespokedBikes.Tests.Unit
+dotnet test BespokedBikes.Tests.Integration
+```
+
+## Design Decisions
+
+### Commission Storage on Sale
+
+Commission percentage is stored on the Product, but the calculated commission amount is stored on each Sale. This preserves historical accuracy when commission rates change over time.
+
+### SalePrice vs RetailPrice
+
+Products have a RetailPrice, but each Sale has a SalePrice. This allows for discounts, promotions, and price negotiations without affecting the base product pricing.
+
+### Feature-Oriented Folders
+
+Instead of organizing by technical layers (Controllers, Services, DTOs in separate folders), we organize by business features. Each feature folder contains all related files, making it easier to understand and modify a specific feature.
+
+### PostgreSQL Over SQLite
+
+PostgreSQL provides better support for production workloads, concurrent access, and advanced features needed for a real-world sales tracking system.
+
+### OpenAPI and Scalar Over Swagger
+
+OpenAPI specification defines the API contract, and Scalar provides a modern, beautiful documentation UI. Controllers will be generated from the OpenAPI spec.
+
+## Next Steps
+
+- [ ] Implement entity classes with full properties
+- [ ] Implement DTOs with full properties
+- [ ] Generate controllers from OpenAPI spec (using code generator)
+- [ ] Implement service business logic
+- [ ] Implement repository data access
+- [ ] Add EF Core migrations
+- [ ] Add seed data for demonstration
+- [ ] Implement FluentValidation rules
+- [ ] Configure AutoMapper profiles
+- [ ] Add middleware for global exception handling
+- [ ] Docker containerization
+- [ ] CI/CD pipeline setup
+
+## Documentation
+
+- [Class Diagram](docs/1%20initial%20diagrams/class-diagram.md)
+- [Entity Relationship Diagram](docs/1%20initial%20diagrams/entity-relationship-diagram.md)
+- [User Scenario Diagram](docs/1%20initial%20diagrams/user-scenario-diagram.md)
+- [OpenAPI Specification](openapi.yaml)
+
+## Commit Convention
 
 This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
 

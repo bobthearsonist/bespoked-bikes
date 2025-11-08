@@ -1,0 +1,14 @@
+# .NET build outputs
+bin/
+obj/
+
+# IDE and editor folders
+.vs/
+.vscode/
+.idea/
+
+# User-specific files
+*.user
+
+# NuGet packages
+*.nupkg
