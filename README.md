@@ -55,6 +55,19 @@ This generates:
 - **Controllers**: `BespokedBikes.Api/Controllers/GeneratedControllerBase.cs`
 - **DTOs**: `BespokedBikes.Application/Generated/Dtos.cs`
 
+### Test API Endpoints with HTTP Client
+
+The project includes an HTTP client file (`apps/backend/BespokedBikes.Api/BespokedBikes.Api.http`) containing pre-written HTTP requests for testing the API endpoints. This file uses environment variables defined in `apps/backend/BespokedBikes.Api/http-client.env.json`.
+
+To use it:
+
+1. Ensure the API is running (see "Run the API" section)
+2. Open `BespokedBikes.Api.http` in your IDE or text editor
+3. The file supports variables like `{{BespokedBikes.Api_HostAddress}}` which are resolved from `http-client.env.json`
+4. Execute requests directly from your IDE (most popular IDEs support HTTP file execution)
+
+This provides a quick way to test API functionality without building a full frontend or using external tools like Postman.
+
 ### Commit Convention
 
 This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
