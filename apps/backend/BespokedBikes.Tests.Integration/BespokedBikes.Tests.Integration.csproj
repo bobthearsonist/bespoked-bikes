@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +16,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="FluentAssertions" Version="8.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="NUnit" Version="4.4.0" />
     <PackageReference Include="NUnit.Analyzers" Version="4.11.2">
       <PrivateAssets>all</PrivateAssets>
@@ -31,5 +36,13 @@
   <ItemGroup>
     <ProjectReference Include="..\BespokedBikes.Api\BespokedBikes.Api.csproj" />
   </ItemGroup>
+
+  <Target Name="BuildApiBeforeTests" BeforeTargets="Build">
+    <MSBuild Projects="..\BespokedBikes.Api\BespokedBikes.Api.csproj" Targets="Build" />
+  </Target>
+
+  <Target Name="PullTestContainerImages" BeforeTargets="Build">
+    <Exec Command="docker pull postgres:17-alpine" IgnoreExitCode="true" ContinueOnError="true" />
+  </Target>
 
 </Project>
