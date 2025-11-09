@@ -1,0 +1,127 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-color: #1a1a1a;
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid #646cff;
+}
+
+.app-header h1 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.app-main {
+  flex: 1;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.create-sale-form {
+  background: #242424;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.create-sale-form h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #646cff;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.87);
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.product-info,
+.commission-preview {
+  background-color: #1a1a1a;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  border-left: 3px solid #646cff;
+}
+
+.product-info p,
+.commission-preview p {
+  margin: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.submit-button {
+  width: 100%;
+  padding: 1rem;
+  background-color: #646cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+.submit-button:hover {
+  background-color: #535bf2;
+}
+
+.submit-button:active {
+  transform: translateY(1px);
+}
+
+.error-message {
+  background-color: #ff4444;
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.success-message {
+  background-color: #44ff44;
+  color: #1a1a1a;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.87);
+  font-size: 1.2rem;
+}

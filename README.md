@@ -31,6 +31,7 @@ Achieves **SOLID** principles:
 
 ## Technology Stack
 
+### Backend
 - **.NET 9** - Web API framework
 - **Entity Framework Core 9.0** - ORM for database access
 - **PostgreSQL** - Database (via Npgsql.EntityFrameworkCore.PostgreSQL 9.0.2)
@@ -40,6 +41,12 @@ Achieves **SOLID** principles:
 - **OpenAPI / Scalar** - API documentation (instead of Swagger)
 - **NUnit** - Testing framework
 - **FluentAssertions** - Assertion library for tests
+
+### Frontend
+- **React 19** with JSX - UI framework
+- **Vite 7** - Build tool and dev server
+- **Jest 30** - Testing framework
+- **React Testing Library 16** - Component testing utilities
 
 ## Domain Model
 
@@ -78,13 +85,35 @@ The API can be viewed at `https://localhost:5001/scalar` when running locally.
 ### Run Tests
 
 ```bash
-# Run all tests
+# Run all backend tests
 dotnet test
 
 # individual suites
 dotnet test BespokedBikes.Tests.Unit
 dotnet test BespokedBikes.Tests.Integration
 ```
+
+### Run the Frontend
+
+The React frontend is located in `apps/web` and provides a basic UI for creating sales.
+
+```bash
+cd apps/web
+npm install
+npm run dev
+```
+
+The frontend will start on `http://localhost:5173` (or another port if 5173 is in use).
+
+**Note:** The backend API must be running for the frontend to function properly. See [apps/web/BACKEND_STATUS.md](apps/web/BACKEND_STATUS.md) for current backend implementation status.
+
+```bash
+# Run frontend tests
+cd apps/web
+npm test
+```
+
+For more details, see the [Frontend README](apps/web/README.md).
 
 ## Design Decisions
 
