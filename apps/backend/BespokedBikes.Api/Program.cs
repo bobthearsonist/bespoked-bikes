@@ -1,9 +1,9 @@
 using BespokedBikes.Application.Features.Employees;
-using BespokedBikes.Infrastructure.Data;
+using BespokedBikes.Infrastructure;
+using BespokedBikes.Infrastructure.Data.Factories;
 using BespokedBikes.Infrastructure.Features.Employees;
 using BespokedBikes.Infrastructure.Migrations;
 using FluentMigrator.Runner;
-using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,27 +13,22 @@ builder.Logging.ClearProviders()
     .AddConsole()
     .AddDebug();
 
-// SQLite in-memory connection string
-var connectionString = "DataSource=:memory:";
+// Create in-memory SQLite factory for development/demo
+var dbFactory = new InMemorySqliteDbContextFactory();
 
-// Add DbContext with SQLite
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
-
-// Add FluentMigrator services for SQLite
-builder.Services.AddFluentMigratorCore()
-    .ConfigureRunner(rb => rb
+// Add infrastructure services with the factory and configure migrations
+builder.Services.AddInfrastructure(
+    dbFactory,
+    rb => rb
         .AddSQLite()
-        .WithGlobalConnectionString(connectionString)
-        .ScanIn(typeof(InitialCreate).Assembly).For.Migrations())
-    .AddLogging(lb => lb.AddFluentMigratorConsole());
+        .WithGlobalConnectionString(dbFactory.ConnectionString)
+        .ScanIn(typeof(InitialCreate).Assembly).For.Migrations());
 
 // Add application services
 builder.Services.AddScoped<IEmployeeRoleService, FlagBasedEmployeeRoleService>();
 
-// Add services
-builder.Services
-    .AddControllers();
+// Add API services
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 builder.Services.AddCors(options =>
@@ -46,12 +41,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Run FluentMigrator migrations for SQLite
-using (var scope = app.Services.CreateScope())
-{
-    var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
-    runner.MigrateUp();
-}
+// Run database migrations
+app.Services.RunMigrations();
 
 // Map Scalar endpoints only in development
 if (app.Environment.IsDevelopment())

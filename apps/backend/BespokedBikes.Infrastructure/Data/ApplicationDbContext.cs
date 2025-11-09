@@ -1,12 +1,10 @@
+using BespokedBikes.Application.Common.Interfaces;
 using BespokedBikes.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BespokedBikes.Infrastructure.Data;
 
-/// <summary>
-/// Application database context
-/// </summary>
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options), IApplicationDbContext
 {
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Employee> Employees => Set<Employee>();
