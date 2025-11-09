@@ -200,6 +200,7 @@ OpenAPI specification defines the API contract, and Scalar provides a modern, be
 - instrumentation with opentelemetry, console exporter for now
 - authorization that utilizes employee role for access
 - identityserver for auth if we have time
+- ODATA for querying if we have time
 
 ### design docs
 

@@ -2,7 +2,7 @@
 
 ### Phase 0: API Contract & Code Generation
 
-- [ ] 0. NSwag Setup & Code Generation (Controllers & DTOs auto-generated)
+- [x] 0. NSwag Setup & Code Generation (Controllers & DTOs auto-generated)
 
 **🎯 CONTRACT COMPLETE: API surface generated from OpenAPI spec**
 
@@ -10,8 +10,8 @@
 
 ### Phase 1: MVP - Core Sale Creation Flow ⭐
 
-- [ ] 1. Database Setup & Configuration
-- [ ] 2. Product Management (Repository & Service - minimal)
+- [x] 1. Database Setup & Configuration
+- [x] 2. Product Management (Repository & Service - minimal)
 - [ ] 3. Employee Management (Repository & Service - minimal)
 - [ ] 4. Customer Management (Repository & Service - minimal)
 - [ ] 5. Inventory Management (Check/Deduct logic only)

@@ -1,40 +1,39 @@
+using BespokedBikes.Application.Features.Employees;
 using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Generated;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BespokedBikes.Api.Controllers;
 
+//TODO this pattern kind of sucks. i would like to have individual controllers files.
+
 /// <summary>
 /// Implementation of IController interface that delegates to feature services.
 /// </summary>
-public class BespokedBikesControllerImplementation : IController
+public class BespokedBikesControllerImplementation(
+    IProductService productService,
+    IEmployeeService employeeService)
+    : IController
 {
-    private readonly IProductService _productService;
-
-    public BespokedBikesControllerImplementation(IProductService productService)
-    {
-        _productService = productService;
-    }
-
     // Product endpoints
     public async Task<ProductDto> CreateProductAsync(ProductDto body)
     {
-        return await _productService.CreateProductAsync(body);
+        return await productService.CreateProductAsync(body);
     }
 
     public async Task<ICollection<ProductDto>> ListProductsAsync()
     {
-        return await _productService.ListProductsAsync();
+        return await productService.ListProductsAsync();
     }
 
     public async Task<ProductDto> GetProductByIdAsync(Guid id)
     {
-        return await _productService.GetProductAsync(id);
+        return await productService.GetProductAsync(id);
     }
 
     public async Task<ProductDto> UpdateProductAsync(Guid id, ProductDto body)
     {
-        return await _productService.UpdateProductAsync(id, body);
+        return await productService.UpdateProductAsync(id, body);
     }
 
     public Task<InventoryDto> UpdateProductInventoryAsync(Guid id, InventoryUpdateDto body)
@@ -64,24 +63,32 @@ public class BespokedBikesControllerImplementation : IController
     }
 
     // Employee endpoints
-    public Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto body)
+    public async Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto body)
     {
-        throw new NotImplementedException("Employee management not yet implemented");
+        return await employeeService.CreateEmployeeAsync(body);
     }
 
-    public Task<ICollection<EmployeeDto>> ListEmployeesAsync(Location? location, EmployeeRole? role)
+    public async Task<ICollection<EmployeeDto>> ListEmployeesAsync(Location? location, EmployeeRole? role)
     {
-        throw new NotImplementedException("Employee management not yet implemented");
+        // For MVP, ignore filters and return all employees
+        // TODO use ODATA for filtering, sorting, paging etc.
+        var employees = await employeeService.ListEmployeesAsync();
+        return employees.ToList();
     }
 
-    public Task<EmployeeDto> GetEmployeeByIdAsync(Guid id)
+    public async Task<EmployeeDto> GetEmployeeByIdAsync(Guid id)
     {
-        throw new NotImplementedException("Employee management not yet implemented");
+        var employee = await employeeService.GetEmployeeByIdAsync(id);
+        if (employee == null)
+        {
+            throw new KeyNotFoundException($"Employee with ID {id} not found");
+        }
+        return employee;
     }
 
     public Task<EmployeeDto> UpdateEmployeeAsync(Guid id, EmployeeDto body)
     {
-        throw new NotImplementedException("Employee management not yet implemented");
+        throw new NotImplementedException("Employee update not yet implemented");
     }
 
     // Sales endpoints

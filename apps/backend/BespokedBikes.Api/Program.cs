@@ -31,12 +31,17 @@ builder.Services.AddInfrastructure(
         .WithGlobalConnectionString(dbFactory.ConnectionString)
         .ScanIn(typeof(InitialCreate).Assembly).For.Migrations());
 
-// Add application services
-builder.Services.AddScoped<IEmployeeRoleService, FlagBasedEmployeeRoleService>();
+//TODO move to extension methods to keep this cleaner and easier to read
+//TODO after that we could even look at using source-generated DI with attributes and Microsoft.Extensions.DependencyInjection.SourceGeneration so we dont have to declare them here at all (sounds alot like autofac))
 
 // Add Product services
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+
+// Add Employee services
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IEmployeeRoleService, FlagBasedEmployeeRoleService>();
 
 // Add AutoMapper with assembly scanning and global type converters
 builder.Services.AddAutoMapper(config =>
