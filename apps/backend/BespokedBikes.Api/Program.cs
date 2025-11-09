@@ -1,4 +1,6 @@
+using BespokedBikes.Application.Features.Employees;
 using BespokedBikes.Infrastructure.Data;
+using BespokedBikes.Infrastructure.Features.Employees;
 using BespokedBikes.Infrastructure.Migrations;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
@@ -11,21 +13,23 @@ builder.Logging.ClearProviders()
     .AddConsole()
     .AddDebug();
 
-// Get connection string
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// SQLite in-memory connection string
+var connectionString = "DataSource=:memory:";
 
-// Add DbContext
+// Add DbContext with SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseSqlite(connectionString));
 
-// Add FluentMigrator services
+// Add FluentMigrator services for SQLite
 builder.Services.AddFluentMigratorCore()
     .ConfigureRunner(rb => rb
-        .AddPostgres()
+        .AddSQLite()
         .WithGlobalConnectionString(connectionString)
         .ScanIn(typeof(InitialCreate).Assembly).For.Migrations())
     .AddLogging(lb => lb.AddFluentMigratorConsole());
+
+// Add application services
+builder.Services.AddScoped<IEmployeeRoleService, FlagBasedEmployeeRoleService>();
 
 // Add services
 builder.Services
@@ -42,7 +46,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Run migrations
+// Run FluentMigrator migrations for SQLite
 using (var scope = app.Services.CreateScope())
 {
     var runner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();

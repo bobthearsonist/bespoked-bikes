@@ -20,7 +20,7 @@ public class InitialCreate : Migration
             .WithColumn("Id").AsGuid().PrimaryKey()
             .WithColumn("Name").AsString(200).NotNullable()
             .WithColumn("Location").AsInt32().NotNullable()
-            .WithColumn("Roles").AsCustom("integer[]").NotNullable()
+            .WithColumn("Roles").AsInt32().NotNullable()
             .WithColumn("HireDate").AsDateTime().NotNullable()
             .WithColumn("TerminationDate").AsDateTime().Nullable()
             .WithColumn("CreatedAt").AsDateTime().NotNullable()

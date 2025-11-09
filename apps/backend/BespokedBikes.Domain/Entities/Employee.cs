@@ -7,7 +7,7 @@ public class Employee
     public Guid Id { get; set; }
     public required string Name { get; set; }
     public Location Location { get; set; }
-    public required List<EmployeeRole> Roles { get; set; } = new();
+    public EmployeeRole Roles { get; set; }
     public DateTime HireDate { get; set; }
     public DateTime? TerminationDate { get; set; }
     public DateTime CreatedAt { get; set; }
