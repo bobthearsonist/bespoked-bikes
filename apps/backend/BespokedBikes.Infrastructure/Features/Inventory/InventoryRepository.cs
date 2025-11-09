@@ -8,18 +8,11 @@ namespace BespokedBikes.Infrastructure.Features.Inventory;
 /// <summary>
 /// Repository implementation for Inventory entity using EF Core
 /// </summary>
-public class InventoryRepository : IInventoryRepository
+public class InventoryRepository(IApplicationDbContext context) : IInventoryRepository
 {
-    private readonly IApplicationDbContext _context;
-
-    public InventoryRepository(IApplicationDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<Domain.Entities.Inventory?> GetByProductAndLocationAsync(Guid productId, Location location, CancellationToken cancellationToken = default)
     {
-        return await _context.Inventories
+        return await context.Inventories
             .FirstOrDefaultAsync(i => i.ProductId == productId && i.Location == location, cancellationToken);
     }
 
@@ -29,8 +22,8 @@ public class InventoryRepository : IInventoryRepository
         inventory.CreatedAt = DateTime.UtcNow;
         inventory.UpdatedAt = DateTime.UtcNow;
 
-        _context.Inventories.Add(inventory);
-        await _context.SaveChangesAsync(cancellationToken);
+        context.Inventories.Add(inventory);
+        await context.SaveChangesAsync(cancellationToken);
 
         return inventory;
     }
@@ -39,15 +32,15 @@ public class InventoryRepository : IInventoryRepository
     {
         inventory.UpdatedAt = DateTime.UtcNow;
 
-        _context.Inventories.Update(inventory);
-        await _context.SaveChangesAsync(cancellationToken);
+        context.Inventories.Update(inventory);
+        await context.SaveChangesAsync(cancellationToken);
 
         return inventory;
     }
 
     public async Task<IEnumerable<Domain.Entities.Inventory>> GetByProductIdAsync(Guid productId, CancellationToken cancellationToken = default)
     {
-        return await _context.Inventories
+        return await context.Inventories
             .Where(i => i.ProductId == productId)
             .ToListAsync(cancellationToken);
     }
