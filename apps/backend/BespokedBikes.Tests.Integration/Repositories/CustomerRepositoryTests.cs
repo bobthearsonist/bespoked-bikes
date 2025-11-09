@@ -45,45 +45,38 @@ public class CustomerRepositoryTests
     }
 
     [SetUp]
-    public void Setup()
-    {
+    public void Setup() =>
         // Create a new scope for each test
         _scope = _serviceProvider!.CreateScope();
-    }
 
     [TearDown]
-    public async Task TearDown()
-    {
-        // Clean up data after each test to ensure isolation
-        if (_scope != null)
-        {
-            var context = DbContext as ApplicationDbContext;
-            if (context != null)
-            {
-                // Remove all data from tables
-                context.Sales.RemoveRange(context.Sales);
-                context.Products.RemoveRange(context.Products);
-                context.Customers.RemoveRange(context.Customers);
-                context.Employees.RemoveRange(context.Employees);
-                await context.SaveChangesAsync();
-            }
+  public async Task TearDown()
+  {
+      // Clean up data after each test to ensure isolation
+      if (_scope == null) return;
 
-            _scope.Dispose();
-        }
-    }
+      if (DbContext is not ApplicationDbContext context)
+      {
+          _scope.Dispose();
+          return;
+      }
+
+      // Remove all data from tables
+      context.Sales.RemoveRange(context.Sales);
+      context.Products.RemoveRange(context.Products);
+      context.Customers.RemoveRange(context.Customers);
+      context.Employees.RemoveRange(context.Employees);
+      await context.SaveChangesAsync();
+
+      _scope.Dispose();
+  }
 
     [OneTimeTearDown]
     public async Task OneTimeTearDown()
     {
-        if (_serviceProvider is IDisposable disposable)
-        {
-            disposable.Dispose();
-        }
+        if (_serviceProvider is IDisposable disposable) disposable.Dispose();
 
-        if (_factory != null)
-        {
-            await _factory.DisposeAsync();
-        }
+        if (_factory != null) await _factory.DisposeAsync();
     }
     [Test]
     public async Task CanCreateAndRetrieveCustomer()

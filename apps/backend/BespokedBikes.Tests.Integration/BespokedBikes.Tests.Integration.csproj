@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,13 +16,27 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="FluentAssertions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NSwag.MSBuild" Version="14.13.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NUnit" Version="4.4.0" />
     <PackageReference Include="NUnit.Analyzers" Version="4.11.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
+    <PackageReference Include="Refit" Version="8.0.0" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
+    <PackageReference Include="Refitter.SourceGenerator" Version="1.6.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Testcontainers.PostgreSql" Version="4.8.1" />
   </ItemGroup>
 
@@ -29,7 +45,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include=".refitter" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BespokedBikes.Api\BespokedBikes.Api.csproj" />
   </ItemGroup>
+
+  <Target Name="BuildApiBeforeTests" BeforeTargets="Build">
+    <MSBuild Projects="..\BespokedBikes.Api\BespokedBikes.Api.csproj" Targets="Build" />
+  </Target>
+
+  <Target Name="PullTestContainerImages" BeforeTargets="Build">
+    <Exec Command="docker pull postgres:17-alpine" IgnoreExitCode="true" ContinueOnError="true" />
+  </Target>
+
+  <Target Name="NSwag" BeforeTargets="CoreCompile">
+    <Exec WorkingDirectory="$(ProjectDir)" Command="$(NSwagExe_Net90) run nswag.json" />
+  </Target>
 
 </Project>
