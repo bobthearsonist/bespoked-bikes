@@ -1,5 +1,6 @@
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
+using BespokedBikes.Application.Features.Inventory;
 using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Generated;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,8 @@ namespace BespokedBikes.Api.Controllers;
 public class BespokedBikesControllerImplementation(
     IProductService productService,
     IEmployeeService employeeService,
-    ICustomerService customerService)
+    ICustomerService customerService,
+    IInventoryService inventoryService)
     : IController
 {
     // Product endpoints
@@ -38,9 +40,9 @@ public class BespokedBikesControllerImplementation(
         return await productService.UpdateProductAsync(id, body);
     }
 
-    public Task<InventoryDto> UpdateProductInventoryAsync(Guid id, InventoryUpdateDto body)
+    public async Task<InventoryDto> UpdateProductInventoryAsync(Guid id, InventoryUpdateDto body)
     {
-        throw new NotImplementedException("Inventory management not yet implemented");
+        return await inventoryService.UpdateProductInventoryAsync(id, body);
     }
 
     // Customer endpoints

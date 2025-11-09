@@ -1,7 +1,11 @@
+using BespokedBikes.Application.Generated;
+
 namespace BespokedBikes.Application.Features.Inventory;
 
+/// <summary>
+/// Service interface for Inventory business logic
+/// </summary>
 public interface IInventoryService
 {
-    // Service methods to be implemented
-    // updateInventory, getInventoryByLocation, checkAvailability
+    Task<InventoryDto> UpdateProductInventoryAsync(Guid productId, InventoryUpdateDto updateDto, CancellationToken cancellationToken = default);
 }
