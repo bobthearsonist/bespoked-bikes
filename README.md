@@ -40,6 +40,35 @@ dotnet test BespokedBikes.Tests.Unit
 dotnet test BespokedBikes.Tests.Integration
 ```
 
+## CI/CD Pipeline
+
+This project uses GitHub Actions for continuous integration and delivery.
+
+### Pipeline Overview
+
+The CI/CD pipeline runs on every pull request to `main` or `develop` branches and executes the following jobs in parallel:
+
+- **Backend Unit Tests**: Runs unit tests for the backend
+- **Backend Integration Tests**: Runs integration tests for the backend
+- **Frontend Unit Tests**: Placeholder for frontend unit tests (when frontend is added)
+- **Frontend Integration Tests**: Placeholder for frontend integration tests (when frontend is added)
+- **System Tests**: Runs after all component tests complete (currently stubbed for container setup)
+
+### Workflow Files
+
+- **`.github/workflows/pr-ci.yml`**: Main PR workflow that orchestrates all test jobs
+- **`.github/workflows/backend-test.yml`**: Reusable workflow for backend testing (reduces duplication)
+
+### Architecture
+
+The pipeline uses reusable workflows to avoid code duplication. The backend test workflow accepts a `test-type` parameter (unit or integration) and is called by the main PR workflow twice - once for each test type.
+
+### Future Enhancements
+
+- Frontend test jobs will be populated when the frontend is implemented
+- System tests will be expanded once Docker containers are set up
+- Additional jobs can be added for linting, code coverage, and deployment
+
 ## Development
 
 ### Generate Code from OpenAPI Spec
