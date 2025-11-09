@@ -3,6 +3,7 @@
 Demo project for bespoked-bikes.
 
 ## Links
+
 - [OpenAPI Specification](openapi.yaml)
 - [Github Repository](https://github.com/yourusername/bespoked-bikes)
 
@@ -163,18 +164,26 @@ OpenAPI specification defines the API contract, and Scalar provides a modern, be
 
 ### Next Steps
 
-- [ ] Implement entity classes with full properties
-- [ ] Implement DTOs with full properties
-- [ ] Generate controllers from OpenAPI spec (using code generator)
+- [x] Implement entity classes with full properties
+- [x] Implement DTOs with full properties
+- [x] Generate controllers from OpenAPI spec (using code generator)
 - [ ] Implement service business logic
-- [ ] Implement repository data access
-- [ ] Add EF Core migrations
+- [ ] Implement repository data access - [x] ~~Add EF Core migrations~~ Add fluentmigrator migrations
 - [ ] Add seed data for demonstration
 - [ ] Implement FluentValidation rules
-- [ ] Configure AutoMapper profiles
+- [x] Configure AutoMapper profiles
 - [ ] Add middleware for global exception handling
 - [ ] Docker containerization
 - [ ] CI/CD pipeline setup
+
+### punts
+
+- [ ] we shouldnt be using the dto in the service layer. we should be doing that mapping in the api layer. when you go back to fix this make sure to wind up with something using more annotations and less strict mapping classes, not less
+- [ ] we need to get to a real db asap
+- [ ] the middleware needs to be setup, your exposing stack traces on errors RN
+- [ ] TESTS!!!
+- [ ] ODATA for querying would be a quick win to add filtering/paging/sorting
+- [ ] Inventory update is kind of ugly. maybe use a JSON PATCH model.
 
 ### decisions
 
