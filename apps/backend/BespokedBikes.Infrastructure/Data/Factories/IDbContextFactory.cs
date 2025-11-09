@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace BespokedBikes.Infrastructure.Data.Factories;
@@ -9,4 +10,6 @@ public interface IDbContextFactory
     string ConnectionString { get; }
 
     bool RequiresPersistentConnection { get; }
+
+    DbConnection? GetPersistentConnection();
 }

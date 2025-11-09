@@ -3,6 +3,7 @@ using BespokedBikes.Infrastructure.Data;
 using BespokedBikes.Infrastructure.Data.Factories;
 using BespokedBikes.Infrastructure.Migrations;
 using FluentMigrator.Runner;
+using FluentMigrator.Runner.Processors.SQLite;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BespokedBikes.Infrastructure;
@@ -14,24 +15,21 @@ public static class DependencyInjection
         IDbContextFactory factory,
         Action<IMigrationRunnerBuilder>? configureMigrations = null)
     {
-        // Register the factory as a singleton
         services.AddSingleton(factory);
 
-        // Add DbContext with options from the factory
-        var options = factory.CreateOptions();
-        services.AddScoped<ApplicationDbContext>(provider => new ApplicationDbContext(options));
+        // Register persistent connection if required by the database provider
+        if (factory.GetPersistentConnection() is { } persistentConnection) services.AddSingleton(persistentConnection);
 
-        // Register interface for dependency injection
-        services.AddScoped<IApplicationDbContext>(provider =>
-            provider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<ApplicationDbContext>(_ => new ApplicationDbContext(factory.CreateOptions()));
+        services.AddScoped<IApplicationDbContext>(
+            provider => provider.GetRequiredService<ApplicationDbContext>());
 
         // Add FluentMigrator services if migrations are configured
-        if (configureMigrations != null)
-        {
-            services.AddFluentMigratorCore()
-                .ConfigureRunner(configureMigrations)
-                .AddLogging(lb => lb.AddFluentMigratorConsole());
-        }
+        if (configureMigrations == null) return services;
+
+        services.AddFluentMigratorCore()
+            .ConfigureRunner(configureMigrations)
+            .AddLogging(lb => lb.AddFluentMigratorConsole());
 
         return services;
     }
