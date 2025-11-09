@@ -1,6 +1,90 @@
+using AutoMapper;
+using BespokedBikes.Application.Features.Customers;
+using BespokedBikes.Application.Features.Employees;
+using BespokedBikes.Application.Features.Products;
+using BespokedBikes.Application.Generated;
+using BespokedBikes.Domain.Entities;
+using BespokedBikes.Domain.Enums;
+
 namespace BespokedBikes.Application.Features.Sales;
 
-public class SalesService : ISalesService
+/// <summary>
+/// Service implementation for Sales business logic
+/// </summary>
+public class SalesService(
+    ISaleRepository saleRepository,
+    IProductRepository productRepository,
+    ICustomerRepository customerRepository,
+    IEmployeeRepository employeeRepository,
+    IMapper mapper)
+    : ISalesService
 {
-    // Implementation to be added
+    public async Task<SaleDto> CreateSaleAsync(CreateSaleDto createSaleDto, CancellationToken cancellationToken = default)
+    {
+        // Validate customer exists
+        var customer = await customerRepository.GetByIdAsync(createSaleDto.CustomerId, cancellationToken);
+        if (customer == null)
+        {
+            throw new KeyNotFoundException($"Customer with ID {createSaleDto.CustomerId} not found");
+        }
+
+        // Validate employee exists
+        var employee = await employeeRepository.GetByIdAsync(createSaleDto.SoldByEmployeeId);
+        if (employee == null)
+        {
+            throw new KeyNotFoundException($"Employee with ID {createSaleDto.SoldByEmployeeId} not found");
+        }
+
+        // Validate product exists and get commission percentage
+        var product = await productRepository.GetByIdAsync(createSaleDto.ProductId, cancellationToken);
+        if (product == null)
+        {
+            throw new KeyNotFoundException($"Product with ID {createSaleDto.ProductId} not found");
+        }
+
+        // Parse sale price from string to decimal
+        var salePrice = decimal.Parse(createSaleDto.SalePrice, System.Globalization.CultureInfo.InvariantCulture);
+
+        // Calculate commission: salePrice * (commissionPercentage / 100)
+        var commissionAmount = salePrice * (product.CommissionPercentage / 100m);
+
+        // Convert DateTimeOffset to DateTime (UTC)
+        var saleDate = createSaleDto.SaleDate.UtcDateTime;
+
+        // Create sale entity
+        var sale = new Sale
+        {
+            CustomerId = createSaleDto.CustomerId,
+            SoldByEmployeeId = createSaleDto.SoldByEmployeeId,
+            ProductId = createSaleDto.ProductId,
+            SalePrice = salePrice,
+            CommissionAmount = commissionAmount,
+            SaleChannel = createSaleDto.SaleChannel ?? "Unknown",
+            Location = (Domain.Enums.Location)createSaleDto.Location,
+            SaleDate = saleDate,
+            Status = Domain.Enums.SaleStatus.Pending,
+            FulfilledByEmployeeId = null,
+            FulfilledDate = null
+        };
+
+        // Save to database
+        sale = await saleRepository.CreateAsync(sale, cancellationToken);
+
+        // Map to DTO and return
+        return mapper.Map<SaleDto>(sale);
+    }
+
+    public async Task<SaleDto?> GetSaleByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var sale = await saleRepository.GetByIdAsync(id, cancellationToken);
+        return sale == null ? null : mapper.Map<SaleDto>(sale);
+    }
+
+    public async Task<IEnumerable<SaleDto>> GetSalesByDateRangeAsync(DateTimeOffset? startDate, DateTimeOffset? endDate, Generated.SaleStatus? status, CancellationToken cancellationToken = default)
+    {
+        // For MVP, filters are ignored and all sales are returned
+        // TODO: Implement proper filtering with OData
+        var sales = await saleRepository.GetByDateRangeAsync(null, null, null, cancellationToken);
+        return mapper.Map<IEnumerable<SaleDto>>(sales);
+    }
 }

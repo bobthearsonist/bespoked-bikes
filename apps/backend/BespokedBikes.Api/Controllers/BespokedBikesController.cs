@@ -2,6 +2,7 @@ using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
 using BespokedBikes.Application.Features.Inventory;
 using BespokedBikes.Application.Features.Products;
+using BespokedBikes.Application.Features.Sales;
 using BespokedBikes.Application.Generated;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,8 @@ public class BespokedBikesControllerImplementation(
     IProductService productService,
     IEmployeeService employeeService,
     ICustomerService customerService,
-    IInventoryService inventoryService)
+    IInventoryService inventoryService,
+    ISalesService salesService)
     : IController
 {
     // Product endpoints
@@ -104,19 +106,27 @@ public class BespokedBikesControllerImplementation(
     }
 
     // Sales endpoints
-    public Task<SaleDto> CreateSaleAsync(CreateSaleDto body)
+    public async Task<SaleDto> CreateSaleAsync(CreateSaleDto body)
     {
-        throw new NotImplementedException("Sales management not yet implemented");
+        return await salesService.CreateSaleAsync(body);
     }
 
-    public Task<ICollection<SaleDto>> GetSalesByDateRangeAsync(DateTimeOffset? startDate, DateTimeOffset? endDate, SaleStatus? status)
+    public async Task<ICollection<SaleDto>> GetSalesByDateRangeAsync(DateTimeOffset? startDate, DateTimeOffset? endDate, SaleStatus? status)
     {
-        throw new NotImplementedException("Sales management not yet implemented");
+        // For MVP, ignore filters and return all sales
+        // TODO: Implement proper filtering with OData
+        var sales = await salesService.GetSalesByDateRangeAsync(startDate, endDate, status);
+        return sales.ToList();
     }
 
-    public Task<SaleDto> GetSaleByIdAsync(Guid id)
+    public async Task<SaleDto> GetSaleByIdAsync(Guid id)
     {
-        throw new NotImplementedException("Sales management not yet implemented");
+        var sale = await salesService.GetSaleByIdAsync(id);
+        if (sale == null)
+        {
+            throw new KeyNotFoundException($"Sale with ID {id} not found");
+        }
+        return sale;
     }
 
     // Reporting endpoints

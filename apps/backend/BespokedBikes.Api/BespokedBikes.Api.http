@@ -375,3 +375,172 @@ Content-Type: application/json
 }
 
 ###
+
+# ============================================
+# Sales Management Endpoints
+# ============================================
+
+### Create a sale
+POST {{BespokedBikes.Api_HostAddress}}/api/sales
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "soldByEmployeeId": "{{employeeId}}",
+  "productId": "{{productId}}",
+  "salePrice": "899.99",
+  "saleChannel": "In-Store",
+  "location": "STORE",
+  "saleDate": "2024-01-15T10:30:00Z"
+}
+
+### Get sale by ID (replace with actual ID from create response)
+@saleId = replace-with-actual-id
+GET {{BespokedBikes.Api_HostAddress}}/api/sales/{{saleId}}
+Accept: application/json
+
+### Get sales by date range (all sales)
+GET {{BespokedBikes.Api_HostAddress}}/api/sales?startDate=2024-01-01T00:00:00Z&endDate=2024-12-31T23:59:59Z
+Accept: application/json
+
+### Get sales by date range with status filter (pending only)
+GET {{BespokedBikes.Api_HostAddress}}/api/sales?startDate=2024-01-01T00:00:00Z&endDate=2024-12-31T23:59:59Z&status=Pending
+Accept: application/json
+
+### Get sales by date range with status filter (fulfilled only)
+GET {{BespokedBikes.Api_HostAddress}}/api/sales?startDate=2024-01-01T00:00:00Z&endDate=2024-12-31T23:59:59Z&status=Fulfilled
+Accept: application/json
+
+# ============================================
+# Sales Workflow Example
+# ============================================
+
+### Step 1: Create a product for sale
+POST {{BespokedBikes.Api_HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "productType": "Bike",
+  "name": "City Commuter Bike",
+  "description": "Perfect for urban commuting",
+  "supplier": "UrbanCycles",
+  "costPrice": "400.00",
+  "retailPrice": "799.99",
+  "commissionPercentage": "12.00"
+}
+
+### Step 2: Create a customer
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Sarah Johnson"
+}
+
+### Step 3: Create an employee (salesperson)
+POST {{BespokedBikes.Api_HostAddress}}/api/employees
+Content-Type: application/json
+
+{
+  "name": "Mike Sales",
+  "location": "STORE",
+  "roles": ["Salesperson"],
+  "hireDate": "2023-06-01T00:00:00Z"
+}
+
+### Step 4: Create a sale (use IDs from previous responses)
+@salesProductId = replace-with-product-id-from-step-1
+@salesCustomerId = replace-with-customer-id-from-step-2
+@salesEmployeeId = replace-with-employee-id-from-step-3
+
+POST {{BespokedBikes.Api_HostAddress}}/api/sales
+Content-Type: application/json
+
+{
+  "customerId": "{{salesCustomerId}}",
+  "soldByEmployeeId": "{{salesEmployeeId}}",
+  "productId": "{{salesProductId}}",
+  "salePrice": "799.99",
+  "saleChannel": "In-Store",
+  "location": "STORE",
+  "saleDate": "2024-01-15T14:30:00Z"
+}
+
+### Step 5: Get the sale to verify commission calculation
+@workflowSaleId = replace-with-sale-id-from-step-4
+GET {{BespokedBikes.Api_HostAddress}}/api/sales/{{workflowSaleId}}
+Accept: application/json
+
+### Step 6: Get all sales for the date range
+GET {{BespokedBikes.Api_HostAddress}}/api/sales?startDate=2024-01-01T00:00:00Z&endDate=2024-12-31T23:59:59Z
+Accept: application/json
+
+# ============================================
+# Sales Validation Tests
+# ============================================
+
+### Test: Create sale with non-existent customer (should return 404)
+POST {{BespokedBikes.Api_HostAddress}}/api/sales
+Content-Type: application/json
+
+{
+  "customerId": "00000000-0000-0000-0000-000000000000",
+  "soldByEmployeeId": "{{employeeId}}",
+  "productId": "{{productId}}",
+  "salePrice": "799.99",
+  "saleChannel": "In-Store",
+  "location": "STORE",
+  "saleDate": "2024-01-15T10:30:00Z"
+}
+
+### Test: Create sale with non-existent employee (should return 404)
+POST {{BespokedBikes.Api_HostAddress}}/api/sales
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "soldByEmployeeId": "00000000-0000-0000-0000-000000000000",
+  "productId": "{{productId}}",
+  "salePrice": "799.99",
+  "saleChannel": "In-Store",
+  "location": "STORE",
+  "saleDate": "2024-01-15T10:30:00Z"
+}
+
+### Test: Create sale with non-existent product (should return 404)
+POST {{BespokedBikes.Api_HostAddress}}/api/sales
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "soldByEmployeeId": "{{employeeId}}",
+  "productId": "00000000-0000-0000-0000-000000000000",
+  "salePrice": "799.99",
+  "saleChannel": "In-Store",
+  "location": "STORE",
+  "saleDate": "2024-01-15T10:30:00Z"
+}
+
+### Test: Create sale with invalid price format (should fail validation)
+POST {{BespokedBikes.Api_HostAddress}}/api/sales
+Content-Type: application/json
+
+{
+  "customerId": "{{customerId}}",
+  "soldByEmployeeId": "{{employeeId}}",
+  "productId": "{{productId}}",
+  "salePrice": "799.9",
+  "saleChannel": "In-Store",
+  "location": "STORE",
+  "saleDate": "2024-01-15T10:30:00Z"
+}
+
+### Test: Create sale with missing required fields (should fail validation)
+POST {{BespokedBikes.Api_HostAddress}}/api/sales
+Content-Type: application/json
+
+{
+  "salePrice": "799.99"
+}
+
+###
