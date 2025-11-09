@@ -1,0 +1,35 @@
+name: Backend Test
+
+on:
+  workflow_call:
+    inputs:
+      test-type:
+        description: 'Type of test to run (unit or integration)'
+        required: true
+        type: string
+
+jobs:
+  test:
+    name: Backend ${{ inputs.test-type }} Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      
+      - name: Restore dependencies
+        working-directory: apps/backend
+        run: dotnet restore
+      
+      - name: Build
+        working-directory: apps/backend
+        run: dotnet build --no-restore
+      
+      - name: Run ${{ inputs.test-type }} tests
+        working-directory: apps/backend
+        run: dotnet test BespokedBikes.Tests.${{ inputs.test-type == 'unit' && 'Unit' || 'Integration' }} --no-build --verbosity normal
