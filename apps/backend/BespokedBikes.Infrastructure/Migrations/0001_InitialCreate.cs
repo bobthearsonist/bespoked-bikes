@@ -21,8 +21,6 @@ public class InitialCreate : Migration
             .WithColumn("Name").AsString(200).NotNullable()
             .WithColumn("Location").AsInt32().NotNullable()
             .WithColumn("Roles").AsInt32().NotNullable()
-            .WithColumn("HireDate").AsDateTime().NotNullable()
-            .WithColumn("TerminationDate").AsDateTime().Nullable()
             .WithColumn("CreatedAt").AsDateTime().NotNullable()
             .WithColumn("UpdatedAt").AsDateTime().NotNullable();
 

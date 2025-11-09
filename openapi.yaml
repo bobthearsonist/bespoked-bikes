@@ -577,18 +577,11 @@ components:
           items:
             $ref: '#/components/schemas/EmployeeRole'
           minItems: 1
-        hireDate:
-          type: string
-          format: date-time
-        terminationDate:
-          type: string
-          format: date-time
-          nullable: true
       required:
         - name
         - location
         - roles
-        - hireDate
+      additionalProperties: false
 
     ProductDto:
       type: object
