@@ -12,6 +12,8 @@ jobs:
   test:
     name: Backend ${{ inputs.test-type }} Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code

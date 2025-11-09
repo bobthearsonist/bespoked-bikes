@@ -10,12 +10,16 @@ jobs:
   # Backend tests run in parallel
   backend-unit-tests:
     name: Backend Unit Tests
+    permissions:
+      contents: read
     uses: ./.github/workflows/backend-test.yml
     with:
       test-type: unit
   
   backend-integration-tests:
     name: Backend Integration Tests
+    permissions:
+      contents: read
     uses: ./.github/workflows/backend-test.yml
     with:
       test-type: integration
@@ -24,6 +28,7 @@ jobs:
   frontend-unit-tests:
     name: Frontend Unit Tests
     runs-on: ubuntu-latest
+    permissions: {}
     steps:
       - name: Placeholder
         run: |
@@ -33,6 +38,7 @@ jobs:
   frontend-integration-tests:
     name: Frontend Integration Tests
     runs-on: ubuntu-latest
+    permissions: {}
     steps:
       - name: Placeholder
         run: |
@@ -43,6 +49,7 @@ jobs:
   system-tests:
     name: System Tests
     runs-on: ubuntu-latest
+    permissions: {}
     needs: 
       - backend-unit-tests
       - backend-integration-tests
