@@ -6,6 +6,13 @@
 
 #nullable enable
 
+using System.CodeDom.Compiler;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
 #pragma warning disable 472 // Disable "CS0472 The result of the expression is always 'false' since a value of type 'Int32' is never equal to 'null' of type 'Int32?'
@@ -24,18 +31,18 @@
 
 namespace BespokedBikes.Application.Generated
 {
-    using System = global::System;
+    using System = System;
 
-    
+
 
     /// <summary>
     /// Store location (expandable to multiple locations in future)
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum Location
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"STORE")]
+        [EnumMember(Value = @"STORE")]
         STORE = 0,
 
     }
@@ -43,14 +50,14 @@ namespace BespokedBikes.Application.Generated
     /// <summary>
     /// Sale status - PENDING (awaiting fulfillment) or FULFILLED (completed)
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum SaleStatus
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"PENDING")]
+        [EnumMember(Value = @"PENDING")]
         PENDING = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"FULFILLED")]
+        [EnumMember(Value = @"FULFILLED")]
         FULFILLED = 1,
 
     }
@@ -58,432 +65,432 @@ namespace BespokedBikes.Application.Generated
     /// <summary>
     /// Employee roles - employees can have multiple roles
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum EmployeeRole
     {
 
-        [System.Runtime.Serialization.EnumMember(Value = @"SALESPERSON")]
+        [EnumMember(Value = @"SALESPERSON")]
         SALESPERSON = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"FULFILLMENT")]
+        [EnumMember(Value = @"FULFILLMENT")]
         FULFILLMENT = 1,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"ADMIN")]
+        [EnumMember(Value = @"ADMIN")]
         ADMIN = 2,
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CustomerDto
     {
 
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Id { get; set; } = default!;
+        [JsonProperty("id", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(200, MinimumLength = 1)]
+        [JsonProperty("name", Required = Required.Always)]
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
         public string Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("email", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Email { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("phone", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("phone", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Phone { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("address", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Address { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("city", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("city", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? City { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("state", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("state", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? State { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("postalCode", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("postalCode", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? PostalCode { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("createdAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreatedAt { get; set; } = default!;
+        [JsonProperty("createdAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset CreatedAt { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("updatedAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset UpdatedAt { get; set; } = default!;
+        [JsonProperty("updatedAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset UpdatedAt { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class EmployeeDto
     {
 
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Id { get; set; } = default!;
+        [JsonProperty("id", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(200, MinimumLength = 1)]
+        [JsonProperty("name", Required = Required.Always)]
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
         public string Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("location", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Location Location { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("roles", Required = Newtonsoft.Json.Required.Always, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.ICollection<EmployeeRole> Roles { get; set; } = new System.Collections.ObjectModel.Collection<EmployeeRole>();
+        [JsonProperty("roles", Required = Required.Always, ItemConverterType = typeof(StringEnumConverter))]
+        [Required]
+        [MinLength(1)]
+        public ICollection<EmployeeRole> Roles { get; set; } = new Collection<EmployeeRole>();
 
-        [Newtonsoft.Json.JsonProperty("hireDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset HireDate { get; set; } = default!;
+        [JsonProperty("hireDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset HireDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("terminationDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? TerminationDate { get; set; } = default!;
+        [JsonProperty("terminationDate", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? TerminationDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("createdAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreatedAt { get; set; } = default!;
+        [JsonProperty("createdAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset CreatedAt { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("updatedAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset UpdatedAt { get; set; } = default!;
+        [JsonProperty("updatedAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset UpdatedAt { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ProductDto
     {
 
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Id { get; set; } = default!;
+        [JsonProperty("id", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("productType", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(100, MinimumLength = 1)]
+        [JsonProperty("productType", Required = Required.Always)]
+        [Required]
+        [StringLength(100, MinimumLength = 1)]
         public string ProductType { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        [System.ComponentModel.DataAnnotations.StringLength(200, MinimumLength = 1)]
+        [JsonProperty("name", Required = Required.Always)]
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
         public string Name { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("description", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Description { get; set; } = default!;
 
         /// <summary>
         /// Supplier name (will become supplier_id FK in future)
         /// </summary>
-        [Newtonsoft.Json.JsonProperty("supplier", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("supplier", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? Supplier { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("costPrice", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
+        [JsonProperty("costPrice", Required = Required.Always)]
+        [Range(0D, double.MaxValue)]
         public double CostPrice { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("retailPrice", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
+        [JsonProperty("retailPrice", Required = Required.Always)]
+        [Range(0D, double.MaxValue)]
         public double RetailPrice { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("commissionPercentage", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0D, 100D)]
+        [JsonProperty("commissionPercentage", Required = Required.Always)]
+        [Range(0D, 100D)]
         public double CommissionPercentage { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("createdAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreatedAt { get; set; } = default!;
+        [JsonProperty("createdAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset CreatedAt { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("updatedAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset UpdatedAt { get; set; } = default!;
+        [JsonProperty("updatedAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset UpdatedAt { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class InventoryDto
     {
 
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Id { get; set; } = default!;
+        [JsonProperty("id", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("productId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid ProductId { get; set; } = default!;
+        [JsonProperty("productId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid ProductId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("location", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Location Location { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("quantity", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        [JsonProperty("quantity", Required = Required.Always)]
+        [Range(0, int.MaxValue)]
         public int Quantity { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("createdAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreatedAt { get; set; } = default!;
+        [JsonProperty("createdAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset CreatedAt { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("updatedAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset UpdatedAt { get; set; } = default!;
+        [JsonProperty("updatedAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset UpdatedAt { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class InventoryUpdateDto
     {
 
-        [Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("location", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Location Location { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("quantity", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        [JsonProperty("quantity", Required = Required.Always)]
+        [Range(0, int.MaxValue)]
         public int Quantity { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateSaleDto
     {
 
-        [Newtonsoft.Json.JsonProperty("customerId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid CustomerId { get; set; } = default!;
+        [JsonProperty("customerId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid CustomerId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("soldByEmployeeId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid SoldByEmployeeId { get; set; } = default!;
+        [JsonProperty("soldByEmployeeId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid SoldByEmployeeId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("productId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid ProductId { get; set; } = default!;
+        [JsonProperty("productId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid ProductId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("salePrice", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
+        [JsonProperty("salePrice", Required = Required.Always)]
+        [Range(0D, double.MaxValue)]
         public double SalePrice { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("saleChannel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("saleChannel", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? SaleChannel { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("location", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Location Location { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("saleDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset SaleDate { get; set; } = default!;
+        [JsonProperty("saleDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset SaleDate { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SaleDto
     {
 
-        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid Id { get; set; } = default!;
+        [JsonProperty("id", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public Guid Id { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("customerId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid CustomerId { get; set; } = default!;
+        [JsonProperty("customerId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid CustomerId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("soldByEmployeeId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid SoldByEmployeeId { get; set; } = default!;
+        [JsonProperty("soldByEmployeeId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid SoldByEmployeeId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("fulfilledByEmployeeId", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Guid? FulfilledByEmployeeId { get; set; } = default!;
+        [JsonProperty("fulfilledByEmployeeId", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public Guid? FulfilledByEmployeeId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("productId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid ProductId { get; set; } = default!;
+        [JsonProperty("productId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid ProductId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("status", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public SaleStatus Status { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("salePrice", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("salePrice", Required = Required.Always)]
         public double SalePrice { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("commissionAmount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("commissionAmount", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
         public double CommissionAmount { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("saleChannel", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("saleChannel", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public string? SaleChannel { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("location", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [JsonProperty("location", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Location Location { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("saleDate", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset SaleDate { get; set; } = default!;
+        [JsonProperty("saleDate", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset SaleDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("fulfilledDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? FulfilledDate { get; set; } = default!;
+        [JsonProperty("fulfilledDate", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset? FulfilledDate { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("createdAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreatedAt { get; set; } = default!;
+        [JsonProperty("createdAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset CreatedAt { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("updatedAt", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset UpdatedAt { get; set; } = default!;
+        [JsonProperty("updatedAt", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public DateTimeOffset UpdatedAt { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class QuarterlyCommissionReportDto
     {
 
-        [Newtonsoft.Json.JsonProperty("year", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("year", Required = Required.Always)]
         public int Year { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("quarter", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(1, 4)]
+        [JsonProperty("quarter", Required = Required.Always)]
+        [Range(1, 4)]
         public int Quarter { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("employees", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.ICollection<EmployeeCommissionDto> Employees { get; set; } = new System.Collections.ObjectModel.Collection<EmployeeCommissionDto>();
+        [JsonProperty("employees", Required = Required.Always)]
+        [Required]
+        public ICollection<EmployeeCommissionDto> Employees { get; set; } = new Collection<EmployeeCommissionDto>();
 
-        [Newtonsoft.Json.JsonProperty("totalCommissions", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("totalCommissions", Required = Required.Always)]
         public double TotalCommissions { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("totalSales", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("totalSales", Required = Required.Always)]
         public double TotalSales { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("salesCount", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("salesCount", Required = Required.Always)]
         public int SalesCount { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class EmployeeCommissionDto
     {
 
-        [Newtonsoft.Json.JsonProperty("employeeId", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.Guid EmployeeId { get; set; } = default!;
+        [JsonProperty("employeeId", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public Guid EmployeeId { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("employeeName", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [JsonProperty("employeeName", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
         public string EmployeeName { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("totalCommission", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("totalCommission", Required = Required.Always)]
         public double TotalCommission { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("totalSales", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("totalSales", Required = Required.Always)]
         public double TotalSales { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("salesCount", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("salesCount", Required = Required.Always)]
         public int SalesCount { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NJsonSchema", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ErrorResponse
     {
 
-        [Newtonsoft.Json.JsonProperty("statusCode", Required = Newtonsoft.Json.Required.Always)]
+        [JsonProperty("statusCode", Required = Required.Always)]
         public int StatusCode { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [JsonProperty("message", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
         public string Message { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<string> Errors { get; set; } = default!;
+        [JsonProperty("errors", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
+        public ICollection<string> Errors { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("timestamp", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTimeOffset Timestamp { get; set; } = default!;
+        [JsonProperty("timestamp", Required = Required.Always)]
+        [Required(AllowEmptyStrings = true)]
+        public DateTimeOffset Timestamp { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("path", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [JsonProperty("path", Required = Required.DisallowNull, NullValueHandling = NullValueHandling.Ignore)]
         public string Path { get; set; } = default!;
 
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+        private IDictionary<string, object>? _additionalProperties;
 
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
         {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
 
@@ -491,16 +498,16 @@ namespace BespokedBikes.Application.Generated
 
 
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ApiException : System.Exception
+    [GeneratedCode("NSwag", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApiException : Exception
     {
         public int StatusCode { get; private set; }
 
         public string? Response { get; private set; }
 
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
+        public IReadOnlyDictionary<string, IEnumerable<string>> Headers { get; private set; }
 
-        public ApiException(string message, int statusCode, string? response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception? innerException)
+        public ApiException(string message, int statusCode, string? response, IReadOnlyDictionary<string, IEnumerable<string>> headers, Exception? innerException)
             : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
         {
             StatusCode = statusCode;
@@ -514,12 +521,12 @@ namespace BespokedBikes.Application.Generated
         }
     }
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [GeneratedCode("NSwag", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ApiException<TResult> : ApiException
     {
         public TResult Result { get; private set; }
 
-        public ApiException(string message, int statusCode, string? response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception? innerException)
+        public ApiException(string message, int statusCode, string? response, IReadOnlyDictionary<string, IEnumerable<string>> headers, TResult result, Exception? innerException)
             : base(message, statusCode, response, headers, innerException)
         {
             Result = result;

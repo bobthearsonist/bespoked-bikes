@@ -1,8 +1,15 @@
-namespace BespokedBikes.Domain.Entities;
-
 using BespokedBikes.Domain.Enums;
+
+namespace BespokedBikes.Domain.Entities;
 
 public class Employee
 {
-    // Id, Name, Location (enum), Roles (EmployeeRole[]), HireDate, TerminationDate, CreatedAt, UpdatedAt
+    public Guid Id { get; set; }
+    public required string Name { get; set; }
+    public Location Location { get; set; }
+    public required List<EmployeeRole> Roles { get; set; } = new();
+    public DateTime HireDate { get; set; }
+    public DateTime? TerminationDate { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }

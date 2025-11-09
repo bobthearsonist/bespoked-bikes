@@ -1,17 +1,11 @@
 using BespokedBikes.Application.Features.Customers;
-using BespokedBikes.Domain.Entities;
 using BespokedBikes.Infrastructure.Data;
 
 namespace BespokedBikes.Infrastructure.Features.Customers;
 
-public class CustomerRepository : ICustomerRepository
+public class CustomerRepository(ApplicationDbContext context) : ICustomerRepository
 {
-    private readonly ApplicationDbContext _context;
-
-    public CustomerRepository(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ApplicationDbContext _context = context;
 
     // Implementation to be added
 }
