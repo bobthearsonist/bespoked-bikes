@@ -1,12 +1,10 @@
-// ReSharper disable once CheckNamespace
 namespace BespokedBikes.Application.Generated;
 
+/// <summary>
+/// Partial class to extend the generated SaleDto
+/// </summary>
 public partial class SaleDto
 {
-    // Add any custom properties or methods here
-}
-
-public partial class CreateSaleDto
-{
-    // Add any custom properties or methods here
+    // No additional properties or methods needed
+    // DTOs are generated from OpenAPI spec
 }
