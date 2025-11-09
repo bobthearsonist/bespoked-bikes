@@ -537,25 +537,6 @@ components:
           type: string
           minLength: 1
           maxLength: 200
-        email:
-          type: string
-          format: email
-          nullable: true
-        phone:
-          type: string
-          nullable: true
-        address:
-          type: string
-          nullable: true
-        city:
-          type: string
-          nullable: true
-        state:
-          type: string
-          nullable: true
-        postalCode:
-          type: string
-          nullable: true
       required:
         - name
       additionalProperties: false

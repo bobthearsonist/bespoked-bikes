@@ -1,7 +1,7 @@
-// ReSharper disable once CheckNamespace
 namespace BespokedBikes.Application.Generated;
 
-public partial class CustomerDto
-{
-    // Add any custom properties or methods here
-}
+/// <summary>
+/// Partial class to extend the generated CustomerDto
+/// Mapping is configured via CustomerMappingProfile
+/// </summary>
+public partial class CustomerDto;

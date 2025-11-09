@@ -105,3 +105,147 @@ GET {{BespokedBikes.Api_HostAddress}}/api/employees/{{employeeId}}
 Accept: application/json
 
 ###
+
+# ============================================
+# Customer Endpoints (Simplified)
+# ============================================
+
+### Search/List all customers (searchTerm parameter not implemented - returns all)
+GET {{BespokedBikes.Api_HostAddress}}/api/customers
+Accept: application/json
+
+### Create a new customer
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Alice Anderson"
+}
+
+### Create another customer
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Bob Builder"
+}
+
+### Create customer with longer name
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Christopher Michael Davidson-Wellington III"
+}
+
+### Get customer by ID (replace with actual ID from create response)
+@customerId = replace-with-actual-id
+GET {{BespokedBikes.Api_HostAddress}}/api/customers/{{customerId}}
+Accept: application/json
+
+### Update a customer (replace with actual ID)
+PUT {{BespokedBikes.Api_HostAddress}}/api/customers/{{customerId}}
+Content-Type: application/json
+
+{
+  "name": "Alice Anderson-Smith"
+}
+
+### Delete a customer (replace with actual ID)
+DELETE {{BespokedBikes.Api_HostAddress}}/api/customers/{{customerId}}
+
+# ============================================
+# Customer Validation Tests
+# ============================================
+
+### Test: Create customer with empty name (should fail validation)
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": ""
+}
+
+### Test: Create customer with name too long (should fail if > 200 chars)
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "This is a very long name that exceeds the maximum length allowed for customer names in the system and should trigger a validation error because it is longer than two hundred characters which is the maximum allowed length for this field"
+}
+
+### Test: Create customer with missing name field (should fail validation)
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+}
+
+### Test: Create customer with null name (should fail validation)
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": null
+}
+
+### Test: Get customer with non-existent ID (should return 404)
+GET {{BespokedBikes.Api_HostAddress}}/api/customers/00000000-0000-0000-0000-000000000000
+Accept: application/json
+
+### Test: Get customer with invalid GUID format (should return 400)
+GET {{BespokedBikes.Api_HostAddress}}/api/customers/invalid-guid
+Accept: application/json
+
+### Test: Update customer with empty name (should fail validation)
+PUT {{BespokedBikes.Api_HostAddress}}/api/customers/{{customerId}}
+Content-Type: application/json
+
+{
+  "name": ""
+}
+
+### Test: Delete non-existent customer (should return 404)
+DELETE {{BespokedBikes.Api_HostAddress}}/api/customers/00000000-0000-0000-0000-000000000000
+
+# ============================================
+# Customer Workflow Example
+# ============================================
+
+### Step 1: Create a customer and note the ID from response
+POST {{BespokedBikes.Api_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "name": "Test Customer for Workflow"
+}
+
+### Step 2: List all customers to verify creation
+GET {{BespokedBikes.Api_HostAddress}}/api/customers
+Accept: application/json
+
+### Step 3: Get the specific customer by ID (use ID from step 1)
+@workflowCustomerId = replace-with-id-from-step-1
+GET {{BespokedBikes.Api_HostAddress}}/api/customers/{{workflowCustomerId}}
+Accept: application/json
+
+### Step 4: Update the customer name
+PUT {{BespokedBikes.Api_HostAddress}}/api/customers/{{workflowCustomerId}}
+Content-Type: application/json
+
+{
+  "name": "Updated Workflow Customer"
+}
+
+### Step 5: Verify the update
+GET {{BespokedBikes.Api_HostAddress}}/api/customers/{{workflowCustomerId}}
+Accept: application/json
+
+### Step 6: Delete the customer
+DELETE {{BespokedBikes.Api_HostAddress}}/api/customers/{{workflowCustomerId}}
+
+### Step 7: Verify deletion (should return 404)
+GET {{BespokedBikes.Api_HostAddress}}/api/customers/{{workflowCustomerId}}
+Accept: application/json
+
+###

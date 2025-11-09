@@ -1,3 +1,4 @@
+using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
 using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Generated;
@@ -12,7 +13,8 @@ namespace BespokedBikes.Api.Controllers;
 /// </summary>
 public class BespokedBikesControllerImplementation(
     IProductService productService,
-    IEmployeeService employeeService)
+    IEmployeeService employeeService,
+    ICustomerService customerService)
     : IController
 {
     // Product endpoints
@@ -42,24 +44,32 @@ public class BespokedBikesControllerImplementation(
     }
 
     // Customer endpoints
-    public Task<CustomerDto> CreateCustomerAsync(CustomerDto body)
+    public async Task<CustomerDto> CreateCustomerAsync(CustomerDto body)
     {
-        throw new NotImplementedException("Customer management not yet implemented");
+        return await customerService.CreateCustomerAsync(body);
     }
 
-    public Task<ICollection<CustomerDto>> SearchCustomersAsync(string? searchTerm)
+    public async Task<ICollection<CustomerDto>> SearchCustomersAsync(string? searchTerm)
     {
-        throw new NotImplementedException("Customer management not yet implemented");
+        // For MVP, ignore searchTerm and return all customers
+        // Search functionality punted for simplification
+        var customers = await customerService.GetAllCustomersAsync();
+        return customers.ToList();
     }
 
-    public Task<CustomerDto> GetCustomerByIdAsync(Guid id)
+    public async Task<CustomerDto> GetCustomerByIdAsync(Guid id)
     {
-        throw new NotImplementedException("Customer management not yet implemented");
+        var customer = await customerService.GetCustomerByIdAsync(id);
+        if (customer == null)
+        {
+            throw new KeyNotFoundException($"Customer with ID {id} not found");
+        }
+        return customer;
     }
 
-    public Task<CustomerDto> UpdateCustomerAsync(Guid id, CustomerDto body)
+    public async Task<CustomerDto> UpdateCustomerAsync(Guid id, CustomerDto body)
     {
-        throw new NotImplementedException("Customer management not yet implemented");
+        return await customerService.UpdateCustomerAsync(id, body);
     }
 
     // Employee endpoints
