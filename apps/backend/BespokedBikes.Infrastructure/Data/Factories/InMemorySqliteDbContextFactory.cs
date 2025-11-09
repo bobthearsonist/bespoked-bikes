@@ -18,7 +18,8 @@ public class InMemorySqliteDbContextFactory : IDbContextFactory, IDisposable
 
     public InMemorySqliteDbContextFactory()
     {
-        ConnectionString = "DataSource=:memory:";
+        // Use shared cache mode to allow multiple connections to access the same in-memory database
+        ConnectionString = "DataSource=:memory:;Mode=Memory;Cache=Shared";
         _connection = new SqliteConnection(ConnectionString);
         _connection.Open(); // Keep connection open for in-memory database lifetime
     }
@@ -30,7 +31,7 @@ public class InMemorySqliteDbContextFactory : IDbContextFactory, IDisposable
         return optionsBuilder.Options;
     }
 
-    public SqliteConnection GetConnection() => _connection;
+    public System.Data.Common.DbConnection? GetPersistentConnection() => _connection;
 
     public void Dispose()
     {

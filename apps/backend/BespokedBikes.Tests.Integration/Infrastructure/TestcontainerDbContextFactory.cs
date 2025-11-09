@@ -52,6 +52,8 @@ public class TestcontainerDbContextFactory : IDbContextFactory, IAsyncDisposable
         return optionsBuilder.Options;
     }
 
+    public System.Data.Common.DbConnection? GetPersistentConnection() => null;
+
     public async ValueTask DisposeAsync()
     {
         await _container.DisposeAsync();
