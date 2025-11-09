@@ -1,5 +1,6 @@
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
+using BespokedBikes.Application.Features.Inventory;
 using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Generated;
 using BespokedBikes.Infrastructure;
@@ -7,6 +8,7 @@ using BespokedBikes.Infrastructure.Data;
 using BespokedBikes.Infrastructure.Data.Factories;
 using BespokedBikes.Infrastructure.Features.Customers;
 using BespokedBikes.Infrastructure.Features.Employees;
+using BespokedBikes.Infrastructure.Features.Inventory;
 using BespokedBikes.Infrastructure.Features.Products;
 using BespokedBikes.Infrastructure.Migrations;
 using FluentMigrator.Runner;
@@ -43,6 +45,10 @@ builder.Services.AddScoped<IProductService, ProductService>();
 // Add Customer services
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+// Add Inventory services
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+builder.Services.AddScoped<IInventoryService, InventoryService>();
 
 // Add Employee services
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();

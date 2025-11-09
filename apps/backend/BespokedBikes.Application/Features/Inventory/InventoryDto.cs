@@ -1,9 +1,10 @@
-namespace BespokedBikes.Application.Features.Inventory;
+namespace BespokedBikes.Application.Generated;
 
-public class InventoryDto
+/// <summary>
+/// Partial class to extend the generated InventoryDto
+/// </summary>
+public partial class InventoryDto
 {
-}
-
-public class InventoryUpdateDto
-{
+    // No additional properties or methods needed
+    // DTOs are generated from OpenAPI spec
 }

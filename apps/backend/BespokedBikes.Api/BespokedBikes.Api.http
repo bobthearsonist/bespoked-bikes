@@ -249,3 +249,129 @@ GET {{BespokedBikes.Api_HostAddress}}/api/customers/{{workflowCustomerId}}
 Accept: application/json
 
 ###
+
+# ============================================
+# Inventory Management Endpoints
+# ============================================
+
+### Update product inventory (creates if doesn't exist, updates if exists)
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": 50
+}
+
+### Update inventory to different quantity
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": 35
+}
+
+### Set inventory to zero (out of stock)
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": 0
+}
+
+### Restock inventory
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": 100
+}
+
+# ============================================
+# Inventory Workflow Example
+# ============================================
+
+### Step 1: Create a product for inventory testing
+POST {{BespokedBikes.Api_HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "productType": "Bike",
+  "name": "Test Bike for Inventory",
+  "description": "Used for testing inventory management",
+  "supplier": "TestSupplier",
+  "costPrice": "300.00",
+  "retailPrice": "599.99",
+  "commissionPercentage": "10.00"
+}
+
+### Step 2: Set initial inventory (use product ID from step 1)
+@inventoryProductId = replace-with-id-from-step-1
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{inventoryProductId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": 25
+}
+
+### Step 3: Simulate a sale - reduce inventory
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{inventoryProductId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": 24
+}
+
+### Step 4: Simulate receiving shipment - increase inventory
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{inventoryProductId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": 74
+}
+
+# ============================================
+# Inventory Validation Tests
+# ============================================
+
+### Test: Update inventory with negative quantity (should fail validation)
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": -5
+}
+
+### Test: Update inventory for non-existent product (should return 404)
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/00000000-0000-0000-0000-000000000000/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE",
+  "quantity": 10
+}
+
+### Test: Update inventory with missing location (should fail validation)
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}/inventory
+Content-Type: application/json
+
+{
+  "quantity": 10
+}
+
+### Test: Update inventory with missing quantity (should fail validation)
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}/inventory
+Content-Type: application/json
+
+{
+  "location": "STORE"
+}
+
+###
