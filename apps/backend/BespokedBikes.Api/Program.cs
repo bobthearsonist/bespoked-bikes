@@ -1,5 +1,6 @@
 using BespokedBikes.Application.Features.Employees;
 using BespokedBikes.Application.Features.Products;
+using BespokedBikes.Application.Generated;
 using BespokedBikes.Infrastructure;
 using BespokedBikes.Infrastructure.Data;
 using BespokedBikes.Infrastructure.Data.Factories;
@@ -37,10 +38,18 @@ builder.Services.AddScoped<IEmployeeRoleService, FlagBasedEmployeeRoleService>()
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
-// Add AutoMapper
+// Add AutoMapper with assembly scanning and global type converters
 builder.Services.AddAutoMapper(config =>
 {
-    config.AddProfile<ProductMappingProfile>();
+    // Configure global decimal <-> string converters for monetary values
+    // This works for our current spec, it could be done a handful of other ways if there were conflicts
+    config.CreateMap<decimal, string>()
+        .ConvertUsing(d => d.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+    config.CreateMap<string, decimal>()
+        .ConvertUsing(s => decimal.Parse(s, System.Globalization.CultureInfo.InvariantCulture));
+
+    // Scan assemblies for [AutoMap] attributes
+    config.AddMaps(typeof(ProductDto).Assembly);
 });
 
 // Register controller implementation
