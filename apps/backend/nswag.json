@@ -11,6 +11,8 @@
       "operationGenerationMode": "SingleClientFromOperationId",
       "namespace": "BespokedBikes.Api.Controllers",
       "generateDtoTypes": false,
+      "dtoNamespace": "BespokedBikes.Application.Generated",
+      "additionalNamespaceUsages": ["BespokedBikes.Application.Generated"],
       "generateNullableReferenceTypes": true,
       "generateDataAnnotations": true,
       "output": "BespokedBikes.Api/Controllers/GeneratedControllerBase.cs"

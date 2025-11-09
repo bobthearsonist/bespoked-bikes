@@ -1,5 +1,7 @@
-namespace BespokedBikes.Application.Features.Employees;
+// ReSharper disable once CheckNamespace
+namespace BespokedBikes.Application.Generated;
 
-public class EmployeeDto
+public partial class EmployeeDto
 {
+    // Add any custom properties or methods here
 }

@@ -629,18 +629,20 @@ components:
           description: Supplier name (will become supplier_id FK in future)
           nullable: true
         costPrice:
-          type: number
-          format: double
-          minimum: 0
+          type: string
+          pattern: '^\d+\.\d{2}$'
+          example: "99.99"
+          description: Cost price in decimal format (e.g., "99.99")
         retailPrice:
-          type: number
-          format: double
-          minimum: 0
+          type: string
+          pattern: '^\d+\.\d{2}$'
+          example: "199.99"
+          description: Retail price in decimal format (e.g., "199.99")
         commissionPercentage:
-          type: number
-          format: double
-          minimum: 0
-          maximum: 100
+          type: string
+          pattern: '^\d+\.\d{2}$'
+          example: "5.50"
+          description: Commission percentage in decimal format (e.g., "5.50")
         createdAt:
           type: string
           format: date-time
@@ -709,9 +711,10 @@ components:
           type: string
           format: uuid
         salePrice:
-          type: number
-          format: double
-          minimum: 0
+          type: string
+          pattern: '^\d+\.\d{2}$'
+          example: "149.99"
+          description: Sale price in decimal format (e.g., "149.99")
         saleChannel:
           type: string
           nullable: true
@@ -751,11 +754,15 @@ components:
         status:
           $ref: '#/components/schemas/SaleStatus'
         salePrice:
-          type: number
-          format: double
+          type: string
+          pattern: '^\d+\.\d{2}$'
+          example: "149.99"
+          description: Sale price in decimal format (e.g., "149.99")
         commissionAmount:
-          type: number
-          format: double
+          type: string
+          pattern: '^\d+\.\d{2}$'
+          example: "7.50"
+          description: Commission amount in decimal format (e.g., "7.50")
           readOnly: true
         saleChannel:
           type: string

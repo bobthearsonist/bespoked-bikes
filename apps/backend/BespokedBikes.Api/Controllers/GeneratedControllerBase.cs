@@ -6,9 +6,7 @@
 
 #nullable enable
 
-using System.CodeDom.Compiler;
 using BespokedBikes.Application.Generated;
-using Microsoft.AspNetCore.Mvc;
 
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
@@ -28,9 +26,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BespokedBikes.Api.Controllers
 {
-    using System = System;
+    using System = global::System;
 
-    [GeneratedCode("NSwag", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public interface IController
     {
 
@@ -41,7 +39,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Customer created successfully</returns>
 
-        Task<CustomerDto> CreateCustomerAsync(CustomerDto body);
+        System.Threading.Tasks.Task<CustomerDto> CreateCustomerAsync(CustomerDto body);
 
         /// <summary>
         /// Search customers
@@ -50,7 +48,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>List of customers</returns>
 
-        Task<ICollection<CustomerDto>> SearchCustomersAsync(string? searchTerm);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CustomerDto>> SearchCustomersAsync(string? searchTerm);
 
         /// <summary>
         /// Get customer by ID
@@ -59,7 +57,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Customer details</returns>
 
-        Task<CustomerDto> GetCustomerByIdAsync(Guid id);
+        System.Threading.Tasks.Task<CustomerDto> GetCustomerByIdAsync(System.Guid id);
 
         /// <summary>
         /// Update customer
@@ -68,7 +66,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Customer updated successfully</returns>
 
-        Task<CustomerDto> UpdateCustomerAsync(Guid id, CustomerDto body);
+        System.Threading.Tasks.Task<CustomerDto> UpdateCustomerAsync(System.Guid id, CustomerDto body);
 
         /// <summary>
         /// Create a new employee
@@ -77,7 +75,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Employee created successfully</returns>
 
-        Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto body);
+        System.Threading.Tasks.Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto body);
 
         /// <summary>
         /// List employees
@@ -86,7 +84,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>List of employees</returns>
 
-        Task<ICollection<EmployeeDto>> ListEmployeesAsync(Location? location, EmployeeRole? role);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<EmployeeDto>> ListEmployeesAsync(Location? location, EmployeeRole? role);
 
         /// <summary>
         /// Get employee by ID
@@ -95,7 +93,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Employee details</returns>
 
-        Task<EmployeeDto> GetEmployeeByIdAsync(Guid id);
+        System.Threading.Tasks.Task<EmployeeDto> GetEmployeeByIdAsync(System.Guid id);
 
         /// <summary>
         /// Update employee
@@ -104,7 +102,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Employee updated successfully</returns>
 
-        Task<EmployeeDto> UpdateEmployeeAsync(Guid id, EmployeeDto body);
+        System.Threading.Tasks.Task<EmployeeDto> UpdateEmployeeAsync(System.Guid id, EmployeeDto body);
 
         /// <summary>
         /// Create a new product
@@ -113,7 +111,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Product created successfully</returns>
 
-        Task<ProductDto> CreateProductAsync(ProductDto body);
+        System.Threading.Tasks.Task<ProductDto> CreateProductAsync(ProductDto body);
 
         /// <summary>
         /// List products
@@ -121,7 +119,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>List of products</returns>
 
-        Task<ICollection<ProductDto>> ListProductsAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProductDto>> ListProductsAsync();
 
         /// <summary>
         /// Get product by ID
@@ -130,7 +128,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Product details</returns>
 
-        Task<ProductDto> GetProductByIdAsync(Guid id);
+        System.Threading.Tasks.Task<ProductDto> GetProductByIdAsync(System.Guid id);
 
         /// <summary>
         /// Update product
@@ -139,7 +137,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Product updated successfully</returns>
 
-        Task<ProductDto> UpdateProductAsync(Guid id, ProductDto body);
+        System.Threading.Tasks.Task<ProductDto> UpdateProductAsync(System.Guid id, ProductDto body);
 
         /// <summary>
         /// Update product inventory
@@ -148,7 +146,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Inventory updated successfully</returns>
 
-        Task<InventoryDto> UpdateProductInventoryAsync(Guid id, InventoryUpdateDto body);
+        System.Threading.Tasks.Task<InventoryDto> UpdateProductInventoryAsync(System.Guid id, InventoryUpdateDto body);
 
         /// <summary>
         /// Create a new sale
@@ -157,7 +155,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Sale created successfully</returns>
 
-        Task<SaleDto> CreateSaleAsync(CreateSaleDto body);
+        System.Threading.Tasks.Task<SaleDto> CreateSaleAsync(CreateSaleDto body);
 
         /// <summary>
         /// Get sales by date range
@@ -167,7 +165,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>List of sales</returns>
 
-        Task<ICollection<SaleDto>> GetSalesByDateRangeAsync(DateTimeOffset? startDate, DateTimeOffset? endDate, SaleStatus? status);
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SaleDto>> GetSalesByDateRangeAsync(System.DateTimeOffset? startDate, System.DateTimeOffset? endDate, SaleStatus? status);
 
         /// <summary>
         /// Get sale by ID
@@ -176,7 +174,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Sale details</returns>
 
-        Task<SaleDto> GetSaleByIdAsync(Guid id);
+        System.Threading.Tasks.Task<SaleDto> GetSaleByIdAsync(System.Guid id);
 
         /// <summary>
         /// Get quarterly commission report
@@ -185,7 +183,7 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Quarterly commission report</returns>
 
-        Task<QuarterlyCommissionReportDto> GetQuarterlyCommissionsAsync(int year, int quarter);
+        System.Threading.Tasks.Task<QuarterlyCommissionReportDto> GetQuarterlyCommissionsAsync(int year, int quarter);
 
         /// <summary>
         /// Get employee quarterly commission report
@@ -195,13 +193,13 @@ namespace BespokedBikes.Api.Controllers
 
         /// <returns>Employee quarterly commission report</returns>
 
-        Task<EmployeeCommissionDto> GetEmployeeQuarterlyCommissionsAsync(Guid id, int year, int quarter);
+        System.Threading.Tasks.Task<EmployeeCommissionDto> GetEmployeeQuarterlyCommissionsAsync(System.Guid id, int year, int quarter);
 
     }
 
-    [GeneratedCode("NSwag", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.6.2.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))")]
 
-    public partial class Controller : ControllerBase
+    public partial class Controller : Microsoft.AspNetCore.Mvc.ControllerBase
     {
         private IController _implementation;
 
@@ -214,8 +212,8 @@ namespace BespokedBikes.Api.Controllers
         /// Create a new customer
         /// </summary>
         /// <returns>Customer created successfully</returns>
-        [HttpPost, Route("api/customers")]
-        public Task<CustomerDto> CreateCustomer([FromBody] CustomerDto body)
+        [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("api/customers")]
+        public System.Threading.Tasks.Task<CustomerDto> CreateCustomer([Microsoft.AspNetCore.Mvc.FromBody] CustomerDto body)
         {
 
             return _implementation.CreateCustomerAsync(body);
@@ -225,8 +223,8 @@ namespace BespokedBikes.Api.Controllers
         /// Search customers
         /// </summary>
         /// <returns>List of customers</returns>
-        [HttpGet, Route("api/customers")]
-        public Task<ICollection<CustomerDto>> SearchCustomers([FromQuery] string? searchTerm)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/customers")]
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<CustomerDto>> SearchCustomers([Microsoft.AspNetCore.Mvc.FromQuery] string? searchTerm)
         {
 
             return _implementation.SearchCustomersAsync(searchTerm);
@@ -236,8 +234,8 @@ namespace BespokedBikes.Api.Controllers
         /// Get customer by ID
         /// </summary>
         /// <returns>Customer details</returns>
-        [HttpGet, Route("api/customers/{id}")]
-        public Task<CustomerDto> GetCustomerById(Guid id)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/customers/{id}")]
+        public System.Threading.Tasks.Task<CustomerDto> GetCustomerById(System.Guid id)
         {
 
             return _implementation.GetCustomerByIdAsync(id);
@@ -247,8 +245,8 @@ namespace BespokedBikes.Api.Controllers
         /// Update customer
         /// </summary>
         /// <returns>Customer updated successfully</returns>
-        [HttpPut, Route("api/customers/{id}")]
-        public Task<CustomerDto> UpdateCustomer(Guid id, [FromBody] CustomerDto body)
+        [Microsoft.AspNetCore.Mvc.HttpPut, Microsoft.AspNetCore.Mvc.Route("api/customers/{id}")]
+        public System.Threading.Tasks.Task<CustomerDto> UpdateCustomer(System.Guid id, [Microsoft.AspNetCore.Mvc.FromBody] CustomerDto body)
         {
 
             return _implementation.UpdateCustomerAsync(id, body);
@@ -258,8 +256,8 @@ namespace BespokedBikes.Api.Controllers
         /// Create a new employee
         /// </summary>
         /// <returns>Employee created successfully</returns>
-        [HttpPost, Route("api/employees")]
-        public Task<EmployeeDto> CreateEmployee([FromBody] EmployeeDto body)
+        [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("api/employees")]
+        public System.Threading.Tasks.Task<EmployeeDto> CreateEmployee([Microsoft.AspNetCore.Mvc.FromBody] EmployeeDto body)
         {
 
             return _implementation.CreateEmployeeAsync(body);
@@ -269,8 +267,8 @@ namespace BespokedBikes.Api.Controllers
         /// List employees
         /// </summary>
         /// <returns>List of employees</returns>
-        [HttpGet, Route("api/employees")]
-        public Task<ICollection<EmployeeDto>> ListEmployees([FromQuery] Location? location, [FromQuery] EmployeeRole? role)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/employees")]
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<EmployeeDto>> ListEmployees([Microsoft.AspNetCore.Mvc.FromQuery] Location? location, [Microsoft.AspNetCore.Mvc.FromQuery] EmployeeRole? role)
         {
 
             return _implementation.ListEmployeesAsync(location, role);
@@ -280,8 +278,8 @@ namespace BespokedBikes.Api.Controllers
         /// Get employee by ID
         /// </summary>
         /// <returns>Employee details</returns>
-        [HttpGet, Route("api/employees/{id}")]
-        public Task<EmployeeDto> GetEmployeeById(Guid id)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/employees/{id}")]
+        public System.Threading.Tasks.Task<EmployeeDto> GetEmployeeById(System.Guid id)
         {
 
             return _implementation.GetEmployeeByIdAsync(id);
@@ -291,8 +289,8 @@ namespace BespokedBikes.Api.Controllers
         /// Update employee
         /// </summary>
         /// <returns>Employee updated successfully</returns>
-        [HttpPut, Route("api/employees/{id}")]
-        public Task<EmployeeDto> UpdateEmployee(Guid id, [FromBody] EmployeeDto body)
+        [Microsoft.AspNetCore.Mvc.HttpPut, Microsoft.AspNetCore.Mvc.Route("api/employees/{id}")]
+        public System.Threading.Tasks.Task<EmployeeDto> UpdateEmployee(System.Guid id, [Microsoft.AspNetCore.Mvc.FromBody] EmployeeDto body)
         {
 
             return _implementation.UpdateEmployeeAsync(id, body);
@@ -302,8 +300,8 @@ namespace BespokedBikes.Api.Controllers
         /// Create a new product
         /// </summary>
         /// <returns>Product created successfully</returns>
-        [HttpPost, Route("api/products")]
-        public Task<ProductDto> CreateProduct([FromBody] ProductDto body)
+        [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("api/products")]
+        public System.Threading.Tasks.Task<ProductDto> CreateProduct([Microsoft.AspNetCore.Mvc.FromBody] ProductDto body)
         {
 
             return _implementation.CreateProductAsync(body);
@@ -313,8 +311,8 @@ namespace BespokedBikes.Api.Controllers
         /// List products
         /// </summary>
         /// <returns>List of products</returns>
-        [HttpGet, Route("api/products")]
-        public Task<ICollection<ProductDto>> ListProducts()
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/products")]
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<ProductDto>> ListProducts()
         {
 
             return _implementation.ListProductsAsync();
@@ -324,8 +322,8 @@ namespace BespokedBikes.Api.Controllers
         /// Get product by ID
         /// </summary>
         /// <returns>Product details</returns>
-        [HttpGet, Route("api/products/{id}")]
-        public Task<ProductDto> GetProductById(Guid id)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/products/{id}")]
+        public System.Threading.Tasks.Task<ProductDto> GetProductById(System.Guid id)
         {
 
             return _implementation.GetProductByIdAsync(id);
@@ -335,8 +333,8 @@ namespace BespokedBikes.Api.Controllers
         /// Update product
         /// </summary>
         /// <returns>Product updated successfully</returns>
-        [HttpPut, Route("api/products/{id}")]
-        public Task<ProductDto> UpdateProduct(Guid id, [FromBody] ProductDto body)
+        [Microsoft.AspNetCore.Mvc.HttpPut, Microsoft.AspNetCore.Mvc.Route("api/products/{id}")]
+        public System.Threading.Tasks.Task<ProductDto> UpdateProduct(System.Guid id, [Microsoft.AspNetCore.Mvc.FromBody] ProductDto body)
         {
 
             return _implementation.UpdateProductAsync(id, body);
@@ -346,8 +344,8 @@ namespace BespokedBikes.Api.Controllers
         /// Update product inventory
         /// </summary>
         /// <returns>Inventory updated successfully</returns>
-        [HttpPut, Route("api/products/{id}/inventory")]
-        public Task<InventoryDto> UpdateProductInventory(Guid id, [FromBody] InventoryUpdateDto body)
+        [Microsoft.AspNetCore.Mvc.HttpPut, Microsoft.AspNetCore.Mvc.Route("api/products/{id}/inventory")]
+        public System.Threading.Tasks.Task<InventoryDto> UpdateProductInventory(System.Guid id, [Microsoft.AspNetCore.Mvc.FromBody] InventoryUpdateDto body)
         {
 
             return _implementation.UpdateProductInventoryAsync(id, body);
@@ -357,8 +355,8 @@ namespace BespokedBikes.Api.Controllers
         /// Create a new sale
         /// </summary>
         /// <returns>Sale created successfully</returns>
-        [HttpPost, Route("api/sales")]
-        public Task<SaleDto> CreateSale([FromBody] CreateSaleDto body)
+        [Microsoft.AspNetCore.Mvc.HttpPost, Microsoft.AspNetCore.Mvc.Route("api/sales")]
+        public System.Threading.Tasks.Task<SaleDto> CreateSale([Microsoft.AspNetCore.Mvc.FromBody] CreateSaleDto body)
         {
 
             return _implementation.CreateSaleAsync(body);
@@ -368,8 +366,8 @@ namespace BespokedBikes.Api.Controllers
         /// Get sales by date range
         /// </summary>
         /// <returns>List of sales</returns>
-        [HttpGet, Route("api/sales")]
-        public Task<ICollection<SaleDto>> GetSalesByDateRange([FromQuery] DateTimeOffset? startDate, [FromQuery] DateTimeOffset? endDate, [FromQuery] SaleStatus? status)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/sales")]
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<SaleDto>> GetSalesByDateRange([Microsoft.AspNetCore.Mvc.FromQuery] System.DateTimeOffset? startDate, [Microsoft.AspNetCore.Mvc.FromQuery] System.DateTimeOffset? endDate, [Microsoft.AspNetCore.Mvc.FromQuery] SaleStatus? status)
         {
 
             return _implementation.GetSalesByDateRangeAsync(startDate, endDate, status);
@@ -379,8 +377,8 @@ namespace BespokedBikes.Api.Controllers
         /// Get sale by ID
         /// </summary>
         /// <returns>Sale details</returns>
-        [HttpGet, Route("api/sales/{id}")]
-        public Task<SaleDto> GetSaleById(Guid id)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/sales/{id}")]
+        public System.Threading.Tasks.Task<SaleDto> GetSaleById(System.Guid id)
         {
 
             return _implementation.GetSaleByIdAsync(id);
@@ -390,8 +388,8 @@ namespace BespokedBikes.Api.Controllers
         /// Get quarterly commission report
         /// </summary>
         /// <returns>Quarterly commission report</returns>
-        [HttpGet, Route("api/reports/commissions/quarterly")]
-        public Task<QuarterlyCommissionReportDto> GetQuarterlyCommissions([FromQuery] int year, [FromQuery] int quarter)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/reports/commissions/quarterly")]
+        public System.Threading.Tasks.Task<QuarterlyCommissionReportDto> GetQuarterlyCommissions([Microsoft.AspNetCore.Mvc.FromQuery] int year, [Microsoft.AspNetCore.Mvc.FromQuery] int quarter)
         {
 
             return _implementation.GetQuarterlyCommissionsAsync(year, quarter);
@@ -401,8 +399,8 @@ namespace BespokedBikes.Api.Controllers
         /// Get employee quarterly commission report
         /// </summary>
         /// <returns>Employee quarterly commission report</returns>
-        [HttpGet, Route("api/reports/commissions/employee/{id}/quarterly")]
-        public Task<EmployeeCommissionDto> GetEmployeeQuarterlyCommissions(Guid id, [FromQuery] int year, [FromQuery] int quarter)
+        [Microsoft.AspNetCore.Mvc.HttpGet, Microsoft.AspNetCore.Mvc.Route("api/reports/commissions/employee/{id}/quarterly")]
+        public System.Threading.Tasks.Task<EmployeeCommissionDto> GetEmployeeQuarterlyCommissions(System.Guid id, [Microsoft.AspNetCore.Mvc.FromQuery] int year, [Microsoft.AspNetCore.Mvc.FromQuery] int quarter)
         {
 
             return _implementation.GetEmployeeQuarterlyCommissionsAsync(id, year, quarter);
@@ -410,16 +408,16 @@ namespace BespokedBikes.Api.Controllers
 
     }
 
-    
+
 
 
 }
 
-#pragma warning restore  108
-#pragma warning restore  114
-#pragma warning restore  472
-#pragma warning restore  612
-#pragma warning restore  649
+#pragma warning restore 108
+#pragma warning restore 114
+#pragma warning restore 472
+#pragma warning restore 612
+#pragma warning restore 649
 #pragma warning restore 1573
 #pragma warning restore 1591
 #pragma warning restore 8073

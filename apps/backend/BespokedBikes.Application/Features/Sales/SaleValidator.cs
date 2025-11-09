@@ -1,3 +1,4 @@
+using BespokedBikes.Application.Generated;
 using FluentValidation;
 
 namespace BespokedBikes.Application.Features.Sales;
