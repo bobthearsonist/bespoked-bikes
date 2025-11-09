@@ -13,9 +13,5 @@ public class ProductMappingProfile : Profile
         CreateMap<string, decimal>().ConvertUsing(s => decimal.Parse(s, CultureInfo.InvariantCulture));
 
         CreateMap<Product, ProductDto>();
-
-        CreateMap<ProductDto, Product>()
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
     }
 }

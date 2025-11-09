@@ -556,14 +556,6 @@ components:
         postalCode:
           type: string
           nullable: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
       required:
         - name
 
@@ -592,14 +584,6 @@ components:
           type: string
           format: date-time
           nullable: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
       required:
         - name
         - location
@@ -643,14 +627,6 @@ components:
           pattern: '^\d+\.\d{2}$'
           example: "5.50"
           description: Commission percentage in decimal format (e.g., "5.50")
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
       required:
         - productType
         - name
@@ -673,14 +649,6 @@ components:
         quantity:
           type: integer
           minimum: 0
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
       required:
         - productId
         - location
@@ -776,14 +744,6 @@ components:
           type: string
           format: date-time
           nullable: true
-        createdAt:
-          type: string
-          format: date-time
-          readOnly: true
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
       required:
         - customerId
         - soldByEmployeeId
