@@ -1,5 +1,3 @@
-@BespokedBikes.Api_HostAddress = https://localhost:7150
-
 ### Get OpenAPI specification
 GET {{BespokedBikes.Api_HostAddress}}/openapi/v1.json
 Accept: application/json
@@ -57,5 +55,53 @@ Content-Type: application/json
   "retailPrice": "1499.99",
   "commissionPercentage": "12.50"
 }
+
+###
+
+# ============================================
+# Employee Endpoints
+# ============================================
+
+### List all employees
+GET {{BespokedBikes.Api_HostAddress}}/api/employees
+Accept: application/json
+
+### Create a new employee with multiple roles
+POST {{BespokedBikes.Api_HostAddress}}/api/employees
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "location": 0,
+  "roles": [0, 2],
+  "hireDate": "2024-01-15T00:00:00Z"
+}
+
+### Create employee - Salesperson only
+POST {{BespokedBikes.Api_HostAddress}}/api/employees
+Content-Type: application/json
+
+{
+  "name": "Jane Smith",
+  "location": 0,
+  "roles": [0],
+  "hireDate": "2024-02-01T00:00:00Z"
+}
+
+### Create employee - Fulfillment only
+POST {{BespokedBikes.Api_HostAddress}}/api/employees
+Content-Type: application/json
+
+{
+  "name": "Bob Johnson",
+  "location": 0,
+  "roles": [1],
+  "hireDate": "2024-03-15T00:00:00Z"
+}
+
+### Get employee by ID (replace with actual ID from create response)
+@employeeId = replace-with-actual-id
+GET {{BespokedBikes.Api_HostAddress}}/api/employees/{{employeeId}}
+Accept: application/json
 
 ###

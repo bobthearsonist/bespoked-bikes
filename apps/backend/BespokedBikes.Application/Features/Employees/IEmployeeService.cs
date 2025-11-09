@@ -1,7 +1,10 @@
+using BespokedBikes.Application.Generated;
+
 namespace BespokedBikes.Application.Features.Employees;
 
 public interface IEmployeeService
 {
-    // Service methods to be implemented
-    // createEmployee, getEmployeeById, updateEmployee, assignRole, removeRole, getEmployeesByRole, validateEmployeeCanSell, validateEmployeeCanFulfill
+    Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto employeeDto);
+    Task<EmployeeDto?> GetEmployeeByIdAsync(Guid id);
+    Task<IReadOnlyList<EmployeeDto>> ListEmployeesAsync();
 }
