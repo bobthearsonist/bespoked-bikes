@@ -1,11 +1,9 @@
-using BespokedBikes.Application.Generated;
-
 namespace BespokedBikes.Application.Features.Reports;
 
-public partial class QuarterlyCommissionReportDto
+public class QuarterlyCommissionReportDto
 {
 }
 
-public partial class EmployeeCommissionDto
+public class EmployeeCommissionDto
 {
 }

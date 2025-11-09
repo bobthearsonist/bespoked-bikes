@@ -1,11 +1,9 @@
-using BespokedBikes.Application.Generated;
-
 namespace BespokedBikes.Application.Features.Inventory;
 
-public partial class InventoryDto
+public class InventoryDto
 {
 }
 
-public partial class InventoryUpdateDto
+public class InventoryUpdateDto
 {
 }

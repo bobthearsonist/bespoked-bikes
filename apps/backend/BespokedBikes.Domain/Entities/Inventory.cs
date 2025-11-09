@@ -1,8 +1,13 @@
-namespace BespokedBikes.Domain.Entities;
-
 using BespokedBikes.Domain.Enums;
+
+namespace BespokedBikes.Domain.Entities;
 
 public class Inventory
 {
-    // Id, ProductId, Location (enum), Quantity, CreatedAt, UpdatedAt
+    public Guid Id { get; set; }
+    public Guid ProductId { get; set; }
+    public Location Location { get; set; }
+    public int Quantity { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }

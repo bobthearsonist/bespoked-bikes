@@ -1,11 +1,9 @@
-using BespokedBikes.Application.Generated;
-
 namespace BespokedBikes.Application.Features.Sales;
 
-public partial class SaleDto
+public class SaleDto
 {
 }
 
-public partial class CreateSaleDto
+public class CreateSaleDto
 {
 }
