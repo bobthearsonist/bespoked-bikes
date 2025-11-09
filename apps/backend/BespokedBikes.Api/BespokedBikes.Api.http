@@ -1,6 +1,61 @@
-@BespokedBikes.Api_HostAddress = http://localhost:5215
+@BespokedBikes.Api_HostAddress = https://localhost:7150
 
-GET {{BespokedBikes.Api_HostAddress}}/weatherforecast/
+### Get OpenAPI specification
+GET {{BespokedBikes.Api_HostAddress}}/openapi/v1.json
 Accept: application/json
+
+### View Scalar API documentation
+# Open in browser: {{BespokedBikes.Api_HostAddress}}/scalar/v1
+
+### List all products
+GET {{BespokedBikes.Api_HostAddress}}/api/products
+Accept: application/json
+
+### Create a new product
+POST {{BespokedBikes.Api_HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "productType": "Bike",
+  "name": "Mountain Bike Pro",
+  "description": "High-performance mountain bike",
+  "supplier": "BikesCo",
+  "costPrice": "500.00",
+  "retailPrice": "899.99",
+  "commissionPercentage": "15.00"
+}
+
+### Get product by ID (replace with actual ID from create response)
+@productId = 7c3d1d85-e22e-442f-9a96-b6be6a88c4f6
+GET {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}
+Accept: application/json
+
+### Update a product (replace with actual ID)
+PUT {{BespokedBikes.Api_HostAddress}}/api/products/{{productId}}
+Content-Type: application/json
+
+{
+  "productType": "Bike",
+  "name": "Mountain Bike Pro - Updated",
+  "description": "High-performance mountain bike with upgrades",
+  "supplier": "BikesCo",
+  "costPrice": "550.00",
+  "retailPrice": "999.99",
+  "commissionPercentage": "15.00"
+}
+
+### Create another product example
+POST {{BespokedBikes.Api_HostAddress}}/api/products
+Content-Type: application/json
+
+{
+  "productType": "Bike",
+  "name": "Road Bike Elite",
+  "description": "Lightweight racing bike",
+  "supplier": "SpeedCycles",
+  "costPrice": "800.00",
+  "retailPrice": "1499.99",
+  "commissionPercentage": "12.50"
+}
 
 ###
