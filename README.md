@@ -2,14 +2,68 @@
 
 Demo project for bespoked-bikes.
 
-This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
+## Links
+- [OpenAPI Specification](openapi.yaml)
+- [Github Repository](https://github.com/yourusername/bespoked-bikes)
 
+## Getting Started
+
+### Build the Solution
+
+```bash
+cd apps/backend
+dotnet restore
+dotnet build
+```
+
+### Run the API
+
+The API is defined in `openapi.yaml`.
+
+```bash
+cd BespokedBikes.Api
+dotnet run
+```
+
+The API will start on `https://localhost:7150` (or configured port).
+The API can be viewed at `https://localhost:7150/scalar/v1` when running locally.
+
+### Run Tests
+
+```bash
+# Run all tests
+dotnet test
+
+# individual suites
+dotnet test BespokedBikes.Tests.Unit
+dotnet test BespokedBikes.Tests.Integration
+```
+
+## Development
+
+### Generate Code from OpenAPI Spec
+
+This project uses NSwag to generate controllers and DTOs from the OpenAPI specification. Run this whenever you update `openapi.yaml`:
+
+```bash
+cd apps/backend
+nswag run nswag.json
+```
+
+This generates:
+
+- **Controllers**: `BespokedBikes.Api/Controllers/GeneratedControllerBase.cs`
+- **DTOs**: `BespokedBikes.Application/Generated/Dtos.cs`
+
+### Commit Convention
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
 
 ## Architecture
 
-This backend project follows **Clean Architecture** with a feature-oriented organization. This is a quick jumble of words trying to describe *why* its this "complex". I'm usually bad about remembering these terms when discussing the *why* so now I cant forget.
+This backend project follows **Clean Architecture** with a feature-oriented organization. This is a quick jumble of words trying to describe _why_ its this "complex". I'm usually bad about remembering these terms when discussing the _why_ so now I cant forget.
 
-``` text
+```text
 Domain (entities, enums) → no dependencies
    ↑
 Application (services, DTOs, interfaces) → depends on Domain
@@ -45,96 +99,40 @@ Achieves **SOLID** principles:
 
 ### Entities
 
-- [ ] align this section with result of actual design
+- **Customer**
+- **Employee**
+- **Product**
+- **Sale**
+- **Inventory**
 
-### Key Business Logic
+## Design Decisions and Planning
+
+### Design Decisions
+
+#### Commission Storage on Sale
+
+Commission percentage is stored on the Product, but the calculated commission amount is stored on each Sale. This preserves historical accuracy when commission rates change over time.
 
 - **Commission Calculation**: `CommissionAmount = (SalePrice - CostPrice) × CommissionPercentage`
 - Commission is stored on each Sale for historical accuracy
 - SalePrice can differ from RetailPrice (discounts, negotiations)
 - Inventory is reduced when sales are created
 
-## Getting Started
-
-### Build the Solution
-
-```bash
-dotnet restore
-dotnet build
-```
-
-### Run the API
-
-The API is defined in `openapi.yaml`.
-
-```bash
-cd BespokedBikes.Api
-dotnet run
-```
-
-The API will start on `https://localhost:5001` (or configured port).
-The API can be viewed at `https://localhost:5001/scalar` when running locally.
-
-### Run Tests
-
-```bash
-# Run all tests
-dotnet test
-
-# individual suites
-dotnet test BespokedBikes.Tests.Unit
-dotnet test BespokedBikes.Tests.Integration
-```
-
-## Design Decisions
-
-### Commission Storage on Sale
-
-Commission percentage is stored on the Product, but the calculated commission amount is stored on each Sale. This preserves historical accuracy when commission rates change over time.
-
-### SalePrice vs RetailPrice
+#### SalePrice vs RetailPrice
 
 Products have a RetailPrice, but each Sale has a SalePrice. This allows for discounts, promotions, and price negotiations without affecting the base product pricing.
 
-### Feature-Oriented Folders
+#### Feature-Oriented Folders
 
 Instead of organizing by technical layers (Controllers, Services, DTOs in separate folders), we organize by business features. Each feature folder contains all related files, making it easier to understand and modify a specific feature.
 
-### PostgreSQL Over SQLite
+(I let this fall away a bit in some of the other layers because it kind of made more sense in some places than others...)
 
-PostgreSQL provides better support for production workloads, concurrent access, and advanced features needed for a real-world sales tracking system.
-
-### OpenAPI and Scalar Over Swagger
+#### OpenAPI and Scalar Over Swagger
 
 OpenAPI specification defines the API contract, and Scalar provides a modern, beautiful documentation UI. Controllers will be generated from the OpenAPI spec.
 
-## Next Steps
-
-- [ ] Implement entity classes with full properties
-- [ ] Implement DTOs with full properties
-- [ ] Generate controllers from OpenAPI spec (using code generator)
-- [ ] Implement service business logic
-- [ ] Implement repository data access
-- [ ] Add EF Core migrations
-- [ ] Add seed data for demonstration
-- [ ] Implement FluentValidation rules
-- [ ] Configure AutoMapper profiles
-- [ ] Add middleware for global exception handling
-- [ ] Docker containerization
-- [ ] CI/CD pipeline setup
-
-## Documentation
-
-- [Class Diagram](docs/1%20initial%20diagrams/class-diagram.md)
-- [Entity Relationship Diagram](docs/1%20initial%20diagrams/entity-relationship-diagram.md)
-- [User Scenario Diagram](docs/1%20initial%20diagrams/user-scenario-diagram.md)
-- [OpenAPI Specification](openapi.yaml)
-
-## Commit Convention
-
-This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
-
-## planning phase
+### planning phase
 
 - [x] scope of deliverables
 - [x] tech stack decision
@@ -150,15 +148,22 @@ This project uses [Conventional Commits](https://www.conventionalcommits.org/) f
 - [ ] setup ci/cd pipeline
 - [ ] start development
 
-## AI tooling
+### Next Steps
 
-I will be using AI tooling as an accelerator tool. for planning i wil use it to generate the actual diagram files form my sketches and then use it to iterate on those until they are the way I want them. during development I will use it to help me with boilerplate code generation and to help me think through problems or issues I encounter. i _will not_ use it to generate large chunks of code or features without my direct involvement. iw ill do my best to identify areas that not my own if there are any and indicate which decisions were made with AI assistance.
+- [ ] Implement entity classes with full properties
+- [ ] Implement DTOs with full properties
+- [ ] Generate controllers from OpenAPI spec (using code generator)
+- [ ] Implement service business logic
+- [ ] Implement repository data access
+- [ ] Add EF Core migrations
+- [ ] Add seed data for demonstration
+- [ ] Implement FluentValidation rules
+- [ ] Configure AutoMapper profiles
+- [ ] Add middleware for global exception handling
+- [ ] Docker containerization
+- [ ] CI/CD pipeline setup
 
-## commit history
-
-i will use the commit history to "tell a story" more than anything since this is an interview exercise.
-
-## decisions
+### decisions
 
 - nswag to go from openapi spec to controllers quickly. make sure to generate dto types even thoguht hey may "not be needed" yet becasue its annoying to configure it without them
 - monorepo structure to have a silly simple UI if we have time. apps/api, apps/web
@@ -183,7 +188,7 @@ i will use the commit history to "tell a story" more than anything since this is
 - authorization that utilizes employee role for access
 - identityserver for auth if we have time
 
-## design docs
+### design docs
 
 initial entity/class diagrams, they may evolve as we go.
 [class-diagram.md](docs/1%20initial%20diagrams/class-diagram.md)
@@ -191,3 +196,11 @@ initial entity/class diagrams, they may evolve as we go.
 
 the scenario doc/s were created to use as a starting point and an exercise to validate the initial entity/class designs. They may not reflect the final design decisions.
 [user-scenario-diagram.md](docs/1%20initial%20diagrams/user-scenario-diagram.md)
+
+### AI tooling
+
+I will be using AI tooling as an accelerator tool. for planning i wil use it to generate the actual diagram files form my sketches and then use it to iterate on those until they are the way I want them. during development I will use it to help me with boilerplate code generation and to help me think through problems or issues I encounter. i _will not_ use it to generate large chunks of code or features without my direct involvement. iw ill do my best to identify areas that not my own if there are any and indicate which decisions were made with AI assistance.
+
+### commit history
+
+i will use the commit history to "tell a story" more than anything since this is an interview exercise.
