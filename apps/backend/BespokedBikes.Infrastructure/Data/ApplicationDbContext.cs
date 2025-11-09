@@ -32,8 +32,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
             entity.Property(e => e.Location).IsRequired();
             entity.Property(e => e.Roles).IsRequired();
-            entity.Property(e => e.HireDate).IsRequired();
-            entity.Property(e => e.TerminationDate);
             entity.Property(e => e.CreatedAt).IsRequired();
             entity.Property(e => e.UpdatedAt).IsRequired();
         });

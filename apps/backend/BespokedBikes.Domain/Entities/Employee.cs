@@ -8,8 +8,6 @@ public class Employee
     public required string Name { get; set; }
     public Location Location { get; set; }
     public EmployeeRole Roles { get; set; }
-    public DateTime HireDate { get; set; }
-    public DateTime? TerminationDate { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 }
