@@ -12,11 +12,11 @@
 
 - [x] 1. Database Setup & Configuration
 - [x] 2. Product Management (Repository & Service - minimal)
-- [ ] 3. Employee Management (Repository & Service - minimal)
-- [ ] 4. Customer Management (Repository & Service - minimal)
-- [ ] 5. Inventory Management (Check/Deduct logic only)
-- [ ] 6. Sales Creation (Service with commission calculation)
-- [ ] 7. Data Seeding (Minimal test data)
+- [x] 3. Employee Management (Repository & Service - minimal)
+- [x] 4. Customer Management (Repository & Service - minimal)
+- [x] 5. Inventory Management (Check/Deduct logic only)
+- [x] 6. Sales Creation (Service with commission calculation)
+- [x] 7. Data Seeding (Minimal test data)
 
 **🎯 MVP MILESTONE: Can create a sale with commission calculation and inventory tracking**
 
