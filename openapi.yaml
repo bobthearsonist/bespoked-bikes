@@ -558,6 +558,7 @@ components:
           nullable: true
       required:
         - name
+      additionalProperties: false
 
     EmployeeDto:
       type: object
@@ -626,6 +627,7 @@ components:
         - costPrice
         - retailPrice
         - commissionPercentage
+      additionalProperties: false
 
     InventoryDto:
       type: object
@@ -646,6 +648,7 @@ components:
         - productId
         - location
         - quantity
+      additionalProperties: false
 
     InventoryUpdateDto:
       type: object
@@ -658,6 +661,7 @@ components:
       required:
         - location
         - quantity
+      additionalProperties: false
 
     CreateSaleDto:
       type: object
@@ -691,6 +695,7 @@ components:
         - salePrice
         - location
         - saleDate
+      additionalProperties: false
 
     SaleDto:
       type: object
@@ -745,6 +750,7 @@ components:
         - salePrice
         - location
         - saleDate
+      additionalProperties: false
 
     QuarterlyCommissionReportDto:
       type: object
@@ -774,6 +780,7 @@ components:
         - totalCommissions
         - totalSales
         - salesCount
+      additionalProperties: false
 
     EmployeeCommissionDto:
       type: object
@@ -797,6 +804,7 @@ components:
         - totalCommission
         - totalSales
         - salesCount
+      additionalProperties: false
 
     ErrorResponse:
       type: object
@@ -818,3 +826,4 @@ components:
         - statusCode
         - message
         - timestamp
+      additionalProperties: false
