@@ -9,7 +9,7 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<Glob
 
     public async Task InvokeAsync(HttpContext context)
     {
-        // Exception handling logic to be implemented
+        // TODO Exception handling logic to be implemented
         await next(context);
     }
 }

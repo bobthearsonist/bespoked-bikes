@@ -44,7 +44,7 @@ builder.Services.AddAutoMapper(config =>
 });
 
 // Register controller implementation
-builder.Services.AddScoped<BespokedBikes.Api.Controllers.IController, BespokedBikes.Api.Controllers.BespokedBikesController>();
+builder.Services.AddScoped<BespokedBikes.Api.Controllers.IController, BespokedBikes.Api.Controllers.BespokedBikesControllerImplementation>();
 
 // Add API services
 builder.Services.AddControllers();
