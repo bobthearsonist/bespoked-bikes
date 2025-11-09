@@ -146,6 +146,24 @@ Instead of organizing by technical layers (Controllers, Services, DTOs in separa
 
 OpenAPI specification defines the API contract, and Scalar provides a modern, beautiful documentation UI. Controllers will be generated from the OpenAPI spec.
 
+#### AutoMapper with Attributes
+
+We're using attributes which keeps boilerplate as simple as possible. There are some places this isn't working currently that should be resolved when we clean up the DTO form the service layer and the data layer schema leaking upward.
+
+#### Controller Layout and nswag
+
+I don't like the current controller layout, I would like to have individual controller files with the routes defined there. I was wrestling with nswag a little too much getting that running and moved on since it's really just organizational.
+
+* better layout in scalar per controller
+* better folder organization
+* possibly more annoying DI setup
+
+#### DateTimeOffset
+
+We're using DateTimeOffset instead of DateTime to handle date and time values. This ensures that we have a consistent representation of time across different time zones and avoids issues with daylight saving time.
+
+I discovered some of the way through that I had picked DateTime for the formats and should likely be using DateTimeOffset. I found it before we got to the Sale objects which will have some time values in the API contract. It just makes it a lot easier to work across time zones with practically zero overheads.
+
 ### planning phase
 
 - [x] scope of deliverables
@@ -156,20 +174,21 @@ OpenAPI specification defines the API contract, and Scalar provides a modern, be
   - [x] user stories
   - [x] api design
 - [x] project plan
-- [ ] setup project structure / monorepo
-  - [ ] initial test projects with single passing test for each
+- [x] setup project structure / monorepo
+  - [x] initial test projects with single passing test for each
 - [ ] containerization with docker
 - [ ] setup ci/cd pipeline
-- [ ] start development
+- [x] start development
 
 ### Next Steps
 
 - [x] Implement entity classes with full properties
 - [x] Implement DTOs with full properties
 - [x] Generate controllers from OpenAPI spec (using code generator)
-- [ ] Implement service business logic
-- [ ] Implement repository data access - [x] ~~Add EF Core migrations~~ Add fluentmigrator migrations
-- [ ] Add seed data for demonstration
+- [x] Implement service business logic
+- [x] Implement repository data access
+- [x] ~~Add EF Core migrations~~ Add fluentmigrator migrations
+- [x] Add seed data for demonstration
 - [ ] Implement FluentValidation rules
 - [x] Configure AutoMapper profiles
 - [ ] Add middleware for global exception handling
@@ -184,6 +203,8 @@ OpenAPI specification defines the API contract, and Scalar provides a modern, be
 - [ ] TESTS!!!
 - [ ] ODATA for querying would be a quick win to add filtering/paging/sorting
 - [ ] Inventory update is kind of ugly. maybe use a JSON PATCH model.
+- [ ] we need to finish cleaning up the createddate/modifieddate handling adn remove it form the dto's
+- [ ] im not sold on the infastructure/domain/application layering. its making it really hard to review changes wholistically. the separation of concerns is great, but for speedrunning through this exercise its slowing me down and making me miss things in review.
 
 ### decisions
 
