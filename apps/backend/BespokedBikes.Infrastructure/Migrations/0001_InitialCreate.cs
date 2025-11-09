@@ -52,10 +52,7 @@ public class InitialCreate : Migration
             .WithColumn("CreatedAt").AsDateTime().NotNullable()
             .WithColumn("UpdatedAt").AsDateTime().NotNullable();
 
-        Create.ForeignKey("FK_Inventories_Products")
-            .FromTable("Inventories").ForeignColumn("ProductId")
-            .ToTable("Products").PrimaryColumn("Id")
-            .OnDelete(Rule.None);
+        // Note: Foreign keys are handled by EF Core configuration for SQLite compatibility
 
         Create.Index("IX_Inventories_ProductId_Location")
             .OnTable("Inventories")
@@ -80,25 +77,7 @@ public class InitialCreate : Migration
             .WithColumn("CreatedAt").AsDateTime().NotNullable()
             .WithColumn("UpdatedAt").AsDateTime().NotNullable();
 
-        Create.ForeignKey("FK_Sales_Products")
-            .FromTable("Sales").ForeignColumn("ProductId")
-            .ToTable("Products").PrimaryColumn("Id")
-            .OnDelete(Rule.None);
-
-        Create.ForeignKey("FK_Sales_SoldByEmployee")
-            .FromTable("Sales").ForeignColumn("SoldByEmployeeId")
-            .ToTable("Employees").PrimaryColumn("Id")
-            .OnDelete(Rule.None);
-
-        Create.ForeignKey("FK_Sales_FulfilledByEmployee")
-            .FromTable("Sales").ForeignColumn("FulfilledByEmployeeId")
-            .ToTable("Employees").PrimaryColumn("Id")
-            .OnDelete(Rule.None);
-
-        Create.ForeignKey("FK_Sales_Customers")
-            .FromTable("Sales").ForeignColumn("CustomerId")
-            .ToTable("Customers").PrimaryColumn("Id")
-            .OnDelete(Rule.None);
+        // Note: Foreign keys are handled by EF Core configuration for SQLite compatibility
 
         Create.Index("IX_Sales_SaleDate")
             .OnTable("Sales")
