@@ -92,8 +92,11 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Run database migrations
+// TODO clean this up with an extension method
+// Run schema migrations
 app.Services.RunMigrations();
+// Run test data migrations based on configuration
+if (app.Configuration.GetValue("TestData:SeedOnStartup", false)) app.Services.RunTestDataMigrations();
 
 // Map Scalar endpoints only in development
 if (app.Environment.IsDevelopment())
