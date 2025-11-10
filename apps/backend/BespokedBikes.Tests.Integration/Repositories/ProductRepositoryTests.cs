@@ -7,7 +7,6 @@ using BespokedBikes.Tests.Integration.Infrastructure;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework.Interfaces;
 
 namespace BespokedBikes.Tests.Integration.Repositories;
 

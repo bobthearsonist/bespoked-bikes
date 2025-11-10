@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Refit;
 using BespokedBikes.Tests.Integration.Generated;
-using BespokedBikes.Api; // Add this for Program reference
 
 namespace BespokedBikes.Tests.Integration.EndToEnd
 {

@@ -1,7 +1,4 @@
 using FluentAssertions;
-using BespokedBikes.Tests.Integration.Generated;
-using Refit;
-using System.Net;
 using Location = BespokedBikes.Application.Generated.Location;
 using EmployeeRole = BespokedBikes.Application.Generated.EmployeeRole;
 using EmployeeDto = BespokedBikes.Application.Generated.EmployeeDto;
@@ -13,8 +10,6 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
     {
         /// <summary>
         /// Happy path: Create an employee and verify it appears in the list
-        ///
-        /// TODO: Failing with 400 - need to add AddNewtonsoftJson() to Program.cs for model validation
         /// </summary>
         [Test]
         public async Task CreateEmployee_ThenList_ShouldReturnEmployee()
