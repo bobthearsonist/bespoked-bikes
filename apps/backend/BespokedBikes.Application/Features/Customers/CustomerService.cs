@@ -19,7 +19,11 @@ public class CustomerService(ICustomerRepository repository, IMapper mapper) : I
     public async Task<CustomerDto?> GetCustomerByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var customer = await repository.GetByIdAsync(id, cancellationToken);
-        return customer == null ? null : mapper.Map<CustomerDto>(customer);
+        if (customer == null)
+        {
+            throw new KeyNotFoundException($"Customer with ID {id} not found");
+        }
+        return mapper.Map<CustomerDto>(customer);
     }
 
     public async Task<IEnumerable<CustomerDto>> GetAllCustomersAsync(CancellationToken cancellationToken = default)

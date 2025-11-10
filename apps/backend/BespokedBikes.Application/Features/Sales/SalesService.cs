@@ -96,7 +96,11 @@ public class SalesService(
     public async Task<SaleDto?> GetSaleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var sale = await saleRepository.GetByIdAsync(id, cancellationToken);
-        return sale == null ? null : mapper.Map<SaleDto>(sale);
+        if (sale == null)
+        {
+            throw new KeyNotFoundException($"Sale with ID {id} not found");
+        }
+        return mapper.Map<SaleDto>(sale);
     }
 
     public async Task<IEnumerable<SaleDto>> GetSalesByDateRangeAsync(DateTimeOffset? startDate, DateTimeOffset? endDate, Generated.SaleStatus? status, CancellationToken cancellationToken = default)

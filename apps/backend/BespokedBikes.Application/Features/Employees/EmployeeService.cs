@@ -19,8 +19,11 @@ public class EmployeeService(IEmployeeRepository repository, IMapper mapper) : I
     public async Task<EmployeeDto?> GetEmployeeByIdAsync(Guid id)
     {
         var employee = await repository.GetByIdAsync(id);
-
-        return employee == null ? null : mapper.Map<EmployeeDto>(employee);
+        if (employee == null)
+        {
+            throw new KeyNotFoundException($"Employee with ID {id} not found");
+        }
+        return mapper.Map<EmployeeDto>(employee);
     }
 
     public async Task<IReadOnlyList<EmployeeDto>> ListEmployeesAsync()
