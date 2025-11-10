@@ -13,22 +13,17 @@ namespace BespokedBikes.Tests.Integration.Infrastructure;
 /// </summary>
 public class TestcontainerDbContextFactory : IDbContextFactory, IAsyncDisposable
 {
-    private readonly PostgreSqlContainer _container;
+    private readonly PostgreSqlContainer _container = new PostgreSqlBuilder()
+        .WithImage("postgres:17-alpine")
+        .WithDatabase("bespoked_test")
+        .WithUsername("test_user")
+        .WithPassword("test_password")
+        .WithCleanUp(true)
+        .Build();
     private bool _isInitialized;
 
     public string ConnectionString { get; private set; } = string.Empty;
     public bool RequiresPersistentConnection => false;
-
-    public TestcontainerDbContextFactory()
-    {
-        _container = new PostgreSqlBuilder()
-            .WithImage("postgres:17-alpine")
-            .WithDatabase("bespoked_test")
-            .WithUsername("test_user")
-            .WithPassword("test_password")
-            .WithCleanUp(true)
-            .Build();
-    }
 
     public async Task InitializeAsync()
     {

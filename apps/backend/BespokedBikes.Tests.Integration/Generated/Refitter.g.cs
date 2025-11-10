@@ -15,7 +15,7 @@ using BespokedBikes.Application.Generated;
 
 namespace BespokedBikes.Tests.Integration.Generated
 {
-    [System.CodeDom.Compiler.GeneratedCode("Refitter", "1.6.5.0")]
+    [System.CodeDom.Compiler.GeneratedCode("Refitter", "1.7.0.0")]
     public partial interface IIBespokedBikesApiApi
     {
         [Headers("Accept: application/json", "Content-Type: application/json")]

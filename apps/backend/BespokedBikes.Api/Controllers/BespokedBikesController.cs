@@ -4,7 +4,6 @@ using BespokedBikes.Application.Features.Inventory;
 using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Features.Sales;
 using BespokedBikes.Application.Generated;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BespokedBikes.Api.Controllers;
 
