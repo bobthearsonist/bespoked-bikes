@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Common.Interfaces;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Domain.Entities;
 using BespokedBikes.Infrastructure;
 using BespokedBikes.Infrastructure.Data;

@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Common.Interfaces;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Domain.Entities;
 using Microsoft.EntityFrameworkCore;

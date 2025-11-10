@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Common.Interfaces;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
 using BespokedBikes.Application.Features.Inventory;

@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Common.Interfaces;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Domain.Entities;
 using BespokedBikes.Infrastructure;
 using BespokedBikes.Infrastructure.Data;
@@ -50,26 +50,26 @@ public class CustomerRepositoryTests
         _scope = _serviceProvider!.CreateScope();
 
     [TearDown]
-  public async Task TearDown()
-  {
-      // Clean up data after each test to ensure isolation
-      if (_scope == null) return;
+    public async Task TearDown()
+    {
+        // Clean up data after each test to ensure isolation
+        if (_scope == null) return;
 
-      if (DbContext is not ApplicationDbContext context)
-      {
-          _scope.Dispose();
-          return;
-      }
+        if (DbContext is not ApplicationDbContext context)
+        {
+            _scope.Dispose();
+            return;
+        }
 
-      // Remove all data from tables
-      context.Sales.RemoveRange(context.Sales);
-      context.Products.RemoveRange(context.Products);
-      context.Customers.RemoveRange(context.Customers);
-      context.Employees.RemoveRange(context.Employees);
-      await context.SaveChangesAsync();
+        // Remove all data from tables
+        context.Sales.RemoveRange(context.Sales);
+        context.Products.RemoveRange(context.Products);
+        context.Customers.RemoveRange(context.Customers);
+        context.Employees.RemoveRange(context.Employees);
+        await context.SaveChangesAsync();
 
-      _scope.Dispose();
-  }
+        _scope.Dispose();
+    }
 
     [OneTimeTearDown]
     public async Task OneTimeTearDown()

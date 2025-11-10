@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Common.Interfaces;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Infrastructure.Data;
 using BespokedBikes.Infrastructure.Data.Factories;
 using BespokedBikes.Infrastructure.Migrations;
