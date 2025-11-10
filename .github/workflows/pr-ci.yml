@@ -40,16 +40,27 @@ jobs:
       - name: Generate coverage summary
         id: coverage
         run: |
-          cd apps/backend/TestResults
-          COVERAGE_FILE=$(find . -name "coverage.cobertura.xml" | head -1)
-          if [ -f "$COVERAGE_FILE" ]; then
-            LINE_RATE=$(grep -oP 'line-rate="\K[^"]+' "$COVERAGE_FILE" | head -1)
-            PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $LINE_RATE * 100}")
-            echo "percentage=$PERCENTAGE" >> $GITHUB_OUTPUT
-            echo "Backend unit test coverage: $PERCENTAGE%"
+          if [ -d "apps/backend/TestResults" ]; then
+            cd apps/backend/TestResults
+            COVERAGE_FILE=$(find . -name "coverage.cobertura.xml" | head -1)
+            if [ -n "$COVERAGE_FILE" ] && [ -f "$COVERAGE_FILE" ]; then
+              echo "Found coverage file: $COVERAGE_FILE"
+              LINE_RATE=$(grep -oP 'line-rate="\K[^"]+' "$COVERAGE_FILE" | head -1)
+              if [ -n "$LINE_RATE" ]; then
+                PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $LINE_RATE * 100}")
+                echo "percentage=$PERCENTAGE" >> $GITHUB_OUTPUT
+                echo "Backend unit test coverage: $PERCENTAGE%"
+              else
+                echo "percentage=0" >> $GITHUB_OUTPUT
+                echo "Could not extract line rate from coverage file"
+              fi
+            else
+              echo "percentage=0" >> $GITHUB_OUTPUT
+              echo "No coverage file found"
+            fi
           else
             echo "percentage=0" >> $GITHUB_OUTPUT
-            echo "No coverage data found"
+            echo "TestResults directory not found"
           fi
 
       - name: Upload coverage to Codecov
@@ -82,16 +93,27 @@ jobs:
       - name: Generate coverage summary
         id: coverage
         run: |
-          cd apps/backend/TestResults
-          COVERAGE_FILE=$(find . -name "coverage.cobertura.xml" | head -1)
-          if [ -f "$COVERAGE_FILE" ]; then
-            LINE_RATE=$(grep -oP 'line-rate="\K[^"]+' "$COVERAGE_FILE" | head -1)
-            PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $LINE_RATE * 100}")
-            echo "percentage=$PERCENTAGE" >> $GITHUB_OUTPUT
-            echo "Backend integration test coverage: $PERCENTAGE%"
+          if [ -d "apps/backend/TestResults" ]; then
+            cd apps/backend/TestResults
+            COVERAGE_FILE=$(find . -name "coverage.cobertura.xml" | head -1)
+            if [ -n "$COVERAGE_FILE" ] && [ -f "$COVERAGE_FILE" ]; then
+              echo "Found coverage file: $COVERAGE_FILE"
+              LINE_RATE=$(grep -oP 'line-rate="\K[^"]+' "$COVERAGE_FILE" | head -1)
+              if [ -n "$LINE_RATE" ]; then
+                PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $LINE_RATE * 100}")
+                echo "percentage=$PERCENTAGE" >> $GITHUB_OUTPUT
+                echo "Backend integration test coverage: $PERCENTAGE%"
+              else
+                echo "percentage=0" >> $GITHUB_OUTPUT
+                echo "Could not extract line rate from coverage file"
+              fi
+            else
+              echo "percentage=0" >> $GITHUB_OUTPUT
+              echo "No coverage file found"
+            fi
           else
             echo "percentage=0" >> $GITHUB_OUTPUT
-            echo "No coverage data found"
+            echo "TestResults directory not found"
           fi
 
       - name: Upload coverage to Codecov
@@ -155,34 +177,45 @@ jobs:
         continue-on-error: true
         with:
           script: |
-            const backendUnitCoverage = '${{ needs.backend-unit-tests.outputs.coverage || 'N/A' }}';
-            const backendIntegrationCoverage = '${{ needs.backend-integration-tests.outputs.coverage || 'N/A' }}';
-            const frontendCoverage = '${{ needs.frontend-unit-tests.outputs.coverage || 'N/A' }}';
+            const backendUnitCoverage = '${{ needs.backend-unit-tests.outputs.coverage }}' || 'N/A';
+            const backendIntegrationCoverage = '${{ needs.backend-integration-tests.outputs.coverage }}' || 'N/A';
+            const frontendCoverage = '${{ needs.frontend-unit-tests.outputs.coverage }}' || '0';
+
+            console.log('Coverage values received:');
+            console.log('- Backend Unit:', backendUnitCoverage);
+            console.log('- Backend Integration:', backendIntegrationCoverage);
+            console.log('- Frontend:', frontendCoverage);
 
             try {
+              // Get PR number from context
+              const prNumber = context.payload.pull_request.number;
+              
               // Get current PR
               const pr = await github.rest.pulls.get({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: context.issue.number
+                pull_number: prNumber
               });
 
-              // Create coverage section with Codecov badge
-              const coverageSection = `
-              ## 📊 Test Coverage
-
-              [![codecov](https://codecov.io/gh/${context.repo.owner}/${context.repo.repo}/branch/${context.payload.pull_request.head.ref}/graph/badge.svg)](https://codecov.io/gh/${context.repo.owner}/${context.repo.repo}/branch/${context.payload.pull_request.head.ref})
-
-              | Component | Coverage |
-              |-----------|----------|
-              | Backend Unit Tests | ${backendUnitCoverage}% |
-              | Backend Integration Tests | ${backendIntegrationCoverage}% |
-              | Frontend | ${frontendCoverage === '0' ? 'N/A (not implemented)' : frontendCoverage + '%'} |
-
-              _Updated: ${new Date().toISOString()}_
-
-              ---
-              `;
+              // Build badge URL
+              const owner = context.repo.owner;
+              const repo = context.repo.repo;
+              const branch = context.payload.pull_request.head.ref;
+              const badgeUrl = 'https://codecov.io/gh/' + owner + '/' + repo + '/branch/' + branch + '/graph/badge.svg';
+              const codecovUrl = 'https://codecov.io/gh/' + owner + '/' + repo + '/branch/' + branch;
+              
+              // Build coverage table
+              const frontendDisplay = frontendCoverage === '0' ? 'N/A (not implemented)' : frontendCoverage + '%';
+              
+              const coverageSection = '\n## 📊 Test Coverage\n\n' +
+                '[![codecov](' + badgeUrl + ')](' + codecovUrl + ')\n\n' +
+                '| Component | Coverage |\n' +
+                '|-----------|----------|\n' +
+                '| Backend Unit Tests | ' + backendUnitCoverage + '% |\n' +
+                '| Backend Integration Tests | ' + backendIntegrationCoverage + '% |\n' +
+                '| Frontend | ' + frontendDisplay + ' |\n\n' +
+                '_Updated: ' + new Date().toISOString() + '_\n\n' +
+                '---\n';
 
               let body = pr.data.body || '';
 
@@ -197,7 +230,7 @@ jobs:
               await github.rest.pulls.update({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                pull_number: context.issue.number,
+                pull_number: prNumber,
                 body: body
               });
 
@@ -206,8 +239,8 @@ jobs:
               // Gracefully handle permission errors (e.g., from forks)
               if (error.status === 403) {
                 console.log('⚠️ Insufficient permissions to update PR description (likely from fork)');
-                console.log(`Coverage: Backend Unit ${backendUnitCoverage}%, Backend Integration ${backendIntegrationCoverage}%, Frontend ${frontendCoverage}%`);
               } else {
+                console.error('Error updating PR description:', error);
                 throw error;
               }
             }
