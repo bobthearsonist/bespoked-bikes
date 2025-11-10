@@ -1,7 +1,4 @@
 using FluentAssertions;
-using BespokedBikes.Tests.Integration.Generated;
-using Refit;
-using System.Net;
 using CustomerDto = BespokedBikes.Application.Generated.CustomerDto;
 
 namespace BespokedBikes.Tests.Integration.EndToEnd
