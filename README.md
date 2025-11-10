@@ -9,7 +9,35 @@ Demo project for bespoked-bikes.
 
 ## Getting Started
 
-### Build the Solution
+### Quick Start with Docker (Recommended)
+
+```bash
+# Start all services (frontend, backend, database)
+docker-compose up --build
+
+# Stop all services
+docker-compose down
+
+# View logs
+docker-compose logs -f backend
+docker-compose logs -f frontend
+docker-compose logs -f postgres
+
+# Connect to PostgreSQL
+docker exec -it bespokedbikes-postgres psql -U bespokedbikes -d bespokedbikes
+
+# To inspect the postgres volume:
+docker volume inspect bespoked-bikes_postgres-data
+```
+
+Frontend: http://localhost:3000
+Backend API: http://localhost:8080
+API Documentation: http://localhost:8080/scalar/v1
+Health Check: http://localhost:8080/health
+
+### Local Development (Without Docker)
+
+#### Build the Solution
 
 ```bash
 cd apps/backend
@@ -17,7 +45,7 @@ dotnet restore
 dotnet build
 ```
 
-### Run the API
+#### Run the API
 
 The API is defined in `openapi.yaml`.
 
@@ -29,7 +57,7 @@ dotnet run
 The API will start on `https://localhost:7150` (or configured port).
 The API can be viewed at `https://localhost:7150/scalar/v1` when running locally.
 
-### Run Tests
+#### Run Tests
 
 ```bash
 # Run all tests
@@ -102,7 +130,7 @@ This provides a quick way to test API functionality without building a full fron
 
 This project uses [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
 
-## Architecture
+## Project Architecture
 
 This backend project follows **Clean Architecture** with a feature-oriented organization. This is a quick jumble of words trying to describe _why_ its this "complex". I'm usually bad about remembering these terms when discussing the _why_ so now I cant forget.
 
@@ -231,8 +259,8 @@ the first good tests i added were right after supposedly getting to a mvp. it sh
 - [ ] Implement FluentValidation rules
 - [x] Configure AutoMapper profiles
 - [ ] Add middleware for global exception handling
-- [ ] Docker containerization
-- [ ] CI/CD pipeline setup
+- [x] Docker containerization
+- [x] CI/CD pipeline setup
 
 ### testing
 
@@ -278,6 +306,7 @@ the first good tests i added were right after supposedly getting to a mvp. it sh
 - [ ] we need to finish cleaning up the createddate/modifieddate handling adn remove it form the dto's
 - [ ] im not sold on the infastructure/domain/application layering. its making it really hard to review changes wholistically. the separation of concerns is great, but for speedrunning through this exercise its slowing me down and making me miss things in review.
 - [ ] we arent return IActionResult from controllers, we should be doing that to have more control over status codes
+- [ ] we should be using a healthcheck framework(middleware?) and reporting actual service health for the backend container
 
 ### decisions
 

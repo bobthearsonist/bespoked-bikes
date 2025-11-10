@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: bespokedbikes-postgres
+    environment:
+      POSTGRES_USER: bespokedbikes
+      POSTGRES_PASSWORD: BespokedBikes2024!
+      POSTGRES_DB: bespokedbikes
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bespokedbikes"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bespokedbikes-network
+
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    container_name: bespokedbikes-backend
+    environment:
+      # Set to Development to enable Scalar API docs, Production to disable
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}
+      - ASPNETCORE_URLS=http://+:8080
+      # Override connection string and database provider for Docker
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=bespokedbikes;Username=bespokedbikes;Password=BespokedBikes2024!
+      - Database__Provider=PostgreSQL
+      - TestData__SeedOnStartup=true
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - bespokedbikes-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: bespokedbikes-frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - bespokedbikes-network
+
+volumes:
+  postgres-data:
+    driver: local
+
+networks:
+  bespokedbikes-network:
+    driver: bridge

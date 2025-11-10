@@ -5,15 +5,11 @@ using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Features.Sales;
 using BespokedBikes.Application.Generated;
 using BespokedBikes.Infrastructure;
-using BespokedBikes.Infrastructure.Data;
-using BespokedBikes.Infrastructure.Data.Factories;
 using BespokedBikes.Infrastructure.Features.Customers;
 using BespokedBikes.Infrastructure.Features.Employees;
 using BespokedBikes.Infrastructure.Features.Inventory;
 using BespokedBikes.Infrastructure.Features.Products;
 using BespokedBikes.Infrastructure.Features.Sales;
-using BespokedBikes.Infrastructure.Migrations;
-using FluentMigrator.Runner;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,19 +19,8 @@ builder.Logging.ClearProviders()
     .AddConsole()
     .AddDebug();
 
-// Create in-memory SQLite factory for development/demo
-var dbFactory = new InMemorySqliteDbContextFactory();
-
-// Add infrastructure services with the factory and configure migrations
-// Pass the connection string - FluentMigrator will create its own connection
-// but since it's the same connection string, SQLite in-memory semantics mean
-// we need to keep the original connection open (which the factory does)
-builder.Services.AddInfrastructure(
-    dbFactory,
-    rb => rb
-        .AddSQLite()
-        .WithGlobalConnectionString(dbFactory.ConnectionString)
-        .ScanIn(typeof(InitialCreate).Assembly).For.Migrations());
+// Add infrastructure services with automatic database provider selection
+builder.Services.AddInfrastructure(builder.Configuration);
 
 //TODO move to extension methods to keep this cleaner and easier to read
 //TODO after that we could even look at using source-generated DI with attributes and Microsoft.Extensions.DependencyInjection.SourceGeneration so we dont have to declare them here at all (sounds alot like autofac))
@@ -109,6 +94,9 @@ app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
+
+// Add health check endpoint
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
 
 app.Run();
 
