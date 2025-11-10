@@ -1,3 +1,4 @@
+using BespokedBikes.Application.Common;
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
 using BespokedBikes.Application.Features.Inventory;
@@ -69,7 +70,9 @@ builder.Services.AddAutoMapper(config =>
     config.CreateMap<decimal, string>()
         .ConvertUsing(d => d.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
     config.CreateMap<string, decimal>()
-        .ConvertUsing(s => decimal.Parse(s, System.Globalization.CultureInfo.InvariantCulture));
+        .ConvertUsing(s => string.IsNullOrEmpty(s) ? 0m : decimal.Parse(s, System.Globalization.CultureInfo.InvariantCulture));
+    config.CreateMap<string?, decimal>()
+        .ConvertUsing(s => string.IsNullOrEmpty(s) ? 0m : decimal.Parse(s, System.Globalization.CultureInfo.InvariantCulture));
 
     // Scan assemblies for [AutoMap] attributes
     config.AddMaps(typeof(ProductDto).Assembly);
@@ -79,7 +82,9 @@ builder.Services.AddAutoMapper(config =>
 builder.Services.AddScoped<BespokedBikes.Api.Controllers.IController, BespokedBikes.Api.Controllers.BespokedBikesControllerImplementation>();
 
 // Add API services
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddNewtonsoftJson(options => JsonSerializerConfiguration.ConfigureNewtonsoftJson(options.SerializerSettings));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 builder.Services.AddCors(options =>
