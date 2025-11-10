@@ -6,7 +6,6 @@ using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Features.Sales;
 using BespokedBikes.Application.Generated;
 using BespokedBikes.Domain.Entities;
-using BespokedBikes.Domain.Enums;
 using BespokedBikes.Infrastructure;
 using BespokedBikes.Infrastructure.Data;
 using BespokedBikes.Infrastructure.Features.Customers;
@@ -254,7 +253,7 @@ public class SalesServiceIntegrationTests
         // Verify sale metadata
         Assert.That(createdSale.SaleChannel, Is.EqualTo("In-Store"), "Sale channel should be recorded");
         Assert.That(createdSale.Location, Is.EqualTo(Application.Generated.Location.STORE), "Sale location should be recorded");
-        Assert.That(createdSale.Status, Is.EqualTo(Application.Generated.SaleStatus.PENDING), "Sale should start in Pending status");
+        Assert.That(createdSale.Status, Is.EqualTo(Application.Generated.SaleStatus.FULFILLED), "Sale should be Fulfilled when inventory is available");
 
         // ==================== INVENTORY VERIFICATION (EXPECTED TO FAIL) ====================
 
@@ -348,7 +347,7 @@ public class SalesServiceIntegrationTests
     /// In the future, this might need to change to require inventory checks.
     /// </summary>
     [Test]
-    public async Task CreateSale_WithoutInventoryRecord_ShouldStillCreateSale()
+    public async Task CreateSale_WithoutInventoryRecord_ShouldStillCreateSale_WithPendingStatus()
     {
         // Create product WITHOUT inventory
         var productId = Guid.NewGuid();
@@ -408,8 +407,5 @@ public class SalesServiceIntegrationTests
         // Assert
         Assert.That(createdSale, Is.Not.Null);
         Assert.That(createdSale.ProductId, Is.EqualTo(productId));
-
-        // Note: In a future implementation, this might throw an exception
-        // if inventory validation is enforced
     }
 }

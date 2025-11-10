@@ -1,10 +1,12 @@
 using AutoMapper;
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
+using BespokedBikes.Application.Features.Inventory;
 using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Generated;
 using BespokedBikes.Domain.Entities;
 using BespokedBikes.Domain.Enums;
+using Location = BespokedBikes.Domain.Enums.Location;
 
 namespace BespokedBikes.Application.Features.Sales;
 
@@ -16,11 +18,13 @@ public class SalesService(
     IProductRepository productRepository,
     ICustomerRepository customerRepository,
     IEmployeeRepository employeeRepository,
+    IInventoryRepository inventoryRepository,
     IMapper mapper)
     : ISalesService
 {
     public async Task<SaleDto> CreateSaleAsync(CreateSaleDto createSaleDto, CancellationToken cancellationToken = default)
     {
+        //TODO: Add validation for CreateSaleDto (e.g., required fields, valid values)
         // Validate customer exists
         var customer = await customerRepository.GetByIdAsync(createSaleDto.CustomerId, cancellationToken);
         if (customer == null)
@@ -42,6 +46,9 @@ public class SalesService(
             throw new KeyNotFoundException($"Product with ID {createSaleDto.ProductId} not found");
         }
 
+        // Check if inventory exists for that product at that location
+        var inventoryCheck = await inventoryRepository.GetByProductAndLocationAsync(createSaleDto.ProductId, (Location)createSaleDto.Location, cancellationToken);
+
         // Parse sale price from string to decimal
         var salePrice = decimal.Parse(createSaleDto.SalePrice, System.Globalization.CultureInfo.InvariantCulture);
 
@@ -50,6 +57,11 @@ public class SalesService(
 
         // Convert DateTimeOffset to DateTime (UTC)
         var saleDate = createSaleDto.SaleDate.UtcDateTime;
+
+        // Determine sale status based on inventory availability
+        var saleStatus = inventoryCheck != null && inventoryCheck.Quantity > 0
+            ? Domain.Enums.SaleStatus.Fulfilled
+            : Domain.Enums.SaleStatus.Pending;
 
         // Create sale entity
         var sale = new Sale
@@ -62,13 +74,20 @@ public class SalesService(
             SaleChannel = createSaleDto.SaleChannel ?? "Unknown",
             Location = (Domain.Enums.Location)createSaleDto.Location,
             SaleDate = saleDate,
-            Status = Domain.Enums.SaleStatus.Pending,
+            Status = saleStatus,
             FulfilledByEmployeeId = null,
             FulfilledDate = null
         };
 
         // Save to database
         sale = await saleRepository.CreateAsync(sale, cancellationToken);
+
+        // Update inventory - decrement quantity by 1 if inventory exists
+        if (inventoryCheck != null)
+        {
+            inventoryCheck.Quantity -= 1;
+            await inventoryRepository.UpdateAsync(inventoryCheck, cancellationToken);
+        }
 
         // Map to DTO and return
         return mapper.Map<SaleDto>(sale);
