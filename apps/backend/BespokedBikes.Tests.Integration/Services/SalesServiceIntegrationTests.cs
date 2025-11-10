@@ -1,4 +1,5 @@
-using BespokedBikes.Application.Common.Interfaces;
+using AutoMapper;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
 using BespokedBikes.Application.Features.Inventory;
@@ -6,7 +7,6 @@ using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Features.Sales;
 using BespokedBikes.Application.Generated;
 using BespokedBikes.Domain.Entities;
-using BespokedBikes.Domain.Enums;
 using BespokedBikes.Infrastructure;
 using BespokedBikes.Infrastructure.Data;
 using BespokedBikes.Infrastructure.Features.Customers;
@@ -44,6 +44,10 @@ public class SalesServiceIntegrationTests
 
     protected IInventoryService InventoryService =>
         _scope?.ServiceProvider.GetRequiredService<IInventoryService>()
+        ?? throw new InvalidOperationException("Test not initialized");
+
+    protected IMapper Mapper =>
+        _scope?.ServiceProvider.GetRequiredService<IMapper>()
         ?? throw new InvalidOperationException("Test not initialized");
 
     [OneTimeSetUp]
@@ -227,8 +231,9 @@ public class SalesServiceIntegrationTests
 
         // ==================== ACT ====================
 
-        // Create the sale through the service
-        var createdSale = await SalesService.CreateSaleAsync(createSaleDto);
+        // Map DTO to entity and create the sale through the service
+        var saleEntity = Mapper.Map<Sale>(createSaleDto);
+        var createdSale = await SalesService.CreateSaleAsync(saleEntity);
 
         // Retrieve the inventory after the sale
         var updatedInventory = await DbContext.Inventories
@@ -243,18 +248,16 @@ public class SalesServiceIntegrationTests
         Assert.That(createdSale.ProductId, Is.EqualTo(productId), "Sale should be linked to correct product");
 
         // Verify the sale price is correct
-        var actualSalePrice = decimal.Parse(createdSale.SalePrice);
-        Assert.That(actualSalePrice, Is.EqualTo(salePrice), "Sale price should match the specified amount");
+        Assert.That(createdSale.SalePrice, Is.EqualTo(salePrice), "Sale price should match the specified amount");
 
         // Verify commission calculation
-        var actualCommission = decimal.Parse(createdSale.CommissionAmount);
-        Assert.That(actualCommission, Is.EqualTo(expectedCommission),
+        Assert.That(createdSale.CommissionAmount, Is.EqualTo(expectedCommission),
             $"Commission should be calculated as {expectedCommission:C} (10% of {salePrice:C})");
 
         // Verify sale metadata
         Assert.That(createdSale.SaleChannel, Is.EqualTo("In-Store"), "Sale channel should be recorded");
-        Assert.That(createdSale.Location, Is.EqualTo(Application.Generated.Location.STORE), "Sale location should be recorded");
-        Assert.That(createdSale.Status, Is.EqualTo(Application.Generated.SaleStatus.PENDING), "Sale should start in Pending status");
+        Assert.That(createdSale.Location, Is.EqualTo(Domain.Enums.Location.Store), "Sale location should be recorded");
+        Assert.That(createdSale.Status, Is.EqualTo(Domain.Enums.SaleStatus.Fulfilled), "Sale should be Fulfilled when inventory is available");
 
         // ==================== INVENTORY VERIFICATION (EXPECTED TO FAIL) ====================
 
@@ -334,11 +337,11 @@ public class SalesServiceIntegrationTests
         };
 
         // Act
-        var createdSale = await SalesService.CreateSaleAsync(createSaleDto);
+        var saleEntity = Mapper.Map<Sale>(createSaleDto);
+        var createdSale = await SalesService.CreateSaleAsync(saleEntity);
 
         // Assert
-        var actualCommission = decimal.Parse(createdSale.CommissionAmount);
-        Assert.That(actualCommission, Is.EqualTo(expectedCommission),
+        Assert.That(createdSale.CommissionAmount, Is.EqualTo(expectedCommission),
             $"Commission should be {expectedCommission:C} (15% of {salePrice:C})");
     }
 
@@ -348,7 +351,7 @@ public class SalesServiceIntegrationTests
     /// In the future, this might need to change to require inventory checks.
     /// </summary>
     [Test]
-    public async Task CreateSale_WithoutInventoryRecord_ShouldStillCreateSale()
+    public async Task CreateSale_WithoutInventoryRecord_ShouldStillCreateSale_WithPendingStatus()
     {
         // Create product WITHOUT inventory
         var productId = Guid.NewGuid();
@@ -403,13 +406,11 @@ public class SalesServiceIntegrationTests
         };
 
         // Act - should not throw even without inventory
-        var createdSale = await SalesService.CreateSaleAsync(createSaleDto);
+        var saleEntity = Mapper.Map<Sale>(createSaleDto);
+        var createdSale = await SalesService.CreateSaleAsync(saleEntity);
 
         // Assert
         Assert.That(createdSale, Is.Not.Null);
         Assert.That(createdSale.ProductId, Is.EqualTo(productId));
-
-        // Note: In a future implementation, this might throw an exception
-        // if inventory validation is enforced
     }
 }

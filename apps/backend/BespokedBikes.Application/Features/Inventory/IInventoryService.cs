@@ -1,4 +1,5 @@
-using BespokedBikes.Application.Generated;
+using BespokedBikes.Domain.Entities;
+using BespokedBikes.Domain.Enums;
 
 namespace BespokedBikes.Application.Features.Inventory;
 
@@ -7,5 +8,5 @@ namespace BespokedBikes.Application.Features.Inventory;
 /// </summary>
 public interface IInventoryService
 {
-    Task<InventoryDto> UpdateProductInventoryAsync(Guid productId, InventoryUpdateDto updateDto, CancellationToken cancellationToken = default);
+    Task<Domain.Entities.Inventory> UpdateProductInventoryAsync(Guid productId, Location location, int quantity, CancellationToken cancellationToken = default);
 }

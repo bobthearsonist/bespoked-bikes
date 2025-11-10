@@ -1,8 +1,7 @@
-using AutoMapper;
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
+using BespokedBikes.Application.Features.Inventory;
 using BespokedBikes.Application.Features.Products;
-using BespokedBikes.Application.Generated;
 using BespokedBikes.Domain.Entities;
 using BespokedBikes.Domain.Enums;
 
@@ -16,75 +15,70 @@ public class SalesService(
     IProductRepository productRepository,
     ICustomerRepository customerRepository,
     IEmployeeRepository employeeRepository,
-    IMapper mapper)
+    IInventoryRepository inventoryRepository)
     : ISalesService
 {
-    public async Task<SaleDto> CreateSaleAsync(CreateSaleDto createSaleDto, CancellationToken cancellationToken = default)
+    public async Task<Sale> CreateSaleAsync(Sale sale, CancellationToken cancellationToken = default)
     {
         // Validate customer exists
-        var customer = await customerRepository.GetByIdAsync(createSaleDto.CustomerId, cancellationToken);
+        var customer = await customerRepository.GetByIdAsync(sale.CustomerId, cancellationToken);
         if (customer == null)
         {
-            throw new KeyNotFoundException($"Customer with ID {createSaleDto.CustomerId} not found");
+            throw new KeyNotFoundException($"Customer with ID {sale.CustomerId} not found");
         }
 
         // Validate employee exists
-        var employee = await employeeRepository.GetByIdAsync(createSaleDto.SoldByEmployeeId);
+        var employee = await employeeRepository.GetByIdAsync(sale.SoldByEmployeeId);
         if (employee == null)
         {
-            throw new KeyNotFoundException($"Employee with ID {createSaleDto.SoldByEmployeeId} not found");
+            throw new KeyNotFoundException($"Employee with ID {sale.SoldByEmployeeId} not found");
         }
 
         // Validate product exists and get commission percentage
-        var product = await productRepository.GetByIdAsync(createSaleDto.ProductId, cancellationToken);
+        var product = await productRepository.GetByIdAsync(sale.ProductId, cancellationToken);
         if (product == null)
         {
-            throw new KeyNotFoundException($"Product with ID {createSaleDto.ProductId} not found");
+            throw new KeyNotFoundException($"Product with ID {sale.ProductId} not found");
         }
 
-        // Parse sale price from string to decimal
-        var salePrice = decimal.Parse(createSaleDto.SalePrice, System.Globalization.CultureInfo.InvariantCulture);
+        // Check if inventory exists for that product at that location
+        var inventoryCheck = await inventoryRepository.GetByProductAndLocationAsync(sale.ProductId, sale.Location, cancellationToken);
 
         // Calculate commission: salePrice * (commissionPercentage / 100)
-        var commissionAmount = salePrice * (product.CommissionPercentage / 100m);
+        sale.CommissionAmount = sale.SalePrice * (product.CommissionPercentage / 100m);
 
-        // Convert DateTimeOffset to DateTime (UTC)
-        var saleDate = createSaleDto.SaleDate.UtcDateTime;
-
-        // Create sale entity
-        var sale = new Sale
-        {
-            CustomerId = createSaleDto.CustomerId,
-            SoldByEmployeeId = createSaleDto.SoldByEmployeeId,
-            ProductId = createSaleDto.ProductId,
-            SalePrice = salePrice,
-            CommissionAmount = commissionAmount,
-            SaleChannel = createSaleDto.SaleChannel ?? "Unknown",
-            Location = (Domain.Enums.Location)createSaleDto.Location,
-            SaleDate = saleDate,
-            Status = Domain.Enums.SaleStatus.Pending,
-            FulfilledByEmployeeId = null,
-            FulfilledDate = null
-        };
+        // Determine sale status based on inventory availability
+        sale.Status = inventoryCheck != null && inventoryCheck.Quantity > 0
+            ? SaleStatus.Fulfilled
+            : SaleStatus.Pending;
 
         // Save to database
         sale = await saleRepository.CreateAsync(sale, cancellationToken);
 
-        // Map to DTO and return
-        return mapper.Map<SaleDto>(sale);
+        // Update inventory - decrement quantity by 1 if inventory exists
+        if (inventoryCheck != null)
+        {
+            inventoryCheck.Quantity -= 1;
+            await inventoryRepository.UpdateAsync(inventoryCheck, cancellationToken);
+        }
+
+        return sale;
     }
 
-    public async Task<SaleDto?> GetSaleByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Sale?> GetSaleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var sale = await saleRepository.GetByIdAsync(id, cancellationToken);
-        return sale == null ? null : mapper.Map<SaleDto>(sale);
+        if (sale == null)
+        {
+            throw new KeyNotFoundException($"Sale with ID {id} not found");
+        }
+        return sale;
     }
 
-    public async Task<IEnumerable<SaleDto>> GetSalesByDateRangeAsync(DateTimeOffset? startDate, DateTimeOffset? endDate, Generated.SaleStatus? status, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Sale>> GetSalesByDateRangeAsync(DateTime? startDate, DateTime? endDate, SaleStatus? status, CancellationToken cancellationToken = default)
     {
         // For MVP, filters are ignored and all sales are returned
         // TODO: Implement proper filtering with OData
-        var sales = await saleRepository.GetByDateRangeAsync(null, null, null, cancellationToken);
-        return mapper.Map<IEnumerable<SaleDto>>(sales);
+        return await saleRepository.GetByDateRangeAsync(null, null, null, cancellationToken);
     }
 }

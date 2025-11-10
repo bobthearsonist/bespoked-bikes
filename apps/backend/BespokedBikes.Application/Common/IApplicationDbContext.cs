@@ -1,7 +1,7 @@
 using BespokedBikes.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BespokedBikes.Application.Common.Interfaces;
+namespace BespokedBikes.Application.Common;
 
 public interface IApplicationDbContext
 {

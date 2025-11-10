@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Common.Interfaces;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Domain.Entities;
 using BespokedBikes.Infrastructure;
 using BespokedBikes.Infrastructure.Data;
@@ -7,7 +7,6 @@ using BespokedBikes.Tests.Integration.Infrastructure;
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework.Interfaces;
 
 namespace BespokedBikes.Tests.Integration.Repositories;
 

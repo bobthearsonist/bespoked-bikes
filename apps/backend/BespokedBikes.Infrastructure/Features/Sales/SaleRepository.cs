@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Common.Interfaces;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Application.Features.Sales;
 using BespokedBikes.Domain.Entities;
 using BespokedBikes.Domain.Enums;

@@ -1,4 +1,5 @@
-using BespokedBikes.Application.Generated;
+using BespokedBikes.Domain.Entities;
+using BespokedBikes.Domain.Enums;
 
 namespace BespokedBikes.Application.Features.Sales;
 
@@ -7,7 +8,7 @@ namespace BespokedBikes.Application.Features.Sales;
 /// </summary>
 public interface ISalesService
 {
-    Task<SaleDto> CreateSaleAsync(CreateSaleDto createSaleDto, CancellationToken cancellationToken = default);
-    Task<SaleDto?> GetSaleByIdAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<IEnumerable<SaleDto>> GetSalesByDateRangeAsync(DateTimeOffset? startDate, DateTimeOffset? endDate, Generated.SaleStatus? status, CancellationToken cancellationToken = default);
+    Task<Sale> CreateSaleAsync(Sale sale, CancellationToken cancellationToken = default);
+    Task<Sale?> GetSaleByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Sale>> GetSalesByDateRangeAsync(DateTime? startDate, DateTime? endDate, SaleStatus? status, CancellationToken cancellationToken = default);
 }
