@@ -38,7 +38,15 @@ dotnet test
 # individual suites
 dotnet test BespokedBikes.Tests.Unit
 dotnet test BespokedBikes.Tests.Integration
+
+# Run tests with coverage
+dotnet test --collect:"XPlat Code Coverage"
+
+# Run specific test suite with coverage
+dotnet test BespokedBikes.Tests.Unit --collect:"XPlat Code Coverage"
 ```
+
+Coverage reports are generated in the `TestResults` directory as `coverage.cobertura.xml` files.
 
 ## CI/CD Pipeline
 
@@ -48,26 +56,36 @@ This project uses GitHub Actions for continuous integration and delivery.
 
 The CI/CD pipeline runs on every pull request to `main` or `develop` branches and executes the following jobs in parallel:
 
-- **Backend Unit Tests**: Runs unit tests for the backend
-- **Backend Integration Tests**: Runs integration tests for the backend
+- **Backend Unit Tests**: Runs unit tests for the backend with code coverage enabled
+- **Backend Integration Tests**: Runs integration tests for the backend with code coverage enabled
 - **Frontend Unit Tests**: Placeholder for frontend unit tests (when frontend is added)
 - **Frontend Integration Tests**: Placeholder for frontend integration tests (when frontend is added)
 - **System Tests**: Runs after all component tests complete (currently stubbed for container setup)
+
+After the PR CI/CD Pipeline completes, a separate workflow runs to generate and post coverage reports:
+
+- **Coverage Report**: Downloads coverage artifacts from test runs and posts a summary comment on the PR
 
 ### Workflow Files
 
 - **`.github/workflows/pr-ci.yml`**: Main PR workflow that orchestrates all test jobs
 - **`.github/workflows/backend-test.yml`**: Reusable workflow for backend testing (reduces duplication)
+- **`.github/workflows/coverage-report.yml`**: Workflow that runs after PR CI/CD to generate and post coverage reports
 
 ### Architecture
 
 The pipeline uses reusable workflows to avoid code duplication. The backend test workflow accepts a `test-type` parameter (unit or integration) and is called by the main PR workflow twice - once for each test type.
 
+All test jobs run with code coverage enabled using coverlet. Coverage reports are uploaded as artifacts and then collected by the coverage-report workflow, which posts a summary comment on the PR with:
+- Line and branch coverage percentages
+- Coverage badges
+- Detailed coverage breakdown by project
+
 ### Future Enhancements
 
-- Frontend test jobs will be populated when the frontend is implemented
+- Frontend test jobs will be populated when the frontend is implemented (with coverage enabled)
 - System tests will be expanded once Docker containers are set up
-- Additional jobs can be added for linting, code coverage, and deployment
+- Additional jobs can be added for linting and deployment
 
 ## Development
 

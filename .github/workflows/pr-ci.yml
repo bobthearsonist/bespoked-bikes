@@ -33,6 +33,7 @@ jobs:
       - name: Placeholder
         run: |
           echo "Frontend unit tests will run here when frontend is implemented"
+          echo "Tests will be run with coverage enabled and reports will be uploaded as artifacts"
           echo "Skipping for now as no frontend exists yet"
   
   frontend-integration-tests:
@@ -43,6 +44,7 @@ jobs:
       - name: Placeholder
         run: |
           echo "Frontend integration tests will run here when frontend is implemented"
+          echo "Tests will be run with coverage enabled and reports will be uploaded as artifacts"
           echo "Skipping for now as no frontend exists yet"
   
   # System tests run after all other tests complete
