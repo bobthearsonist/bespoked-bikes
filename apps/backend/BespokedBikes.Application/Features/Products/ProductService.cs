@@ -1,46 +1,44 @@
-using AutoMapper;
-using BespokedBikes.Application.Generated;
 using BespokedBikes.Domain.Entities;
 
 namespace BespokedBikes.Application.Features.Products;
 
-public class ProductService(IProductRepository repository, IMapper mapper) : IProductService
+public class ProductService(IProductRepository repository) : IProductService
 {
-    public async Task<ProductDto> GetProductAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Product> GetProductAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var product = await repository.GetByIdAsync(id, cancellationToken);
 
         if (product == null) throw new KeyNotFoundException($"Product with ID {id} not found.");
 
-        return mapper.Map<ProductDto>(product);
+        return product;
     }
 
-    public async Task<ICollection<ProductDto>> ListProductsAsync(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<Product>> ListProductsAsync(CancellationToken cancellationToken = default)
     {
-        var products = await repository.GetAllAsync(cancellationToken);
-        return mapper.Map<ICollection<ProductDto>>(products);
+        return await repository.GetAllAsync(cancellationToken);
     }
 
-    public async Task<ProductDto> CreateProductAsync(ProductDto productDto, CancellationToken cancellationToken = default)
+    public async Task<Product> CreateProductAsync(Product product, CancellationToken cancellationToken = default)
     {
-        var product = mapper.Map<Product>(productDto);
         product.Id = Guid.NewGuid();
-
-        var createdProduct = await repository.CreateAsync(product, cancellationToken);
-        return mapper.Map<ProductDto>(createdProduct);
+        return await repository.CreateAsync(product, cancellationToken);
     }
 
-    public async Task<ProductDto> UpdateProductAsync(Guid id, ProductDto productDto, CancellationToken cancellationToken = default)
+    public async Task<Product> UpdateProductAsync(Guid id, Product product, CancellationToken cancellationToken = default)
     {
         var existingProduct = await repository.GetByIdAsync(id, cancellationToken);
 
         if (existingProduct == null) throw new KeyNotFoundException($"Product with ID {id} not found.");
 
-        // Map the DTO to the existing entity to preserve CreatedAt
-        mapper.Map(productDto, existingProduct);
-        existingProduct.Id = id;
+        // Update the existing product's properties while preserving timestamps
+        existingProduct.ProductType = product.ProductType;
+        existingProduct.Name = product.Name;
+        existingProduct.Description = product.Description;
+        existingProduct.Supplier = product.Supplier;
+        existingProduct.CostPrice = product.CostPrice;
+        existingProduct.RetailPrice = product.RetailPrice;
+        existingProduct.CommissionPercentage = product.CommissionPercentage;
 
-        var updatedProduct = await repository.UpdateAsync(existingProduct, cancellationToken);
-        return mapper.Map<ProductDto>(updatedProduct);
+        return await repository.UpdateAsync(existingProduct, cancellationToken);
     }
 }

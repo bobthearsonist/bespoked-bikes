@@ -1,10 +1,10 @@
-using BespokedBikes.Application.Generated;
+using BespokedBikes.Domain.Entities;
 
 namespace BespokedBikes.Application.Features.Employees;
 
 public interface IEmployeeService
 {
-    Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto employeeDto);
-    Task<EmployeeDto?> GetEmployeeByIdAsync(Guid id);
-    Task<IReadOnlyList<EmployeeDto>> ListEmployeesAsync();
+    Task<Employee> CreateEmployeeAsync(Employee employee);
+    Task<Employee?> GetEmployeeByIdAsync(Guid id);
+    Task<IReadOnlyList<Employee>> ListEmployeesAsync();
 }

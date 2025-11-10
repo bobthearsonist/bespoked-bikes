@@ -1,3 +1,4 @@
+using BespokedBikes.Api.Middleware;
 using BespokedBikes.Application.Common;
 using BespokedBikes.Application.Features.Customers;
 using BespokedBikes.Application.Features.Employees;
@@ -74,7 +75,9 @@ builder.Services.AddAutoMapper(config =>
     config.CreateMap<string?, decimal>()
         .ConvertUsing(s => string.IsNullOrEmpty(s) ? 0m : decimal.Parse(s, System.Globalization.CultureInfo.InvariantCulture));
 
-    // Scan assemblies for [AutoMap] attributes
+    // Scan assemblies for [AutoMap] attributes and mapping profiles
+    // Domain assembly for entity attributes, Application assembly for profiles and value resolvers
+    config.AddMaps(typeof(BespokedBikes.Domain.Entities.Product).Assembly);
     config.AddMaps(typeof(ProductDto).Assembly);
 });
 
@@ -109,6 +112,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+// Add global exception handling middleware
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseCors();

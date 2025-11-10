@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Generated;
+using BespokedBikes.Domain.Entities;
 
 namespace BespokedBikes.Application.Features.Customers;
 
@@ -7,8 +7,8 @@ namespace BespokedBikes.Application.Features.Customers;
 /// </summary>
 public interface ICustomerService
 {
-    Task<CustomerDto> CreateCustomerAsync(CustomerDto customerDto, CancellationToken cancellationToken = default);
-    Task<CustomerDto?> GetCustomerByIdAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<IEnumerable<CustomerDto>> GetAllCustomersAsync(CancellationToken cancellationToken = default);
-    Task<CustomerDto> UpdateCustomerAsync(Guid id, CustomerDto customerDto, CancellationToken cancellationToken = default);
+    Task<Customer> CreateCustomerAsync(Customer customer, CancellationToken cancellationToken = default);
+    Task<Customer?> GetCustomerByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken = default);
+    Task<Customer> UpdateCustomerAsync(Guid id, Customer customer, CancellationToken cancellationToken = default);
 }

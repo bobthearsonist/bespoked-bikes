@@ -1,35 +1,27 @@
-using AutoMapper;
-using BespokedBikes.Application.Generated;
 using BespokedBikes.Domain.Entities;
 
 namespace BespokedBikes.Application.Features.Employees;
 
-public class EmployeeService(IEmployeeRepository repository, IMapper mapper) : IEmployeeService
+public class EmployeeService(IEmployeeRepository repository) : IEmployeeService
 {
-    public async Task<EmployeeDto> CreateEmployeeAsync(EmployeeDto employeeDto)
+    public async Task<Employee> CreateEmployeeAsync(Employee employee)
     {
-        var employee = mapper.Map<Employee>(employeeDto);
         employee.Id = Guid.NewGuid();
-
-        var createdEmployee = await repository.CreateAsync(employee);
-
-        return mapper.Map<EmployeeDto>(createdEmployee);
+        return await repository.CreateAsync(employee);
     }
 
-    public async Task<EmployeeDto?> GetEmployeeByIdAsync(Guid id)
+    public async Task<Employee?> GetEmployeeByIdAsync(Guid id)
     {
         var employee = await repository.GetByIdAsync(id);
         if (employee == null)
         {
             throw new KeyNotFoundException($"Employee with ID {id} not found");
         }
-        return mapper.Map<EmployeeDto>(employee);
+        return employee;
     }
 
-    public async Task<IReadOnlyList<EmployeeDto>> ListEmployeesAsync()
+    public async Task<IReadOnlyList<Employee>> ListEmployeesAsync()
     {
-        var employees = await repository.GetAllAsync();
-
-        return mapper.Map<IReadOnlyList<EmployeeDto>>(employees);
+        return await repository.GetAllAsync();
     }
 }

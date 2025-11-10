@@ -239,7 +239,7 @@ the first good tests i added were right after supposedly getting to a mvp. it sh
 - [ ] Implement unit tests
   - [ ] focus on areas with more logic, not the boilerplate
   - [ ] get your edge cases here
-- [ ] Implement integration tests
+- [x] Implement integration tests
   - [x] {feature}IntegrationTests (HTTP → Full stack)
     - [x] quick and dirty test for creating a sale
     - [x] a happy path test for each feature
@@ -249,35 +249,17 @@ the first good tests i added were right after supposedly getting to a mvp. it sh
     - [ ] mock the service layer and focus on error handling middleware
 - [ ] Implement end-to-end system tests using playwright and the front end.
 
-#### Known Test Failures (As of Current State)
-
-**Integration Tests (4 failing, 1 passing):**
-
-1. ✅ `CustomerIntegrationTests.CreateCustomer_ThenList_ShouldReturnCustomer` - **PASSING**
-2. ❌ `EmployeeIntegrationTests.CreateEmployee_ThenList_ShouldReturnEmployee` - **400 Bad Request**
-   - **Root Cause**: Model validation not properly configured in API pipeline
-   - **Required Fix**: Add `services.AddControllers().AddNewtonsoftJson()` to Program.cs
-3. ❌ `ProductIntegrationTests.CreateProduct_ThenList_ShouldReturnProduct` - **500 Internal Server Error**
-   - **Root Cause**: AutoMapper configuration issue with decimal<->string conversions
-   - **Required Fix**: Verify ProductMappingProfile has correct conversions for CostPrice, RetailPrice, CommissionPercentage
-4. ❌ `SalesIntegrationTests.SaleCreation_HappyPath` - **400 Bad Request** (fails at employee creation)
-   - **Root Cause**: Same as #2 - will pass once employee validation is fixed
-5. ❌ `SalesIntegrationTests.CreateSale_ThenGetSales_ShouldReturnSale` - **400 Bad Request** (fails at employee creation)
-   - **Root Cause**: Same as #2 - will pass once employee validation is fixed
-
-**Summary**: Tests are legitimate failures indicating missing application configuration, not test issues.
-
 ### punts
 
-- [ ] we shouldnt be using the dto in the service layer. we should be doing that mapping in the api layer. when you go back to fix this make sure to wind up with something using more annotations and less strict mapping classes, not less
-- [ ] we need to get to a real db asap
-- [ ] the middleware needs to be setup, your exposing stack traces on errors RN
-- [ ] TESTS!!!
+- [x] we shouldnt be using the dto in the service layer. we should be doing that mapping in the api layer. when you go back to fix this make sure to wind up with something using more annotations and less strict mapping classes, not less
+- [x] we need to get to a real db asap
+- [x] the middleware needs to be setup, your exposing stack traces on errors RN
+- [x] TESTS!!!
 - [ ] ODATA for querying would be a quick win to add filtering/paging/sorting
 - [ ] Inventory update is kind of ugly. maybe use a JSON PATCH model.
 - [ ] we need to finish cleaning up the createddate/modifieddate handling adn remove it form the dto's
 - [ ] im not sold on the infastructure/domain/application layering. its making it really hard to review changes wholistically. the separation of concerns is great, but for speedrunning through this exercise its slowing me down and making me miss things in review.
-- [ ] we arent return IActionResult from controllers, we should be doing that to have more control over status codes
+- [x] we arent return IActionResult from controllers, we should be doing that to have more control over status codes
 
 ### decisions
 

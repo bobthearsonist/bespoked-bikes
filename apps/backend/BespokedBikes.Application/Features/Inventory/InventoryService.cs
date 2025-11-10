@@ -1,6 +1,6 @@
-using AutoMapper;
 using BespokedBikes.Application.Features.Products;
-using BespokedBikes.Application.Generated;
+using BespokedBikes.Domain.Entities;
+using BespokedBikes.Domain.Enums;
 
 namespace BespokedBikes.Application.Features.Inventory;
 
@@ -9,11 +9,10 @@ namespace BespokedBikes.Application.Features.Inventory;
 /// </summary>
 public class InventoryService(
     IInventoryRepository inventoryRepository,
-    IProductRepository productRepository,
-    IMapper mapper)
+    IProductRepository productRepository)
     : IInventoryService
 {
-    public async Task<InventoryDto> UpdateProductInventoryAsync(Guid productId, InventoryUpdateDto updateDto, CancellationToken cancellationToken = default)
+    public async Task<Domain.Entities.Inventory> UpdateProductInventoryAsync(Guid productId, Location location, int quantity, CancellationToken cancellationToken = default)
     {
         // Verify product exists
         var product = await productRepository.GetByIdAsync(productId, cancellationToken);
@@ -23,32 +22,27 @@ public class InventoryService(
         }
 
         // Check if inventory record exists for this product/location
-        var location = (Domain.Enums.Location)updateDto.Location;
         var existingInventory = await inventoryRepository.GetByProductAndLocationAsync(
             productId,
             location,
             cancellationToken);
 
-        Domain.Entities.Inventory inventory;
-
         if (existingInventory == null)
         {
             // Create new inventory record
-            inventory = new Domain.Entities.Inventory
+            var inventory = new Domain.Entities.Inventory
             {
                 ProductId = productId,
                 Location = location,
-                Quantity = updateDto.Quantity
+                Quantity = quantity
             };
-            inventory = await inventoryRepository.CreateAsync(inventory, cancellationToken);
+            return await inventoryRepository.CreateAsync(inventory, cancellationToken);
         }
         else
         {
             // Update existing inventory record
-            existingInventory.Quantity = updateDto.Quantity;
-            inventory = await inventoryRepository.UpdateAsync(existingInventory, cancellationToken);
+            existingInventory.Quantity = quantity;
+            return await inventoryRepository.UpdateAsync(existingInventory, cancellationToken);
         }
-
-        return mapper.Map<InventoryDto>(inventory);
     }
 }

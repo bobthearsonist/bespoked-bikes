@@ -1,5 +1,3 @@
-using AutoMapper;
-using BespokedBikes.Application.Generated;
 using BespokedBikes.Domain.Entities;
 
 namespace BespokedBikes.Application.Features.Customers;
@@ -7,32 +5,29 @@ namespace BespokedBikes.Application.Features.Customers;
 /// <summary>
 /// Service implementation for Customer business logic
 /// </summary>
-public class CustomerService(ICustomerRepository repository, IMapper mapper) : ICustomerService
+public class CustomerService(ICustomerRepository repository) : ICustomerService
 {
-    public async Task<CustomerDto> CreateCustomerAsync(CustomerDto customerDto, CancellationToken cancellationToken = default)
+    public async Task<Customer> CreateCustomerAsync(Customer customer, CancellationToken cancellationToken = default)
     {
-        var customer = mapper.Map<Customer>(customerDto);
-        var createdCustomer = await repository.CreateAsync(customer, cancellationToken);
-        return mapper.Map<CustomerDto>(createdCustomer);
+        return await repository.CreateAsync(customer, cancellationToken);
     }
 
-    public async Task<CustomerDto?> GetCustomerByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Customer?> GetCustomerByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var customer = await repository.GetByIdAsync(id, cancellationToken);
         if (customer == null)
         {
             throw new KeyNotFoundException($"Customer with ID {id} not found");
         }
-        return mapper.Map<CustomerDto>(customer);
+        return customer;
     }
 
-    public async Task<IEnumerable<CustomerDto>> GetAllCustomersAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken = default)
     {
-        var customers = await repository.GetAllAsync(cancellationToken);
-        return mapper.Map<IEnumerable<CustomerDto>>(customers);
+        return await repository.GetAllAsync(cancellationToken);
     }
 
-    public async Task<CustomerDto> UpdateCustomerAsync(Guid id, CustomerDto customerDto, CancellationToken cancellationToken = default)
+    public async Task<Customer> UpdateCustomerAsync(Guid id, Customer customer, CancellationToken cancellationToken = default)
     {
         var existingCustomer = await repository.GetByIdAsync(id, cancellationToken);
         if (existingCustomer == null)
@@ -41,9 +36,8 @@ public class CustomerService(ICustomerRepository repository, IMapper mapper) : I
         }
 
         // Update only the editable fields
-        existingCustomer.Name = customerDto.Name;
+        existingCustomer.Name = customer.Name;
 
-        var updatedCustomer = await repository.UpdateAsync(existingCustomer, cancellationToken);
-        return mapper.Map<CustomerDto>(updatedCustomer);
+        return await repository.UpdateAsync(existingCustomer, cancellationToken);
     }
 }
