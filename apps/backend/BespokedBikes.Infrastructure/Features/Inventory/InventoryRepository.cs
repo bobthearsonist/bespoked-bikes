@@ -1,4 +1,4 @@
-using BespokedBikes.Application.Common.Interfaces;
+using BespokedBikes.Application.Common;
 using BespokedBikes.Application.Features.Inventory;
 using BespokedBikes.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
