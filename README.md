@@ -5,7 +5,7 @@ Demo project for bespoked-bikes.
 ## Links
 
 - [OpenAPI Specification](openapi.yaml)
-- [Github Repository](https://github.com/yourusername/bespoked-bikes)
+- [Github Repository](https://github.com/bobthearsonist/bespoked-bikes)
 
 ## Getting Started
 
