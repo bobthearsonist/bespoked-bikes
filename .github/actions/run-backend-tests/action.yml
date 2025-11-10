@@ -1,0 +1,42 @@
+name: 'Run Backend Tests'
+description: 'Run backend tests with optional coverage collection'
+
+inputs:
+  test-project:
+    description: 'Test project name (e.g., BespokedBikes.Tests.Unit)'
+    required: true
+  working-directory:
+    description: 'Working directory for backend project'
+    required: false
+    default: 'apps/backend'
+  coverage:
+    description: 'Enable coverage collection (true/false)'
+    required: false
+    default: 'false'
+  results-directory:
+    description: 'Directory for test results'
+    required: false
+    default: './TestResults'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run tests without coverage
+      if: inputs.coverage != 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        dotnet test ${{ inputs.test-project }} \
+          --no-build \
+          --verbosity normal
+    
+    - name: Run tests with coverage
+      if: inputs.coverage == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        dotnet test ${{ inputs.test-project }} \
+          --no-build \
+          --verbosity normal \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ${{ inputs.results-directory }}

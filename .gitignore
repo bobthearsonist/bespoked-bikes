@@ -12,3 +12,6 @@ obj/
 
 # NuGet packages
 *.nupkg
+
+# Test results
+TestResults/

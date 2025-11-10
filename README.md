@@ -66,36 +66,68 @@ dotnet test
 # individual suites
 dotnet test BespokedBikes.Tests.Unit
 dotnet test BespokedBikes.Tests.Integration
+
+# Run tests with coverage
+dotnet test --collect:"XPlat Code Coverage"
+
+# Run specific test suite with coverage
+dotnet test BespokedBikes.Tests.Unit --collect:"XPlat Code Coverage"
 ```
+
+Coverage reports are generated in the `TestResults` directory as `coverage.cobertura.xml` files.
 
 ## CI/CD Pipeline
 
-This project uses GitHub Actions for continuous integration and delivery.
+This project uses GitHub Actions for continuous integration and delivery with integrated code coverage reporting.
 
 ### Pipeline Overview
 
-The CI/CD pipeline runs on every pull request to `main` or `develop` branches and executes the following jobs in parallel:
+The CI/CD pipeline runs on every pull request to `main` or `develop` branches and executes the following jobs:
 
-- **Backend Unit Tests**: Runs unit tests for the backend
-- **Backend Integration Tests**: Runs integration tests for the backend
+- **Backend Unit Tests**: Runs unit tests for the backend with code coverage enabled
+- **Backend Integration Tests**: Runs integration tests for the backend with code coverage enabled
 - **Frontend Unit Tests**: Placeholder for frontend unit tests (when frontend is added)
 - **Frontend Integration Tests**: Placeholder for frontend integration tests (when frontend is added)
+- **Coverage Summary**: Automatically updates PR description with coverage badges and percentages
 - **System Tests**: Runs after all component tests complete (currently stubbed for container setup)
+
+### Coverage Reporting
+
+Coverage reports are automatically:
+- Uploaded to [Codecov](https://codecov.io) for historical tracking and visualization
+- Displayed as badges in the PR description
+- Shown as percentages for both unit and integration tests
+- Uploaded as artifacts for detailed review (14-day retention)
+
+The PR description is automatically updated with:
+- Codecov badge for the PR branch
+- Coverage percentages for backend unit and integration tests
+- Frontend coverage (when implemented)
 
 ### Workflow Files
 
-- **`.github/workflows/pr-ci.yml`**: Main PR workflow that orchestrates all test jobs
-- **`.github/workflows/backend-test.yml`**: Reusable workflow for backend testing (reduces duplication)
+- **`.github/workflows/pr-ci.yml`**: Main PR workflow that orchestrates all test jobs and coverage reporting
+
+### Composite Actions
+
+The pipeline uses composite actions for code reuse:
+- **`.github/actions/setup-dotnet-backend`**: Sets up .NET SDK and restores dependencies
+- **`.github/actions/run-backend-tests`**: Runs backend tests with optional coverage collection
+- **`.github/actions/upload-coverage`**: Uploads coverage to Codecov and as artifacts
 
 ### Architecture
 
-The pipeline uses reusable workflows to avoid code duplication. The backend test workflow accepts a `test-type` parameter (unit or integration) and is called by the main PR workflow twice - once for each test type.
+All test jobs run with code coverage enabled using coverlet (XPlat Code Coverage). Coverage reports are:
+1. Generated during test execution in Cobertura XML format
+2. Uploaded to Codecov with appropriate flags (backend-unit, backend-integration)
+3. Stored as artifacts for manual review
+4. Summarized and displayed in the PR description
 
 ### Future Enhancements
 
-- Frontend test jobs will be populated when the frontend is implemented
+- Frontend test jobs will be populated when the frontend is implemented (with coverage enabled)
 - System tests will be expanded once Docker containers are set up
-- Additional jobs can be added for linting, code coverage, and deployment
+- Additional jobs can be added for linting and deployment
 
 ## Development
 

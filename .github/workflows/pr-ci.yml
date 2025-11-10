@@ -6,51 +6,253 @@ on:
       - main
       - develop
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
 jobs:
-  # Backend tests run in parallel
+  # ============================================
+  # Backend Jobs
+  # ============================================
+
   backend-unit-tests:
-    name: Backend Unit Tests
-    permissions:
-      contents: read
-    uses: ./.github/workflows/backend-test.yml
-    with:
-      test-type: unit
-  
-  backend-integration-tests:
-    name: Backend Integration Tests
-    permissions:
-      contents: read
-    uses: ./.github/workflows/backend-test.yml
-    with:
-      test-type: integration
-  
-  # Frontend tests run in parallel (placeholder for when frontend is added)
-  frontend-unit-tests:
-    name: Frontend Unit Tests
+    name: Backend → Unit Tests
     runs-on: ubuntu-latest
-    permissions: {}
+    outputs:
+      coverage: ${{ steps.coverage.outputs.percentage }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Backend
+        uses: ./.github/actions/setup-dotnet-backend
+
+      - name: Run unit tests
+        uses: ./.github/actions/run-backend-tests
+        with:
+          test-project: 'BespokedBikes.Tests.Unit'
+          coverage: 'true'
+
+      - name: Generate coverage summary
+        id: coverage
+        run: |
+          if [ -d "apps/backend/TestResults" ]; then
+            cd apps/backend/TestResults
+            COVERAGE_FILE=$(find . -name "coverage.cobertura.xml" | head -1)
+            if [ -n "$COVERAGE_FILE" ] && [ -f "$COVERAGE_FILE" ]; then
+              echo "Found coverage file: $COVERAGE_FILE"
+              LINE_RATE=$(grep -oP 'line-rate="\K[^"]+' "$COVERAGE_FILE" | head -1)
+              if [ -n "$LINE_RATE" ]; then
+                PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $LINE_RATE * 100}")
+                echo "percentage=$PERCENTAGE" >> $GITHUB_OUTPUT
+                echo "Backend unit test coverage: $PERCENTAGE%"
+              else
+                echo "percentage=0" >> $GITHUB_OUTPUT
+                echo "Could not extract line rate from coverage file"
+              fi
+            else
+              echo "percentage=0" >> $GITHUB_OUTPUT
+              echo "No coverage file found"
+            fi
+          else
+            echo "percentage=0" >> $GITHUB_OUTPUT
+            echo "TestResults directory not found"
+          fi
+
+      - name: Upload coverage to Codecov
+        uses: ./.github/actions/upload-coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          coverage-file: 'apps/backend/TestResults/**/coverage.cobertura.xml'
+          flags: 'backend-unit'
+          artifact-name: 'backend-unit-coverage'
+          artifact-path: 'apps/backend/TestResults/**/coverage.cobertura.xml'
+
+  backend-integration-tests:
+    name: Backend → Integration Tests
+    runs-on: ubuntu-latest
+    outputs:
+      coverage: ${{ steps.coverage.outputs.percentage }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET Backend
+        uses: ./.github/actions/setup-dotnet-backend
+
+      - name: Run integration tests
+        uses: ./.github/actions/run-backend-tests
+        with:
+          test-project: 'BespokedBikes.Tests.Integration'
+          coverage: 'true'
+
+      - name: Generate coverage summary
+        id: coverage
+        run: |
+          if [ -d "apps/backend/TestResults" ]; then
+            cd apps/backend/TestResults
+            COVERAGE_FILE=$(find . -name "coverage.cobertura.xml" | head -1)
+            if [ -n "$COVERAGE_FILE" ] && [ -f "$COVERAGE_FILE" ]; then
+              echo "Found coverage file: $COVERAGE_FILE"
+              LINE_RATE=$(grep -oP 'line-rate="\K[^"]+' "$COVERAGE_FILE" | head -1)
+              if [ -n "$LINE_RATE" ]; then
+                PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $LINE_RATE * 100}")
+                echo "percentage=$PERCENTAGE" >> $GITHUB_OUTPUT
+                echo "Backend integration test coverage: $PERCENTAGE%"
+              else
+                echo "percentage=0" >> $GITHUB_OUTPUT
+                echo "Could not extract line rate from coverage file"
+              fi
+            else
+              echo "percentage=0" >> $GITHUB_OUTPUT
+              echo "No coverage file found"
+            fi
+          else
+            echo "percentage=0" >> $GITHUB_OUTPUT
+            echo "TestResults directory not found"
+          fi
+
+      - name: Upload coverage to Codecov
+        uses: ./.github/actions/upload-coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        with:
+          coverage-file: 'apps/backend/TestResults/**/coverage.cobertura.xml'
+          flags: 'backend-integration'
+          artifact-name: 'backend-integration-coverage'
+          artifact-path: 'apps/backend/TestResults/**/coverage.cobertura.xml'
+
+  # ============================================
+  # Frontend Jobs (Placeholders)
+  # ============================================
+
+  frontend-unit-tests:
+    name: Frontend → Unit Tests
+    runs-on: ubuntu-latest
+    outputs:
+      coverage: ${{ steps.coverage.outputs.percentage }}
     steps:
       - name: Placeholder
+        id: coverage
         run: |
           echo "Frontend unit tests will run here when frontend is implemented"
+          echo "Tests will be run with coverage enabled and uploaded to Codecov"
           echo "Skipping for now as no frontend exists yet"
-  
+          echo "percentage=0" >> $GITHUB_OUTPUT
+
   frontend-integration-tests:
-    name: Frontend Integration Tests
+    name: Frontend → Integration Tests
     runs-on: ubuntu-latest
-    permissions: {}
     steps:
       - name: Placeholder
         run: |
           echo "Frontend integration tests will run here when frontend is implemented"
+          echo "Tests will be run with coverage enabled and uploaded to Codecov"
           echo "Skipping for now as no frontend exists yet"
-  
-  # System tests run after all other tests complete
+
+  # ============================================
+  # Coverage Summary (Updates PR Description)
+  # ============================================
+
+  coverage-summary:
+    name: Coverage → Update PR
+    runs-on: ubuntu-latest
+    needs:
+      - backend-unit-tests
+      - backend-integration-tests
+      - frontend-unit-tests
+    if: always() && github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update PR description with coverage
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            const backendUnitCoverage = '${{ needs.backend-unit-tests.outputs.coverage }}' || 'N/A';
+            const backendIntegrationCoverage = '${{ needs.backend-integration-tests.outputs.coverage }}' || 'N/A';
+            const frontendCoverage = '${{ needs.frontend-unit-tests.outputs.coverage }}' || '0';
+
+            console.log('Coverage values received:');
+            console.log('- Backend Unit:', backendUnitCoverage);
+            console.log('- Backend Integration:', backendIntegrationCoverage);
+            console.log('- Frontend:', frontendCoverage);
+
+            try {
+              // Get PR number from context
+              const prNumber = context.payload.pull_request.number;
+              
+              // Get current PR
+              const pr = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber
+              });
+
+              // Build badge URL
+              const owner = context.repo.owner;
+              const repo = context.repo.repo;
+              const branch = context.payload.pull_request.head.ref;
+              const badgeUrl = 'https://codecov.io/gh/' + owner + '/' + repo + '/branch/' + branch + '/graph/badge.svg';
+              const codecovUrl = 'https://codecov.io/gh/' + owner + '/' + repo + '/branch/' + branch;
+              
+              // Build coverage table
+              const frontendDisplay = frontendCoverage === '0' ? 'N/A (not implemented)' : frontendCoverage + '%';
+              
+              const coverageSection = '\n## 📊 Test Coverage\n\n' +
+                '[![codecov](' + badgeUrl + ')](' + codecovUrl + ')\n\n' +
+                '| Component | Coverage |\n' +
+                '|-----------|----------|\n' +
+                '| Backend Unit Tests | ' + backendUnitCoverage + '% |\n' +
+                '| Backend Integration Tests | ' + backendIntegrationCoverage + '% |\n' +
+                '| Frontend | ' + frontendDisplay + ' |\n\n' +
+                '_Updated: ' + new Date().toISOString() + '_\n\n' +
+                '---\n';
+
+              let body = pr.data.body || '';
+
+              // Remove existing coverage section if present
+              const coverageRegex = /## 📊 Test Coverage[\s\S]*?---\n/g;
+              body = body.replace(coverageRegex, '');
+
+              // Add new coverage section at the end
+              body = body.trim() + '\n\n' + coverageSection;
+
+              // Update PR description
+              await github.rest.pulls.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber,
+                body: body
+              });
+
+              console.log('✅ PR description updated with coverage information');
+            } catch (error) {
+              // Gracefully handle permission errors (e.g., from forks)
+              if (error.status === 403) {
+                console.log('⚠️ Insufficient permissions to update PR description (likely from fork)');
+              } else {
+                console.error('Error updating PR description:', error);
+                throw error;
+              }
+            }
+
+  # ============================================
+  # System Tests
+  # ============================================
+
   system-tests:
     name: System Tests
     runs-on: ubuntu-latest
-    permissions: {}
-    needs: 
+    needs:
       - backend-unit-tests
       - backend-integration-tests
       - frontend-unit-tests
@@ -60,3 +262,42 @@ jobs:
         run: |
           echo "System tests will run here once containers are set up"
           echo "This job ensures all component tests pass before running end-to-end tests"
+
+  # ============================================
+  # Summary
+  # ============================================
+
+  ci-summary:
+    name: ✅ CI Summary
+    runs-on: ubuntu-latest
+    needs:
+      - backend-unit-tests
+      - backend-integration-tests
+      - frontend-unit-tests
+      - frontend-integration-tests
+      - system-tests
+    if: always()
+    steps:
+      - name: Check all jobs
+        run: |
+          echo "## 🔍 Test Results Summary"
+          echo ""
+          echo "### Backend"
+          echo "- Unit Tests: ${{ needs.backend-unit-tests.result }}"
+          echo "- Integration Tests: ${{ needs.backend-integration-tests.result }}"
+          echo ""
+          echo "### Frontend"
+          echo "- Unit Tests: ${{ needs.frontend-unit-tests.result }}"
+          echo "- Integration Tests: ${{ needs.frontend-integration-tests.result }}"
+          echo ""
+          echo "### System Tests"
+          echo "- System Tests: ${{ needs.system-tests.result }}"
+          echo ""
+
+          if [[ "${{ needs.backend-unit-tests.result }}" != "success" ]] || \
+             [[ "${{ needs.backend-integration-tests.result }}" != "success" ]]; then
+            echo "❌ One or more test jobs failed"
+            exit 1
+          fi
+
+          echo "✅ All required CI jobs passed!"
