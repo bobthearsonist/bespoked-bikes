@@ -34,4 +34,11 @@ jobs:
       
       - name: Run ${{ inputs.test-type }} tests
         working-directory: apps/backend
-        run: dotnet test BespokedBikes.Tests.${{ inputs.test-type == 'unit' && 'Unit' || 'Integration' }} --no-build --verbosity normal
+        run: dotnet test BespokedBikes.Tests.${{ inputs.test-type == 'unit' && 'Unit' || 'Integration' }} --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./TestResults
+      
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ inputs.test-type }}
+          path: apps/backend/TestResults/**/coverage.cobertura.xml
+          retention-days: 1

@@ -1,0 +1,59 @@
+name: Coverage Report
+
+on:
+  workflow_run:
+    workflows: ["PR CI/CD Pipeline"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  report:
+    name: Generate Coverage Report
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    
+    steps:
+      - name: Download backend unit coverage
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: coverage-unit
+          path: coverage-unit
+        continue-on-error: true
+      
+      - name: Download backend integration coverage
+        uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: coverage-integration
+          path: coverage-integration
+        continue-on-error: true
+      
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage-*/coverage.cobertura.xml
+          badge: true
+          fail_below_min: false
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '60 80'
+      
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event.workflow_run.event == 'pull_request'
+        with:
+          number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          recreate: true
+          path: code-coverage-results.md
