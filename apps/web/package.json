@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "generate:api": "openapi-typescript-codegen --input ../../openapi.yaml --output ./src/generated --client fetch"
   },
   "dependencies": {
     "react": "^19.1.1",
@@ -32,6 +33,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
+    "openapi-typescript-codegen": "^0.29.0",
     "vite": "^7.1.7"
   }
 }

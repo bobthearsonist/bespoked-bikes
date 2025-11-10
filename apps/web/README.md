@@ -13,6 +13,7 @@ Extremely basic React frontend for the BeSpoked Bikes sales management system. T
 - **React 19** with JSX
 - **Vite** for fast development and building
 - **Jest** and React Testing Library for testing
+- **OpenAPI TypeScript Codegen** for generating type-safe API client from OpenAPI specification
 
 ## Getting Started
 
@@ -67,6 +68,16 @@ npm test -- --watch
 npm run lint
 ```
 
+### Generating API Client
+
+The API client is automatically generated from the OpenAPI specification (`openapi.yaml`). To regenerate after API changes:
+
+```bash
+npm run generate:api
+```
+
+This uses `openapi-typescript-codegen` to generate TypeScript types and services in `src/generated/`. The generated code is gitignored and should be regenerated locally or in CI/CD.
+
 ## Usage
 
 1. Ensure the backend API is running at `http://localhost:5000`
@@ -87,19 +98,33 @@ Commission = (Sale Price - Cost Price) × Commission Percentage
 
 ## API Integration
 
-The frontend connects to the backend API at `http://localhost:5000/api` with the following endpoints:
+The frontend uses an **auto-generated API client** from the OpenAPI specification. The client is generated using `openapi-typescript-codegen` and provides:
 
+- Type-safe API calls with TypeScript definitions
+- Automatic request/response handling
+- Error handling with typed error responses
+- All endpoints defined in `openapi.yaml`
+
+Key endpoints used:
 - `GET /api/customers` - Fetch all customers
 - `GET /api/employees` - Fetch all employees
 - `GET /api/products` - Fetch all products
 - `POST /api/sales` - Create a new sale
+
+The base URL is configurable via the `VITE_API_URL` environment variable (defaults to `http://localhost:5000`).
 
 ## Project Structure
 
 ```
 src/
 ├── api/
-│   └── client.js          # API client for backend communication
+│   ├── client.js           # API client wrapper (uses generated client)
+│   └── generatedClient.js  # Configuration for generated API client
+├── generated/              # Auto-generated from openapi.yaml (gitignored)
+│   ├── index.ts
+│   ├── core/              # Core HTTP request handling
+│   ├── models/            # TypeScript type definitions for DTOs
+│   └── services/          # API service methods
 ├── components/
 │   ├── CreateSaleForm.jsx # Main sale creation form
 │   └── CreateSaleForm.test.jsx # Component tests
