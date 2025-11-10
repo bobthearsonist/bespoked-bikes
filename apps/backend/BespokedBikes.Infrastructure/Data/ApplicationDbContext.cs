@@ -62,6 +62,11 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(i => i.Quantity).IsRequired();
             entity.Property(i => i.CreatedAt).IsRequired();
             entity.Property(i => i.UpdatedAt).IsRequired();
+            
+            // Configure RowVersion as concurrency token for optimistic concurrency control
+            entity.Property(i => i.RowVersion)
+                .IsRowVersion()
+                .IsRequired();
 
             // Foreign key to Product
             entity.HasOne<Product>()
