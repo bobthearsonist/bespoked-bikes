@@ -25,6 +25,7 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
             {
                 Name = "Road Bike",
                 ProductType = "Bike",
+                Description = "High-performance carbon fiber road bike",
                 Supplier = "Giant",
                 CostPrice = "400.00",
                 RetailPrice = "599.99",

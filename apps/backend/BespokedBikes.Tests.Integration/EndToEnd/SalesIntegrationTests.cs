@@ -37,6 +37,7 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
             {
                 Name = "Test Bike",
                 ProductType = "Bike",
+                Description = "Test bike for integration testing",
                 Supplier = "Test Supplier",
                 CostPrice = "400.00",
                 RetailPrice = "599.99",
@@ -102,6 +103,7 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
             {
                 Name = "Mountain Bike",
                 ProductType = "Bike",
+                Description = "All-terrain mountain bike",
                 Supplier = "Trek",
                 CostPrice = "500.00",
                 RetailPrice = "699.99",
