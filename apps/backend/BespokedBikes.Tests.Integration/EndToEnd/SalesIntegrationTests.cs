@@ -1,7 +1,4 @@
 using FluentAssertions;
-using BespokedBikes.Tests.Integration.Generated;
-using Refit;
-using System.Net;
 using CustomerDto = BespokedBikes.Application.Generated.CustomerDto;
 using EmployeeDto = BespokedBikes.Application.Generated.EmployeeDto;
 using ProductDto = BespokedBikes.Application.Generated.ProductDto;
@@ -19,8 +16,6 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
         /// <summary>
         /// Happy path integration test: Create dependencies → Create Sale → Read Sale → Query Sales
         /// Tests the complete sales flow through the HTTP API
-        ///
-        /// TODO: Failing at employee creation - will pass once AddNewtonsoftJson() is added to Program.cs
         /// </summary>
         [Test]
         public async Task SaleCreation_HappyPath()
@@ -69,7 +64,7 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
             created.SoldByEmployeeId.Should().Be(employee.Id);
             created.ProductId.Should().Be(product.Id);
             created.SalePrice.Should().Be("550.00");
-            created.Status.Should().Be(SaleStatus.PENDING);
+            created.Status.Should().Be(SaleStatus.FULFILLED);
 
             // Read the sale by ID
             var fetched = await Api.GetSaleById(created.Id, CancellationToken.None);
@@ -85,8 +80,6 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
 
         /// <summary>
         /// Simple happy path: Create a sale and verify it appears in the list
-        ///
-        /// TODO: Failing at employee creation - will pass once AddNewtonsoftJson() is added to Program.cs
         /// </summary>
         [Test]
         public async Task CreateSale_ThenGetSales_ShouldReturnSale()
@@ -129,6 +122,53 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
             sale.CustomerId.Should().Be(customer.Id);
             sale.SoldByEmployeeId.Should().Be(employee.Id);
             sale.ProductId.Should().Be(product.Id);
+        }
+
+        /// <summary>
+        /// Test that validates sale status is PENDING when no inventory exists
+        /// </summary>
+        [Test]
+        public async Task CreateSale_WithoutInventory_ShouldHavePendingStatus()
+        {
+            // Set up required dependencies
+            var customer = await Api.CreateCustomer(new CustomerDto { Name = "Pending Customer" }, CancellationToken.None);
+            var employee = await Api.CreateEmployee(new EmployeeDto
+            {
+                Name = "Sales Rep",
+                Location = Location.STORE,
+                Roles = new List<EmployeeRole> { EmployeeRole.SALESPERSON }
+            }, CancellationToken.None);
+            var product = await Api.CreateProduct(new ProductDto
+            {
+                Name = "Out of Stock Bike",
+                ProductType = "Bike",
+                Description = "Currently unavailable bike",
+                Supplier = "Future Bikes",
+                CostPrice = "600.00",
+                RetailPrice = "899.99",
+                CommissionPercentage = "6.00"
+            }, CancellationToken.None);
+
+            // DO NOT add inventory - this product has no stock
+
+            // Create a sale without inventory
+            var saleDto = new CreateSaleDto
+            {
+                CustomerId = customer.Id,
+                SoldByEmployeeId = employee.Id,
+                ProductId = product.Id,
+                SaleDate = DateTimeOffset.Now,
+                SalePrice = "850.00",
+                Location = Location.STORE
+            };
+            var created = await Api.CreateSale(saleDto, CancellationToken.None);
+
+            // Verify the sale was created with PENDING status
+            created.Should().NotBeNull();
+            created.Status.Should().Be(SaleStatus.PENDING, "Sale should be PENDING when no inventory exists");
+            created.CustomerId.Should().Be(customer.Id);
+            created.SoldByEmployeeId.Should().Be(employee.Id);
+            created.ProductId.Should().Be(product.Id);
         }
     }
 }
