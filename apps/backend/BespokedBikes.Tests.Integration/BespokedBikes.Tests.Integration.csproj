@@ -20,12 +20,21 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+
     <PackageReference Include="NUnit" Version="4.4.0" />
     <PackageReference Include="NUnit.Analyzers" Version="4.11.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.10" />
+    <PackageReference Include="Refit" Version="8.0.0" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
+    <PackageReference Include="Refit.Newtonsoft.Json" Version="8.0.0" />
+    <PackageReference Include="Refitter.SourceGenerator" Version="1.7.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Testcontainers.PostgreSql" Version="4.8.1" />
   </ItemGroup>
 
@@ -34,11 +43,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BespokedBikes.Api\BespokedBikes.Api.csproj" />
+    <AdditionalFiles Include=".refitter" />
   </ItemGroup>
 
-  <Target Name="BuildApiBeforeTests" BeforeTargets="Build">
+  <ItemGroup>
+    <ProjectReference Include="..\BespokedBikes.Api\BespokedBikes.Api.csproj" />
+    <ProjectReference Include="..\BespokedBikes.Application\BespokedBikes.Application.csproj" />
+  </ItemGroup>
+
+  <Target Name="BuildDependenciesBeforeTests" BeforeTargets="Build">
     <MSBuild Projects="..\BespokedBikes.Api\BespokedBikes.Api.csproj" Targets="Build" />
+    <MSBuild Projects="..\BespokedBikes.Application\BespokedBikes.Application.csproj" Targets="Build" />
   </Target>
 
   <Target Name="PullTestContainerImages" BeforeTargets="Build">

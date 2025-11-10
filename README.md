@@ -183,15 +183,25 @@ We're using attributes which keeps boilerplate as simple as possible. There are 
 
 I don't like the current controller layout, I would like to have individual controller files with the routes defined there. I was wrestling with nswag a little too much getting that running and moved on since it's really just organizational.
 
-* better layout in scalar per controller
-* better folder organization
-* possibly more annoying DI setup
+- better layout in scalar per controller
+- better folder organization
+- possibly more annoying DI setup
 
 #### DateTimeOffset
 
 We're using DateTimeOffset instead of DateTime to handle date and time values. This ensures that we have a consistent representation of time across different time zones and avoids issues with daylight saving time.
 
 I discovered some of the way through that I had picked DateTime for the formats and should likely be using DateTimeOffset. I found it before we got to the Sale objects which will have some time values in the API contract. It just makes it a lot easier to work across time zones with practically zero overheads.
+
+### refit for integration tests
+
+Refit let me generate a client straight from the open API doc and validate things like middleware behavior easily.
+
+### Testing Strategy
+
+we strayed form the original plan a good bit when it took me longer than expected to get the basic structure in place.
+
+the first good tests i added were right after supposedly getting to a mvp. it showed that there is actually a bug.
 
 ### planning phase
 
@@ -206,7 +216,7 @@ I discovered some of the way through that I had picked DateTime for the formats 
 - [x] setup project structure / monorepo
   - [x] initial test projects with single passing test for each
 - [ ] containerization with docker
-- [ ] setup ci/cd pipeline
+- [x] setup ci/cd pipeline
 - [x] start development
 
 ### Next Steps
@@ -224,6 +234,39 @@ I discovered some of the way through that I had picked DateTime for the formats 
 - [ ] Docker containerization
 - [ ] CI/CD pipeline setup
 
+### testing
+
+- [ ] Implement unit tests
+  - [ ] focus on areas with more logic, not the boilerplate
+  - [ ] get your edge cases here
+- [ ] Implement integration tests
+  - [x] {feature}IntegrationTests (HTTP → Full stack)
+    - [x] quick and dirty test for creating a sale
+    - [x] a happy path test for each feature
+  - [ ] {feature}RepositoryTests (Repository → Database)
+    - [ ] focus on where there is logic
+  - [ ] {feature}ControllerTests (Controller → Service)
+    - [ ] mock the service layer and focus on error handling middleware
+- [ ] Implement end-to-end system tests using playwright and the front end.
+
+#### Known Test Failures (As of Current State)
+
+**Integration Tests (4 failing, 1 passing):**
+
+1. ✅ `CustomerIntegrationTests.CreateCustomer_ThenList_ShouldReturnCustomer` - **PASSING**
+2. ❌ `EmployeeIntegrationTests.CreateEmployee_ThenList_ShouldReturnEmployee` - **400 Bad Request**
+   - **Root Cause**: Model validation not properly configured in API pipeline
+   - **Required Fix**: Add `services.AddControllers().AddNewtonsoftJson()` to Program.cs
+3. ❌ `ProductIntegrationTests.CreateProduct_ThenList_ShouldReturnProduct` - **500 Internal Server Error**
+   - **Root Cause**: AutoMapper configuration issue with decimal<->string conversions
+   - **Required Fix**: Verify ProductMappingProfile has correct conversions for CostPrice, RetailPrice, CommissionPercentage
+4. ❌ `SalesIntegrationTests.SaleCreation_HappyPath` - **400 Bad Request** (fails at employee creation)
+   - **Root Cause**: Same as #2 - will pass once employee validation is fixed
+5. ❌ `SalesIntegrationTests.CreateSale_ThenGetSales_ShouldReturnSale` - **400 Bad Request** (fails at employee creation)
+   - **Root Cause**: Same as #2 - will pass once employee validation is fixed
+
+**Summary**: Tests are legitimate failures indicating missing application configuration, not test issues.
+
 ### punts
 
 - [ ] we shouldnt be using the dto in the service layer. we should be doing that mapping in the api layer. when you go back to fix this make sure to wind up with something using more annotations and less strict mapping classes, not less
@@ -234,6 +277,7 @@ I discovered some of the way through that I had picked DateTime for the formats 
 - [ ] Inventory update is kind of ugly. maybe use a JSON PATCH model.
 - [ ] we need to finish cleaning up the createddate/modifieddate handling adn remove it form the dto's
 - [ ] im not sold on the infastructure/domain/application layering. its making it really hard to review changes wholistically. the separation of concerns is great, but for speedrunning through this exercise its slowing me down and making me miss things in review.
+- [ ] we arent return IActionResult from controllers, we should be doing that to have more control over status codes
 
 ### decisions
 

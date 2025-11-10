@@ -111,3 +111,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Public partial class declaration for integration testing with WebApplicationFactory
+public partial class Program { }
