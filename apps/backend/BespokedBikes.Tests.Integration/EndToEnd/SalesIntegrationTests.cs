@@ -170,5 +170,58 @@ namespace BespokedBikes.Tests.Integration.EndToEnd
             created.SoldByEmployeeId.Should().Be(employee.Id);
             created.ProductId.Should().Be(product.Id);
         }
+
+        /// <summary>
+        /// Test that validates inventory with quantity 0 is not decremented to negative
+        /// Regression test for bug where inventory was decremented even when quantity was 0
+        /// </summary>
+        [Test]
+        public async Task CreateSale_WithZeroInventory_ShouldHavePendingStatus()
+        {
+            // Set up required dependencies
+            var customer = await Api.CreateCustomer(new CustomerDto { Name = "Zero Inventory Customer" }, CancellationToken.None);
+            var employee = await Api.CreateEmployee(new EmployeeDto
+            {
+                Name = "Sales Agent",
+                Location = Location.STORE,
+                Roles = new List<EmployeeRole> { EmployeeRole.SALESPERSON }
+            }, CancellationToken.None);
+            var product = await Api.CreateProduct(new ProductDto
+            {
+                Name = "Zero Stock Bike",
+                ProductType = "Bike",
+                Description = "Bike with zero inventory",
+                Supplier = "Test Supplier",
+                CostPrice = "500.00",
+                RetailPrice = "799.99",
+                CommissionPercentage = "5.50"
+            }, CancellationToken.None);
+
+            // Set inventory to zero explicitly
+            await Api.UpdateProductInventory(product.Id, new InventoryUpdateDto
+            {
+                Location = Location.STORE,
+                Quantity = 0
+            }, CancellationToken.None);
+
+            // Create a sale with zero inventory
+            var saleDto = new CreateSaleDto
+            {
+                CustomerId = customer.Id,
+                SoldByEmployeeId = employee.Id,
+                ProductId = product.Id,
+                SaleDate = DateTimeOffset.Now,
+                SalePrice = "750.00",
+                Location = Location.STORE
+            };
+            var created = await Api.CreateSale(saleDto, CancellationToken.None);
+
+            // Verify the sale was created with PENDING status (not FULFILLED)
+            created.Should().NotBeNull();
+            created.Status.Should().Be(SaleStatus.PENDING, "Sale should be PENDING when inventory quantity is 0");
+            created.CustomerId.Should().Be(customer.Id);
+            created.SoldByEmployeeId.Should().Be(employee.Id);
+            created.ProductId.Should().Be(product.Id);
+        }
     }
 }

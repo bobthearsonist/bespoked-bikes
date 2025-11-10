@@ -82,8 +82,8 @@ public class SalesService(
         // Save to database
         sale = await saleRepository.CreateAsync(sale, cancellationToken);
 
-        // Update inventory - decrement quantity by 1 if inventory exists
-        if (inventoryCheck != null)
+        // Update inventory - decrement quantity by 1 if inventory exists and has stock
+        if (inventoryCheck != null && inventoryCheck.Quantity > 0)
         {
             inventoryCheck.Quantity -= 1;
             await inventoryRepository.UpdateAsync(inventoryCheck, cancellationToken);
