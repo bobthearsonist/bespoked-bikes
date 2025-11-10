@@ -6,6 +6,7 @@ using BespokedBikes.Application.Features.Products;
 using BespokedBikes.Application.Generated;
 using BespokedBikes.Domain.Entities;
 using BespokedBikes.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 using Location = BespokedBikes.Domain.Enums.Location;
 
 namespace BespokedBikes.Application.Features.Sales;
@@ -82,11 +83,56 @@ public class SalesService(
         // Save to database
         sale = await saleRepository.CreateAsync(sale, cancellationToken);
 
-        // Update inventory - decrement quantity by 1 if inventory exists
+        // Update inventory with optimistic concurrency control
         if (inventoryCheck != null)
         {
-            inventoryCheck.Quantity -= 1;
-            await inventoryRepository.UpdateAsync(inventoryCheck, cancellationToken);
+            const int maxRetries = 3;
+            var retryCount = 0;
+            var success = false;
+
+            while (!success && retryCount < maxRetries)
+            {
+                try
+                {
+                    // Reload the inventory to get the latest version
+                    if (retryCount > 0)
+                    {
+                        inventoryCheck = await inventoryRepository.GetByProductAndLocationAsync(
+                            sale.ProductId, 
+                            sale.Location, 
+                            cancellationToken);
+                        
+                        if (inventoryCheck == null)
+                        {
+                            // Inventory was deleted, break out
+                            break;
+                        }
+                    }
+
+                    // Check if we have sufficient quantity
+                    if (inventoryCheck.Quantity <= 0)
+                    {
+                        throw new InvalidOperationException(
+                            $"Insufficient inventory for product {sale.ProductId} at location {sale.Location}");
+                    }
+
+                    // Decrement quantity
+                    inventoryCheck.Quantity -= 1;
+                    await inventoryRepository.UpdateAsync(inventoryCheck, cancellationToken);
+                    success = true;
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    retryCount++;
+                    if (retryCount >= maxRetries)
+                    {
+                        throw new InvalidOperationException(
+                            $"Failed to update inventory after {maxRetries} attempts due to concurrent updates. Please try again.");
+                    }
+                    // Wait briefly before retrying to reduce contention
+                    await Task.Delay(50 * retryCount, cancellationToken);
+                }
+            }
         }
 
         // Map to DTO and return
